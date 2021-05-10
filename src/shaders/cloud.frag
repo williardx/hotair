@@ -13,6 +13,7 @@ uniform float uTimeFactor1;
 uniform float uTimeFactor2;
 uniform float uDisplStrenght1;
 uniform float uDisplStrenght2;
+uniform vec3 baseColor;
 
 varying vec2 vUv;
 
@@ -34,5 +35,5 @@ void main() {
     float alpha = levels((txtNoise1 + txtNoise2) * 0.6, 0.2, 0.4, 0.7).r;
     alpha *= txtShape.r;
 
-    gl_FragColor = vec4(vec3(0.95,0.95,0.95), alpha);
+    gl_FragColor = vec4(baseColor, alpha);
 }
