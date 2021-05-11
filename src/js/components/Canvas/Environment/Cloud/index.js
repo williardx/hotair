@@ -13,12 +13,12 @@ import vertex from "~shaders/cloud.vert"
  * Start alpha max output at alpha min input, animate to larger value
  */
 
-export default ({ size, position, color }) => {
+export default ({ size, position, color, maskName }) => {
   const group = useRef()
   const mesh = useRef()
   const [width, height] = size
 
-  const src1 = useAssets("images/clouds/1_test.jpg")
+  const src1 = useAssets(`images/clouds/${maskName}.jpg`)
   const t1 = useTexture(src1)
 
   const src2 = useAssets("images/clouds/2.jpg")
@@ -30,7 +30,7 @@ export default ({ size, position, color }) => {
 
   const myUniforms = useMemo(
     () => ({
-      uTime: { value: Math.random() * 10000 },
+      uTime: { value: Math.random() * 100000 },
       uTxtShape: { value: t1 },
       uTxtCloudNoise: { value: t2 },
       uFac1: { value: 17.8 },
@@ -40,7 +40,7 @@ export default ({ size, position, color }) => {
       uDisplStrenght1: { value: 0 },
       uDisplStrenght2: { value: 0 },
       alphaMaxOutput: { value: 0.2 },
-      baseColor: { value: tint(new Color(color), 0.15) },
+      baseColor: { value: tint(new Color(color), 0.2) },
     }),
     [t1]
   )
@@ -90,35 +90,35 @@ export default ({ size, position, color }) => {
   /**
    * DAT GUI
    */
-  useEffect(() => {
-    if (material) {
-      gui.get((gui) => {
-        gui
-          .add(material.uniforms.uFac1, "value", 0.00001, 30)
-          .step(0.1)
-          .name("1-ScaleFactor")
-        gui
-          .add(material.uniforms.uTimeFactor1, "value", 0.00001, 0.009)
-          .step(0.0001)
-          .name("1-TimeFactor")
-        gui
-          .add(material.uniforms.uDisplStrenght1, "value", 0.00001, 0.3)
-          .step(0.01)
-          .name("1-Strength")
-        gui
-          .add(material.uniforms.uTimeFactor2, "value", 0.00001, 0.009)
-          .step(0.0001)
-          .name("2-TimeFactor")
-        gui
-          .add(material.uniforms.uFac2, "value", 0.00001, 100)
-          .name("2-ScaleFactor")
-        gui
-          .add(material.uniforms.uDisplStrenght2, "value", 0.00001, 0.3)
-          .step(0.01)
-          .name("2-Strength")
-      })
-    }
-  }, [material])
+  // useEffect(() => {
+  //   if (material) {
+  //     gui.get((gui) => {
+  //       gui
+  //         .add(material.uniforms.uFac1, "value", 0.00001, 30)
+  //         .step(0.1)
+  //         .name("1-ScaleFactor")
+  //       gui
+  //         .add(material.uniforms.uTimeFactor1, "value", 0.00001, 0.009)
+  //         .step(0.0001)
+  //         .name("1-TimeFactor")
+  //       gui
+  //         .add(material.uniforms.uDisplStrenght1, "value", 0.00001, 0.3)
+  //         .step(0.01)
+  //         .name("1-Strength")
+  //       gui
+  //         .add(material.uniforms.uTimeFactor2, "value", 0.00001, 0.009)
+  //         .step(0.0001)
+  //         .name("2-TimeFactor")
+  //       gui
+  //         .add(material.uniforms.uFac2, "value", 0.00001, 100)
+  //         .name("2-ScaleFactor")
+  //       gui
+  //         .add(material.uniforms.uDisplStrenght2, "value", 0.00001, 0.3)
+  //         .step(0.01)
+  //         .name("2-Strength")
+  //     })
+  //   }
+  // }, [material])
 
   return (
     <group ref={group}>

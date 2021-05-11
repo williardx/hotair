@@ -24,6 +24,8 @@ const POSITIONS = [
   [-1, -0.7, 0],
 ]
 
+const MASK_NAMES = ["mask", "mask_small", "mask_tiny"]
+
 const numClouds = 3
 
 const cycleArray = (arr) => {
@@ -48,6 +50,7 @@ export default () => {
           position={POSITIONS[index]}
           color={cycleArray(GOOGLE_COLORS)}
           key={index.toString()}
+          maskName={cycleArray(MASK_NAMES)}
         />
       ))}
     </>
