@@ -7,12 +7,18 @@ import gui from "~js/helpers/gui"
 import fragment from "~shaders/cloud.frag"
 import vertex from "~shaders/cloud.vert"
 
+/**
+ * To go from opaque texture -> cloud texture
+ * Start uDisplStrenght* at 0 and animate to larger value
+ * Start alpha max output at alpha min input, animate to larger value
+ */
+
 export default ({ size, position, color }) => {
   const group = useRef()
   const mesh = useRef()
   const [width, height] = size
 
-  const src1 = useAssets("images/clouds/1.jpg")
+  const src1 = useAssets("images/clouds/1_test.jpg")
   const t1 = useTexture(src1)
 
   const src2 = useAssets("images/clouds/2.jpg")
@@ -31,8 +37,9 @@ export default ({ size, position, color }) => {
       uFac2: { value: 2.7 },
       uTimeFactor1: { value: 0.002 },
       uTimeFactor2: { value: 0.0015 },
-      uDisplStrenght1: { value: 0.04 },
-      uDisplStrenght2: { value: 0.08 },
+      uDisplStrenght1: { value: 0 },
+      uDisplStrenght2: { value: 0 },
+      alphaMaxOutput: { value: 0.2 },
       baseColor: { value: tint(new Color(color), 0.15) },
     }),
     [t1]
@@ -67,6 +74,15 @@ export default ({ size, position, color }) => {
   useFrame(() => {
     if (material) {
       material.uniforms.uTime.value += 1
+      if (material.uniforms.uDisplStrenght1.value < 0.04) {
+        material.uniforms.uDisplStrenght1.value += 0.00015
+      }
+      if (material.uniforms.uDisplStrenght2.value < 0.08) {
+        material.uniforms.uDisplStrenght2.value += 0.0003
+      }
+      if (material.uniforms.alphaMaxOutput.value < 0.7) {
+        material.uniforms.alphaMaxOutput.value += 0.002
+      }
     }
     mesh.current.position.x += 0.0001
   })
