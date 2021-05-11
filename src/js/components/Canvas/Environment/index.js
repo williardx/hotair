@@ -1,5 +1,4 @@
 import React from "react"
-
 import Background from "./Background"
 import Cloud from "./Cloud"
 
@@ -28,16 +27,15 @@ const POSITIONS = [
 const numClouds = 3
 
 const cycleArray = (arr) => {
-  const originalFirst = GOOGLE_COLORS[0]
-  for (var i = 0; i < GOOGLE_COLORS.length; i++) {
-    if (i === GOOGLE_COLORS.length - 1) {
-      GOOGLE_COLORS[i] = originalFirst
+  const originalFirst = arr[0]
+  for (var i = 0; i < arr.length; i++) {
+    if (i === arr.length - 1) {
+      arr[i] = originalFirst
     } else {
-      GOOGLE_COLORS[i] = GOOGLE_COLORS[i + 1]
+      arr[i] = arr[i + 1]
     }
   }
-  console.log(GOOGLE_COLORS)
-  return GOOGLE_COLORS[0]
+  return arr[0]
 }
 
 export default () => {

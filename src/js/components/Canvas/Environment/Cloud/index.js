@@ -18,6 +18,10 @@ export default ({ size, position, color }) => {
   const src2 = useAssets("images/clouds/2.jpg")
   const t2 = useTexture(src2)
 
+  const tint = (color, tintFactor) => {
+    return color.offsetHSL(0, 0, tintFactor)
+  }
+
   const myUniforms = useMemo(
     () => ({
       uTime: { value: Math.random() * 10000 },
@@ -29,7 +33,7 @@ export default ({ size, position, color }) => {
       uTimeFactor2: { value: 0.0015 },
       uDisplStrenght1: { value: 0.04 },
       uDisplStrenght2: { value: 0.08 },
-      baseColor: { value: new Color(color) },
+      baseColor: { value: tint(new Color(color), 0.15) },
     }),
     [t1]
   )
