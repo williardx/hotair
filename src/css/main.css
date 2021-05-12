@@ -1,7 +1,6 @@
 html,
 body {
   box-sizing: border-box;
-  background: #ababab;
   overscroll-behavior: none;
   width: 100%;
   height: 100%;

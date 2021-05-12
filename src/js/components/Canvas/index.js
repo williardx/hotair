@@ -6,10 +6,7 @@ import { useDebugMode } from "~js/hooks"
 export default ({ children }) => {
   return (
     <div className="root">
-      <Canvas camera={{ position: [0, 1, 3] }}>
-        <color attach="background" args={["white"]} />
-        {children}
-      </Canvas>
+      <Canvas camera={{ position: [0, 1, 3] }}>{children}</Canvas>
 
       <style jsx>{`
         .root {

@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import Background from "./Background"
 import Cloud from "./Cloud"
 
@@ -36,6 +36,21 @@ const cycleArray = (arr) => {
 
 export default () => {
   const [shouldTransition, setShouldTransition] = useState(false)
+
+  useEffect(() => {
+    const eventListener = (event) => {
+      console.log(event)
+      if (event.keyCode === 32) {
+        setShouldTransition(true)
+      }
+    }
+    window.addEventListener("keypress", eventListener)
+
+    return () => {
+      element.removeEventListener("keypress", eventListener)
+    }
+  }, [])
+
   return (
     <>
       <Background shouldTransition={shouldTransition} />
