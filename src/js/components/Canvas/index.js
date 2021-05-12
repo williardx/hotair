@@ -1,14 +1,13 @@
-import React from 'react'
-import {Canvas} from 'react-three-fiber'
+import React from "react"
+import { Canvas } from "react-three-fiber"
 
-import {useDebugMode} from '~js/hooks'
+import { useDebugMode } from "~js/hooks"
 
-export default ({children}) => {
+export default ({ children }) => {
   return (
     <div className="root">
-      <Canvas
-        camera={{position: [0, 1, 3]}}
-      >
+      <Canvas camera={{ position: [0, 1, 3] }}>
+        <color attach="background" args={["white"]} />
         {children}
       </Canvas>
 

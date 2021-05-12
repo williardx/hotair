@@ -3,13 +3,7 @@ import Background from "./Background"
 import Cloud from "./Cloud"
 
 const GOOGLE_COLORS = [
-  0x4285f4,
-  0x33b679,
-  0xf4511e,
-  0xf6bf26,
-  0x8e24aa,
-  0xd50000,
-  0x3f51b5,
+  0x4285f4, 0x33b679, 0xf4511e, 0xf6bf26, 0x8e24aa, 0xd50000, 0x3f51b5,
 ]
 
 const POSITIONS = [
@@ -24,9 +18,9 @@ const POSITIONS = [
   [-1, -0.7, 0],
 ]
 
-const MASK_NAMES = ["mask", "mask_small", "mask_tiny"]
+const MASK_NAMES = ["busy_mask"]
 
-const numClouds = 3
+const numClouds = POSITIONS.length
 
 const cycleArray = (arr) => {
   const originalFirst = arr[0]

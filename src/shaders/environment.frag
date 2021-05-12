@@ -4,6 +4,7 @@ uniform vec3 uSpot1Color;
 uniform vec3 uSpot2Color;
 uniform vec2 uSpot1Position;
 uniform vec2 uSpot2Position;
+uniform float uAlpha;
 
 varying vec2 vUv;
 
@@ -25,5 +26,5 @@ void main() {
   vec4 mixVS1 = mix(verticalGradient, colorSpot1, colorSpot1.a);
   vec4 final = mix(mixVS1, colorSpot2, colorSpot2.a);
 
-	gl_FragColor = vec4(final.rgb, 1.0);
+	gl_FragColor = vec4(final.rgb, uAlpha);
 }
