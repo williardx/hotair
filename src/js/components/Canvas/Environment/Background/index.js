@@ -2,10 +2,7 @@ import React, { useRef, useMemo } from "react"
 import { useFrame } from "react-three-fiber"
 import { CanvasTexture, BackSide } from "three"
 
-import vertex from "~shaders/default.vert"
-import fragment from "~shaders/environment.frag"
-
-export default () => {
+export default ({ shouldTransition }) => {
   const mesh = useRef()
   const radius = 8
 
@@ -25,7 +22,7 @@ export default () => {
   }, [])
 
   useFrame(() => {
-    if (mesh.current.material.opacity < 1) {
+    if (shouldTransition && mesh.current.material.opacity < 1) {
       mesh.current.material.opacity += 0.005
     }
   })

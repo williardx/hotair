@@ -13,7 +13,7 @@ import vertex from "~shaders/cloud.vert"
  * Start alpha max output at alpha min input, animate to larger value
  */
 
-export default ({ size, position, color, maskName }) => {
+export default ({ size, position, color, maskName, shouldTransition }) => {
   const group = useRef()
   const mesh = useRef()
   const [width, height] = size
@@ -72,7 +72,7 @@ export default ({ size, position, color, maskName }) => {
   }, [t2])
 
   useFrame(() => {
-    if (material) {
+    if (material && shouldTransition) {
       material.uniforms.uTime.value += 1
       if (material.uniforms.uDisplStrenght1.value < 0.04) {
         material.uniforms.uDisplStrenght1.value += 0.00015
@@ -83,8 +83,8 @@ export default ({ size, position, color, maskName }) => {
       if (material.uniforms.alphaMaxOutput.value < 0.7) {
         material.uniforms.alphaMaxOutput.value += 0.002
       }
+      mesh.current.position.x += 0.0001
     }
-    mesh.current.position.x += 0.0001
   })
 
   /**
