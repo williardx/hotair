@@ -23,7 +23,7 @@ export default ({ shouldTransition }) => {
 
   useFrame(() => {
     if (shouldTransition && mesh.current.material.opacity < 1) {
-      mesh.current.material.opacity += 0.005
+      mesh.current.material.opacity += 0.008
     }
   })
 

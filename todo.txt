@@ -1,0 +1,7 @@
+- Render words on busy tiles
+- Make tile clouds more natural clouds - clean up shape after transition
+- Bold colors -> light, cloud-friendly colors on transition
+- Accept user input and display on tile
+- Render previous user input on load
+- Figure out how/when transition will occur
+- Fix calendar so that tiles / calendar columns are aligned / centered

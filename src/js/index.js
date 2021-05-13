@@ -21,9 +21,9 @@ import Environment from "~js/components/Canvas/Environment"
 const App = () => {
   const debugMode = useDebugMode()
 
-  useEffect(() => {
-    gui.init()
-  }, [])
+  // useEffect(() => {
+  //   gui.init()
+  // }, [])
 
   return (
     <>

@@ -20,7 +20,7 @@ const POSITIONS = [
 
 const MASK_NAMES = ["busy_mask"]
 
-const numClouds = POSITIONS.length
+const numClouds = 3
 
 const cycleArray = (arr) => {
   const originalFirst = arr[0]
