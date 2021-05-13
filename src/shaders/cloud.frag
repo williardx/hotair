@@ -15,6 +15,7 @@ uniform float uDisplStrenght1;
 uniform float uDisplStrenght2;
 uniform vec3 baseColor;
 uniform float alphaMaxOutput;
+uniform sampler2D canvasTexture;
 
 varying vec2 vUv;
 
@@ -42,5 +43,6 @@ void main() {
     float alpha = levels((txtNoise1 + txtNoise2) * 0.6, 0.2, 0.5, alphaMaxOutput).r;
     alpha *= txtShape.r;
 
-    gl_FragColor = vec4(baseColor, alpha);
+    gl_FragColor = texture2D(canvasTexture, newUv);
+    gl_FragColor.rgb *= alpha;
 }

@@ -18,9 +18,9 @@ const POSITIONS = [
   [-1, -0.7, 0],
 ]
 
-const MASK_NAMES = ["busy_mask"]
+const MASK_NAMES = ["mask"]
 
-const numClouds = 3
+const numClouds = 1
 
 const cycleArray = (arr) => {
   const originalFirst = arr[0]

@@ -1,6 +1,12 @@
 import React, { useRef, useEffect, useMemo } from "react"
 import { useFrame } from "react-three-fiber"
-import { ShaderMaterial, UniformsUtils, ShaderLib, Color } from "three"
+import {
+  ShaderMaterial,
+  UniformsUtils,
+  ShaderLib,
+  Color,
+  CanvasTexture,
+} from "three"
 
 import { useAssets, useTexture } from "~js/hooks"
 import gui from "~js/helpers/gui"
@@ -28,6 +34,25 @@ export default ({ size, position, color, maskName, shouldTransition }) => {
     return color.offsetHSL(0, 0, tintFactor)
   }
 
+  const canvasTexture = useMemo(() => {
+    const canvas = document.createElement("canvas")
+    const context = canvas.getContext("2d")
+    canvas.width = 100
+    canvas.height = 100
+    context.font = "16pt Roboto"
+    context.textAlign = "center"
+    context.fillStyle = "#4285f4"
+    context.fillRect(0, 0, canvas.width, canvas.height)
+    context.fillStyle = "#FF0000"
+    context.fillRect(0, 50, 100, 10)
+    context.fillStyle = "white"
+    context.fillText("SUP", 50, 50)
+    const texture = new CanvasTexture(canvas)
+    texture.needsUpdate = true
+
+    return texture
+  }, [])
+
   const myUniforms = useMemo(
     () => ({
       uTime: { value: Math.random() * 100000 },
@@ -41,6 +66,7 @@ export default ({ size, position, color, maskName, shouldTransition }) => {
       uDisplStrenght2: { value: 0 },
       alphaMaxOutput: { value: 0.2 },
       baseColor: { value: tint(new Color(color), 0.2) },
+      canvasTexture: { type: "t", value: canvasTexture },
     }),
     [t1]
   )
