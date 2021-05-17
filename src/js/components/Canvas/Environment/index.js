@@ -6,6 +6,16 @@ const GOOGLE_COLORS = [
   0x4285f4, 0x33b679, 0xf4511e, 0xf6bf26, 0xcd60eb, 0xff3232, 0x6b7fdf,
 ]
 
+const GOOGLE_COLORS_CSS = [
+  "#4285f4",
+  "#33b679",
+  "#f4511e",
+  "#f6bf26",
+  "#cd60eb",
+  "#ff3232",
+  "#6b7fdf",
+]
+
 const POSITIONS = [
   [0, 0, 0],
   [0, 0.7, 0],
@@ -20,7 +30,7 @@ const POSITIONS = [
 
 const MASK_NAMES = ["mask"]
 
-const numClouds = 1
+const numClouds = 9
 
 const cycleArray = (arr) => {
   const originalFirst = arr[0]
@@ -59,7 +69,7 @@ export default () => {
           shouldTransition={shouldTransition}
           size={[1, 1]}
           position={POSITIONS[index]}
-          color={cycleArray(GOOGLE_COLORS)}
+          color={cycleArray(GOOGLE_COLORS_CSS)}
           key={index.toString()}
           maskName={cycleArray(MASK_NAMES)}
         />

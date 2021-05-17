@@ -7,11 +7,12 @@ import {
   Color,
   CanvasTexture,
 } from "three"
-
+import roundedRect from "~js/helpers/roundedRectangle"
 import { useAssets, useTexture } from "~js/hooks"
 import gui from "~js/helpers/gui"
 import fragment from "~shaders/cloud.frag"
 import vertex from "~shaders/cloud.vert"
+import roundRect from "../../../../helpers/roundedRectangle"
 
 /**
  * To go from opaque texture -> cloud texture
@@ -37,21 +38,19 @@ export default ({ size, position, color, maskName, shouldTransition }) => {
   const canvasTexture = useMemo(() => {
     const canvas = document.createElement("canvas")
     const context = canvas.getContext("2d")
-    canvas.width = 100
-    canvas.height = 100
-    context.font = "16pt Roboto"
+    canvas.width = 512
+    canvas.height = 512
+    context.font = "24pt Roboto"
     context.textAlign = "center"
-    context.fillStyle = "#4285f4"
-    context.fillRect(0, 0, canvas.width, canvas.height)
-    context.fillStyle = "#FF0000"
-    context.fillRect(0, 50, 100, 10)
+    context.fillStyle = color
+    roundRect(context, 200, 200, 130, 180, 10, true, false)
     context.fillStyle = "white"
-    context.fillText("SUP", 50, 50)
+    context.fillText("busy", 250, 250)
     const texture = new CanvasTexture(canvas)
     texture.needsUpdate = true
 
     return texture
-  }, [])
+  }, [color])
 
   const myUniforms = useMemo(
     () => ({
