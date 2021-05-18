@@ -20,7 +20,14 @@ import roundRect from "../../../../helpers/roundedRectangle"
  * Start alpha max output at alpha min input, animate to larger value
  */
 
-export default ({ size, position, color, maskName, shouldTransition }) => {
+export default ({
+  size,
+  position,
+  color,
+  maskName,
+  shouldTransition,
+  text,
+}) => {
   const group = useRef()
   const mesh = useRef()
   const [width, height] = size
@@ -40,16 +47,16 @@ export default ({ size, position, color, maskName, shouldTransition }) => {
     const context = canvas.getContext("2d")
     canvas.width = 512
     canvas.height = 512
-    context.font = "18pt Roboto"
+    context.font = "22pt Roboto"
     // context.textAlign = "left"
     context.fillStyle = color
     context.shadowColor = color
     context.shadowBlur = 15
     roundRect(context, 140, 120, 230, 310, 10, true, false)
     context.fillStyle = "white"
-    context.fillText("have", 170, 170)
-    context.fillText("fun", 170, 200)
-    context.fillText("y'all", 170, 230)
+    context.fillText(text, 170, 170)
+    // context.fillText("fun", 170, 200)
+    // context.fillText("y'all", 170, 230)
     const texture = new CanvasTexture(canvas)
     texture.needsUpdate = true
 

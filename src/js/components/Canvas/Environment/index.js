@@ -18,9 +18,9 @@ const GOOGLE_COLORS_CSS = [
 
 const POSITIONS = [
   [0, 0, 0],
-  [0.1, -0.2, 0],
+  // [0.1, -0.2, 0],
   [0, 0.7, 0],
-  [0, -0.7, 0],
+  // [0, -0.7, 0],
   [1, 0, 0],
   [1, 0.7, 0],
   [1, -0.7, 0],
@@ -29,9 +29,11 @@ const POSITIONS = [
   [-1, -0.7, 0],
 ]
 
+const TEXT = ["so busy", "hella busy", "太忙", "非常忙"]
+
 const MASK_NAMES = ["mask"]
 
-const numClouds = 1
+const numClouds = 4
 
 const cycleArray = (arr) => {
   const originalFirst = arr[0]
@@ -73,6 +75,7 @@ export default () => {
           color={cycleArray(GOOGLE_COLORS_CSS)}
           key={index.toString()}
           maskName={cycleArray(MASK_NAMES)}
+          text={cycleArray(TEXT)}
         />
       ))}
     </>
