@@ -2,10 +2,6 @@ import React, { useState, useEffect } from "react"
 import Background from "./Background"
 import Cloud from "./Cloud"
 
-const GOOGLE_COLORS = [
-  0x4285f4, 0x33b679, 0xf4511e, 0xf6bf26, 0xcd60eb, 0xff3232, 0x6b7fdf,
-]
-
 const GOOGLE_COLORS_CSS = [
   "#4285f4",
   "#33b679",
@@ -30,8 +26,7 @@ const POSITIONS = [
 ]
 
 const TEXT = ["so busy", "hella busy", "太忙", "非常忙"]
-
-const MASK_NAMES = ["mask"]
+const SIZES = [150, 250, 350, 450]
 
 const numClouds = 4
 
@@ -74,8 +69,8 @@ export default () => {
           position={POSITIONS[index]}
           color={cycleArray(GOOGLE_COLORS_CSS)}
           key={index.toString()}
-          maskName={cycleArray(MASK_NAMES)}
           text={cycleArray(TEXT)}
+          tileHeight={cycleArray(SIZES)}
         />
       ))}
     </>

@@ -24,16 +24,13 @@ export default ({
   size,
   position,
   color,
-  maskName,
   shouldTransition,
   text,
+  tileHeight,
 }) => {
   const group = useRef()
   const mesh = useRef()
   const [width, height] = size
-
-  const src1 = useAssets(`images/clouds/${maskName}.jpg`)
-  const t1 = useTexture(src1)
 
   const src2 = useAssets("images/clouds/2.jpg")
   const t2 = useTexture(src2)
@@ -48,11 +45,11 @@ export default ({
     canvas.width = 512
     canvas.height = 512
     context.font = "22pt Roboto"
-    // context.textAlign = "left"
+    // context.strokeRect(0, 0, canvas.width, canvas.height)
     context.fillStyle = color
     context.shadowColor = color
     context.shadowBlur = 15
-    roundRect(context, 140, 120, 230, 310, 10, true, false)
+    roundRect(context, 140, 120, 230, tileHeight, 10, true, false)
     context.fillStyle = "white"
     context.fillText(text, 170, 170)
     // context.fillText("fun", 170, 200)
@@ -66,7 +63,6 @@ export default ({
   const myUniforms = useMemo(
     () => ({
       uTime: { value: Math.random() * 100000 },
-      uTxtShape: { value: t1 },
       uTxtCloudNoise: { value: t2 },
       uFac1: { value: 17.8 },
       uFac2: { value: 2.7 },
@@ -78,7 +74,7 @@ export default ({
       baseColor: { value: tint(new Color(color), 0.2) },
       canvasTexture: { type: "t", value: canvasTexture },
     }),
-    [t1]
+    []
   )
 
   const material = useMemo(() => {
@@ -94,12 +90,6 @@ export default ({
 
     return mat
   }, [])
-
-  useEffect(() => {
-    if (material) {
-      material.uniforms.uTxtShape.value = t1
-    }
-  }, [t1])
 
   useEffect(() => {
     if (material) {

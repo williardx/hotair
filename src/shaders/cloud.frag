@@ -2,8 +2,6 @@
 #pragma glslify: snoise3 = require(glsl-noise/simplex/3d)
 #pragma glslify: levels = require('./levels')
 
-
-uniform sampler2D uTxtShape;
 uniform sampler2D uTxtCloudNoise;
 uniform float uTime;
 
@@ -35,7 +33,6 @@ void main() {
     newUv += noiseSmall * uDisplStrenght2;
 
     // Use vUv as second param to get static shape
-    vec4 txtShape = texture2D(uTxtShape, newUv);
     vec4 canvas = texture2D(canvasTexture, newUv);
 
     // Make min/max very similar to get opaque cloud (or max < min)
