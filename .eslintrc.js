@@ -30,5 +30,6 @@ module.exports = {
     "react/jsx-max-props-per-line": ["error", { maximum: 1 }],
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": 0,
+    quotes: "double",
   },
 }

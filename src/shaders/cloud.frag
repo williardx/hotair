@@ -36,13 +36,13 @@ void main() {
 
     // Use vUv as second param to get static shape
     vec4 txtShape = texture2D(uTxtShape, newUv);
+    vec4 canvas = texture2D(canvasTexture, newUv);
 
     // Make min/max very similar to get opaque cloud (or max < min)
     // Less gamma = thinner clouds
     // Color, min input, gamma, max output
     float alpha = levels((txtNoise1 + txtNoise2) * 0.6, 0.2, 0.5, alphaMaxOutput).r;
-    alpha *= txtShape.r;
 
-    gl_FragColor = texture2D(canvasTexture, newUv);
+    gl_FragColor = canvas;
     gl_FragColor.rgb *= alpha;
 }
