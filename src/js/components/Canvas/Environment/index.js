@@ -28,9 +28,6 @@ const createPositions = (numPositions) => {
   })
 }
 
-const numClouds = 9
-const POSITIONS = createPositions(numClouds)
-
 const TEXT = ["so busy", "hella busy", "太忙", "非常忙"]
 // const SIZES = [75, 150, 250, 350]
 const SIZES = [100]
@@ -47,8 +44,10 @@ const cycleArray = (arr) => {
   return arr[0]
 }
 
-export default () => {
+export default ({ tiles }) => {
+  console.log("-------------------tiles", tiles)
   const [shouldTransition, setShouldTransition] = useState(false)
+  const POSITIONS = createPositions(tiles.length)
 
   useEffect(() => {
     const eventListener = (event) => {
@@ -67,14 +66,14 @@ export default () => {
   return (
     <>
       <Background shouldTransition={shouldTransition} />
-      {Array.from(Array(numClouds)).map((_, index) => (
+      {tiles.map((tile, index) => (
         <Cloud
           shouldTransition={shouldTransition}
           size={[1, 1]}
           position={POSITIONS[index]}
           color={cycleArray(GOOGLE_COLORS_CSS)}
           key={index.toString()}
-          text={cycleArray(TEXT)}
+          text={tile.text}
           tileHeight={cycleArray(SIZES)}
         />
       ))}
