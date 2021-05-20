@@ -14,6 +14,7 @@ import Canvas from "~js/components/Canvas"
 import Camera from "~js/components/Canvas/Camera"
 import Sphere from "~js/components/Canvas/Sphere"
 import Environment from "~js/components/Canvas/Environment"
+import EventForm from "~js/components/EventForm"
 
 /**
  * app
@@ -26,16 +27,23 @@ const App = () => {
   // }, [])
 
   const [tiles, setTiles] = useState([])
+  const [formVisibilityToggle, setFormVisibilityToggle] = useState(false)
 
-  const handleAddEvent = useCallback(() => {
-    const tile = { text: "Hello" }
+  const handleAddEvent = (tile) => {
     setTiles([...tiles, tile])
-  }, [tiles, setTiles])
+    toggleFormVisibility()
+  }
+
+  const toggleFormVisibility = () => {
+    setFormVisibilityToggle(!formVisibilityToggle)
+  }
+
+  console.log("rendering app")
 
   return (
     <>
       <button
-        onClick={handleAddEvent}
+        onClick={toggleFormVisibility}
         style={{
           width: 100,
           height: 100,
@@ -60,6 +68,7 @@ const App = () => {
           +
         </div>
       </button>
+      <EventForm isVisible={formVisibilityToggle} onSubmit={handleAddEvent} />
       <Canvas>
         <Camera />
         <Environment tiles={tiles} />

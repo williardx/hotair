@@ -30,7 +30,11 @@ const createPositions = (numPositions) => {
 
 const TEXT = ["so busy", "hella busy", "太忙", "非常忙"]
 // const SIZES = [75, 150, 250, 350]
-const SIZES = [100]
+const SIZES = {
+  small: 75,
+  medium: 200,
+  large: 300,
+}
 
 const cycleArray = (arr) => {
   const originalFirst = arr[0]
@@ -45,14 +49,13 @@ const cycleArray = (arr) => {
 }
 
 export default ({ tiles }) => {
-  console.log("-------------------tiles", tiles)
   const [shouldTransition, setShouldTransition] = useState(false)
   const POSITIONS = createPositions(tiles.length)
 
   useEffect(() => {
     const eventListener = (event) => {
       console.log(event)
-      if (event.keyCode === 32) {
+      if (event.code === "Backslash") {
         setShouldTransition(true)
       }
     }
@@ -74,7 +77,7 @@ export default ({ tiles }) => {
           color={cycleArray(GOOGLE_COLORS_CSS)}
           key={index.toString()}
           text={tile.text}
-          tileHeight={cycleArray(SIZES)}
+          tileHeight={SIZES[tile.size]}
         />
       ))}
     </>
