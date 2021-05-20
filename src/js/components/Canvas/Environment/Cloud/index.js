@@ -47,11 +47,12 @@ export default ({
     context.font = "22pt Roboto"
     // context.strokeRect(0, 0, canvas.width, canvas.height)
     context.fillStyle = color
-    context.shadowColor = color
+    // context.shadowColor = color
     context.shadowBlur = 15
-    roundRect(context, 140, 120, 230, tileHeight, 10, true, false)
+    const tileWidth = 150
+    roundRect(context, 140, 120, tileWidth, tileHeight, 10, true, false)
     context.fillStyle = "white"
-    context.fillText(text, 170, 170)
+    context.fillText(text, 150, 170)
     // context.fillText("fun", 170, 200)
     // context.fillText("y'all", 170, 230)
     const texture = new CanvasTexture(canvas)

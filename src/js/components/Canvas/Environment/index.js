@@ -12,23 +12,28 @@ const GOOGLE_COLORS_CSS = [
   "#6b7fdf",
 ]
 
-const POSITIONS = [
-  [0, 0, 0],
-  // [0.1, -0.2, 0],
-  [0, 0.7, 0],
-  // [0, -0.7, 0],
-  [1, 0, 0],
-  [1, 0.7, 0],
-  [1, -0.7, 0],
-  [-1, 0, 0],
-  [-1, 0.7, 0],
-  [-1, -0.7, 0],
-]
+const createPositions = (numPositions) => {
+  const numCols = 7
+  const numRows = 5
+  const colStart = -0.91
+  const rowStart = 0.7
+  const colOffset = 0.325
+  const rowOffset = 0.5
+  return Array.from(Array(numPositions)).map((_, index) => {
+    return [
+      colStart + colOffset * (index % numCols),
+      rowStart - rowOffset * (index % numRows),
+      0,
+    ]
+  })
+}
+
+const numClouds = 21
+const POSITIONS = createPositions(numClouds)
 
 const TEXT = ["so busy", "hella busy", "太忙", "非常忙"]
-const SIZES = [150, 250, 350, 450]
-
-const numClouds = 4
+// const SIZES = [75, 150, 250, 350]
+const SIZES = [100]
 
 const cycleArray = (arr) => {
   const originalFirst = arr[0]
