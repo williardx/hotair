@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useMemo } from "react"
-import { useFrame } from "react-three-fiber"
+import { useFrame } from "@react-three/fiber"
 import {
   ShaderMaterial,
   UniformsUtils,

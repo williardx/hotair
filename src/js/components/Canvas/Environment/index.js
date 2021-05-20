@@ -28,7 +28,7 @@ const createPositions = (numPositions) => {
   })
 }
 
-const numClouds = 21
+const numClouds = 9
 const POSITIONS = createPositions(numClouds)
 
 const TEXT = ["so busy", "hella busy", "太忙", "非常忙"]

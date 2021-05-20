@@ -1,16 +1,16 @@
-import React, {useRef, useEffect} from 'react'
-import {extend, useFrame, useThree} from 'react-three-fiber'
+import React, { useRef, useEffect } from "react"
+import { extend, useFrame, useThree } from "@react-three/fiber"
 
-import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls'
-extend({OrbitControls})
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls"
+extend({ OrbitControls })
 
 export default () => {
   const ref = useRef()
-  const {gl, camera} = useThree()
+  const { gl, camera } = useThree()
 
   useFrame(() => ref.current.update())
 
-  useEffect(()=>{
+  useEffect(() => {
     ref.current.object = camera
   }, [camera])
 
