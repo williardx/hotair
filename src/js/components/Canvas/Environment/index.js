@@ -2,15 +2,6 @@ import React, { useState, useEffect } from "react"
 import Background from "./Background"
 import Cloud from "./Cloud"
 
-const GOOGLE_COLORS_CSS = [
-  "#4285f4",
-  "#33b679",
-  "#f4511e",
-  "#f6bf26",
-  "#cd60eb",
-  "#ff3232",
-]
-
 const createPositions = (numPositions) => {
   const numCols = 7
   const numRows = 5
@@ -27,7 +18,6 @@ const createPositions = (numPositions) => {
   })
 }
 
-const TEXT = ["so busy", "hella busy", "太忙", "非常忙"]
 // const SIZES = [75, 150, 250, 350]
 const SIZES = {
   small: 75,
@@ -73,7 +63,7 @@ export default ({ tiles }) => {
           shouldTransition={shouldTransition}
           size={[1, 1]}
           position={POSITIONS[index]}
-          color={cycleArray(GOOGLE_COLORS_CSS)}
+          color={tile.color}
           key={index.toString()}
           text={tile.text}
           tileHeight={SIZES[tile.size]}

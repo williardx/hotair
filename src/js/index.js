@@ -22,11 +22,13 @@ import EventForm from "~js/components/EventForm"
 const App = () => {
   const debugMode = useDebugMode()
 
-  useEffect(() => {
-    gui.init()
-  }, [])
+  // useEffect(() => {
+  //   gui.init()
+  // }, [])
 
-  const [tiles, setTiles] = useState([{ text: "test", size: "large" }])
+  const [tiles, setTiles] = useState([
+    { text: "test", size: "large", color: "#ff3232" },
+  ])
   const [formVisibilityToggle, setFormVisibilityToggle] = useState(false)
 
   const handleAddEvent = (tile) => {
