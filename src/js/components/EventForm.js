@@ -1,7 +1,6 @@
 import React, { useState, useCallback } from "react"
 
 export default ({ onSubmit, isVisible }) => {
-  console.log("------------form is visible: ", isVisible)
   const [text, setText] = useState("")
   const [size, setSize] = useState("small")
   const onTextInputChange = useCallback(

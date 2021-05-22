@@ -14,6 +14,10 @@ uniform float uDisplStrenght2;
 uniform vec3 baseColor;
 uniform float alphaMaxOutput;
 uniform sampler2D canvasTexture;
+uniform float uColorFactor;
+uniform float uLevelsMinInput;
+uniform float uGamma;
+
 
 varying vec2 vUv;
 
@@ -38,7 +42,7 @@ void main() {
     // Make min/max very similar to get opaque cloud (or max < min)
     // Less gamma = thinner clouds
     // Color, min input, gamma, max output
-    float alpha = levels((txtNoise1 + txtNoise2) * 0.6, 0.2, 0.5, alphaMaxOutput).r;
+    float alpha = levels((txtNoise1 + txtNoise2) * uColorFactor, uLevelsMinInput, uGamma, alphaMaxOutput).r;
 
     gl_FragColor = canvas;
     gl_FragColor.rgb *= alpha;

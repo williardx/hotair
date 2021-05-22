@@ -9,7 +9,6 @@ const GOOGLE_COLORS_CSS = [
   "#f6bf26",
   "#cd60eb",
   "#ff3232",
-  "#6b7fdf",
 ]
 
 const createPositions = (numPositions) => {
