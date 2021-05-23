@@ -32,6 +32,8 @@ export default ({
   const [width, height] = size
   const maxBlurAmount = 20
   const tileWidth = 150
+  const maxTextWidth = 130
+  const textVerticalOffset = 20
 
   const src2 = useAssets("images/clouds/2.jpg")
   const t2 = useTexture(src2)
@@ -40,16 +42,38 @@ export default ({
     return color.offsetHSL(0, 0, tintFactor)
   }
 
+  function getLines(ctx, text, maxWidth) {
+    var words = text.split(" ")
+    var lines = []
+    var currentLine = words[0]
+
+    for (var i = 1; i < words.length; i++) {
+      var word = words[i]
+      var width = ctx.measureText(currentLine + " " + word).width
+      if (width < maxWidth) {
+        currentLine += " " + word
+      } else {
+        lines.push(currentLine)
+        currentLine = word
+      }
+    }
+    lines.push(currentLine)
+    return lines
+  }
+
   const canvasTexture = useMemo(() => {
     const canvas = document.createElement("canvas")
     const context = canvas.getContext("2d")
     canvas.width = 512
     canvas.height = 512
-    context.font = "22pt Roboto"
+    context.font = "18pt Roboto"
     context.fillStyle = color
     roundRect(context, 140, 120, tileWidth, tileHeight, 10, true, false)
     context.fillStyle = "white"
-    context.fillText(text, 150, 170)
+    const lines = getLines(context, text, maxTextWidth)
+    for (let i = 0; i < lines.length; i++) {
+      context.fillText(lines[i], 150, 170 + i * textVerticalOffset)
+    }
     context.blurAmount = 0
     context.brightnessAmount = 1
     context.borderRadius = 10
@@ -65,7 +89,10 @@ export default ({
     roundRect(ctx, 140, 120, tileWidth, tileHeight, 10, true, false)
     ctx.filter = "none"
     ctx.fillStyle = "white"
-    ctx.fillText(text, 150, 170)
+    const lines = getLines(ctx, text, maxTextWidth)
+    for (let i = 0; i < lines.length; i++) {
+      ctx.fillText(lines[i], 150, 170 + i * textVerticalOffset)
+    }
   }
 
   const myUniforms = useMemo(

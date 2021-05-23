@@ -27,7 +27,11 @@ const App = () => {
   // }, [])
 
   const [tiles, setTiles] = useState([
-    { text: "test", size: "large", color: "#ff3232" },
+    {
+      text: "Dang I was hanging out with this girl last night and she was really cool",
+      size: "large",
+      color: "#ff3232",
+    },
   ])
   const [formVisibilityToggle, setFormVisibilityToggle] = useState(false)
 
@@ -39,8 +43,6 @@ const App = () => {
   const toggleFormVisibility = () => {
     setFormVisibilityToggle(!formVisibilityToggle)
   }
-
-  console.log("rendering app")
 
   return (
     <>
