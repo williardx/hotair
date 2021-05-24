@@ -25,18 +25,6 @@ const SIZES = {
   large: 300,
 }
 
-const cycleArray = (arr) => {
-  const originalFirst = arr[0]
-  for (var i = 0; i < arr.length; i++) {
-    if (i === arr.length - 1) {
-      arr[i] = originalFirst
-    } else {
-      arr[i] = arr[i + 1]
-    }
-  }
-  return arr[0]
-}
-
 export default ({ tiles }) => {
   const [shouldTransition, setShouldTransition] = useState(false)
   const POSITIONS = createPositions(tiles.length)
@@ -62,7 +50,7 @@ export default ({ tiles }) => {
         <Cloud
           shouldTransition={shouldTransition}
           size={[1, 1]}
-          position={POSITIONS[index]}
+          position={tile.position}
           color={tile.color}
           key={index.toString()}
           text={tile.text}

@@ -1,12 +1,6 @@
 import React, { useRef, useEffect, useMemo } from "react"
 import { useFrame } from "@react-three/fiber"
-import {
-  ShaderMaterial,
-  UniformsUtils,
-  ShaderLib,
-  Color,
-  CanvasTexture,
-} from "three"
+import { ShaderMaterial, UniformsUtils, ShaderLib, CanvasTexture } from "three"
 import { useAssets, useTexture } from "~js/hooks"
 import gui from "~js/helpers/gui"
 import fragment from "~shaders/cloud.frag"
@@ -37,10 +31,6 @@ export default ({
 
   const src2 = useAssets("images/clouds/2.jpg")
   const t2 = useTexture(src2)
-
-  const tint = (color, tintFactor) => {
-    return color.offsetHSL(0, 0, tintFactor)
-  }
 
   function getLines(ctx, text, maxWidth) {
     var words = text.split(" ")
@@ -80,10 +70,10 @@ export default ({
     return new CanvasTexture(canvas)
   }, [color])
 
-  const transitionCanvas = (ctx) => {
+  const transitionCanvas = (ctx, scalingFactor = 1) => {
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
-    ctx.blurAmount += 0.03
-    ctx.brightnessAmount += 0.001
+    ctx.blurAmount += 0.03 * scalingFactor
+    ctx.brightnessAmount += 0.001 * scalingFactor
     ctx.filter = `blur(${ctx.blurAmount}px) brightness(${ctx.brightnessAmount})`
     ctx.fillStyle = color
     roundRect(ctx, 140, 120, tileWidth, tileHeight, 10, true, false)
@@ -97,6 +87,7 @@ export default ({
 
   const myUniforms = useMemo(
     () => ({
+      // rotation: { value: Math.PI / 2 },
       uTime: { value: Math.random() * 100000 },
       uTxtCloudNoise: { value: t2 },
       uFac1: { value: 17.8 },
@@ -109,7 +100,6 @@ export default ({
       uColorFactor: { value: 0.6 },
       uLevelsMinInput: { value: 0.2 },
       uGamma: { value: 3 },
-      baseColor: { value: tint(new Color(color), 0.2) },
       canvasTexture: { type: "t", value: canvasTexture },
     }),
     []
@@ -136,22 +126,23 @@ export default ({
   }, [t2])
 
   useFrame(() => {
-    if (material && shouldTransition) {
+    if (material) {
+      const scalingFactor = 3
       material.uniforms.uTime.value += 1
       const ctx = material.uniforms.canvasTexture.value.image.getContext("2d")
       if (ctx.blurAmount < maxBlurAmount) {
-        transitionCanvas(ctx)
+        transitionCanvas(ctx, scalingFactor)
         material.uniforms.canvasTexture.value.needsUpdate = true
       }
 
       if (material.uniforms.uDisplStrenght1.value < 0.04) {
-        material.uniforms.uDisplStrenght1.value += 0.00015
+        material.uniforms.uDisplStrenght1.value += 0.00015 * scalingFactor
       }
       if (material.uniforms.uDisplStrenght2.value < 0.08) {
-        material.uniforms.uDisplStrenght2.value += 0.0003
+        material.uniforms.uDisplStrenght2.value += 0.0003 * scalingFactor
       }
       if (material.uniforms.alphaMaxOutput.value < 0.7) {
-        material.uniforms.alphaMaxOutput.value += 0.002
+        material.uniforms.alphaMaxOutput.value += 0.002 * scalingFactor
       }
       mesh.current.position.x += 0.0001
     }

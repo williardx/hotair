@@ -1,8 +1,23 @@
-- Make tile clouds more natural clouds - clean up shape after transition
-- Bold colors -> light, cloud-friendly colors on transition
-- Accept user input and display on tile
 - Render previous user input on load
 - Figure out how/when transition will occur
 - Fix calendar so that tiles / calendar columns are aligned / centered
 - Improve tile placement so that the tiles form a reasonable grid / have nice overlap
 - Improve performance so that many tiles can be on the screen at once
+- Ability to create larger tiles
+- Style UI for adding an event
+- Clouds move at different speeds and in different directions
+- Remove objects when they go off screen
+
+
+
+
+--------------------------------------
+X Scene starts with a sky
+There are already several clouds floating in the sky
+Tiles are being added to the scene and slowly transition into clouds
+    - If there are new tiles in the database then we show those
+    - Otherwise, we cycle through all tiles added by users
+Pushing plus button (or whatever other icon) takes user to calendar view
+Calendar view shows a very cluttered calendar, all with tiles created from user input
+User can then push plus button to add their own tile
+After a short delay scene transitions back to the sky with their tile slowly transitioning into a cloud

@@ -11,13 +11,11 @@ uniform float uTimeFactor1;
 uniform float uTimeFactor2;
 uniform float uDisplStrenght1;
 uniform float uDisplStrenght2;
-uniform vec3 baseColor;
 uniform float alphaMaxOutput;
 uniform sampler2D canvasTexture;
 uniform float uColorFactor;
 uniform float uLevelsMinInput;
 uniform float uGamma;
-
 
 varying vec2 vUv;
 

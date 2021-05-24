@@ -15,6 +15,7 @@ import Camera from "~js/components/Canvas/Camera"
 import Sphere from "~js/components/Canvas/Sphere"
 import Environment from "~js/components/Canvas/Environment"
 import EventForm from "~js/components/EventForm"
+import PlusButton from "~js/components/PlusButton"
 
 /**
  * app
@@ -26,11 +27,28 @@ const App = () => {
   //   gui.init()
   // }, [])
 
+  const randomRange = (lower, upper) => {
+    return lower + Math.random() * (upper - lower)
+  }
+
   const [tiles, setTiles] = useState([
     {
-      text: "Dang I was hanging out with this girl last night and she was really cool",
+      text: "THIS FUCKING PROJECT",
       size: "large",
       color: "#ff3232",
+      position: [randomRange(-1.5, 1.5), randomRange(-1, 1), 0],
+    },
+    {
+      text: "THIS FUCKING PROJECT",
+      size: "large",
+      color: "#33b679",
+      position: [randomRange(-1.5, 1.5), randomRange(-1, 1), 0],
+    },
+    {
+      text: "THIS FUCKING PROJECT",
+      size: "large",
+      color: "#f6bf26",
+      position: [randomRange(-1.5, 1.5), randomRange(-1, 1), 0],
     },
   ])
   const [formVisibilityToggle, setFormVisibilityToggle] = useState(false)
@@ -46,32 +64,7 @@ const App = () => {
 
   return (
     <>
-      <button
-        onClick={toggleFormVisibility}
-        style={{
-          width: 100,
-          height: 100,
-          border: "none",
-          position: "fixed",
-          borderRadius: 100,
-          bottom: 100,
-          right: 100,
-          backgroundColor: "#2693ff",
-          zIndex: 1000,
-        }}
-      >
-        <div
-          style={{
-            color: "white",
-            fontSize: 80,
-            position: "absolute",
-            top: -2,
-            left: 28,
-          }}
-        >
-          +
-        </div>
-      </button>
+      <PlusButton />
       <EventForm isVisible={formVisibilityToggle} onSubmit={handleAddEvent} />
       <Canvas>
         <Camera />

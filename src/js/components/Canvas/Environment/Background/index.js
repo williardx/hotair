@@ -22,8 +22,8 @@ export default ({ shouldTransition }) => {
   }, [])
 
   useFrame(() => {
-    if (shouldTransition && mesh.current.material.opacity < 1) {
-      mesh.current.material.opacity += 0.008
+    if (shouldTransition && mesh.current.material.opacity > 0) {
+      mesh.current.material.opacity -= 0.008
     }
   })
 
@@ -36,7 +36,7 @@ export default ({ shouldTransition }) => {
           attach="material"
           side={BackSide}
           transparent
-          opacity={0}
+          opacity={1}
         />
       </mesh>
     </>
