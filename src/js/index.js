@@ -33,12 +33,12 @@ const App = () => {
   }
 
   const [tiles, setTiles] = useState([
-    // {
-    //   text: "THIS FUCKING PROJECT",
-    //   size: "large",
-    //   color: "#ff3232",
-    //   position: [randomRange(-1.5, 1.5), randomRange(-1, 1), 0],
-    // },
+    {
+      text: "THIS FUCKING PROJECT",
+      size: "large",
+      color: "#ff3232",
+      position: [randomRange(-1.5, 1.5), randomRange(-1, 1), 0],
+    },
     // {
     //   text: "THIS FUCKING PROJECT",
     //   size: "large",
@@ -55,9 +55,8 @@ const App = () => {
   const [formVisibilityToggle, setFormVisibilityToggle] = useState(false)
   const [calendarVisibilityToggle, setCalendarVisibilityToggle] = useState(true)
 
-  const handleAddEvent = (tile) => {
+  const handleAddTile = (tile) => {
     setTiles([...tiles, tile])
-    toggleFormVisibility()
   }
 
   const toggleFormVisibility = () => {
@@ -66,14 +65,17 @@ const App = () => {
 
   return (
     <>
-      <PlusButton onClick={toggleFormVisibility} />
-      {/* <EventForm isVisible={formVisibilityToggle} onSubmit={handleAddEvent} /> */}
-      <Calendar isVisible={calendarVisibilityToggle} />
-      <Canvas>
+      {/* <PlusButton onClick={toggleFormVisibility} /> */}
+      <Calendar
+        tiles={tiles}
+        isVisible={calendarVisibilityToggle}
+        handleAddTile={handleAddTile}
+      />
+      {/* <Canvas>
         <Camera />
         <Environment tiles={tiles} />
         {debugMode && <Sphere />}
-      </Canvas>
+      </Canvas> */}
     </>
   )
 }

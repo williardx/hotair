@@ -17,7 +17,7 @@ X There are already several clouds floating in the sky
 Tiles are being added to the scene and slowly transition into clouds
     - If there are new tiles in the database then we show those
     - Otherwise, we cycle through all tiles added by users
-Pushing plus button (or whatever other icon) takes user to calendar view
+X Pushing plus button (or whatever other icon) takes user to calendar view
 Calendar view shows a very cluttered calendar, all with tiles created from user input
 User can then push plus button to add their own tile
 After a short delay scene transitions back to the sky with their tile slowly transitioning into a cloud

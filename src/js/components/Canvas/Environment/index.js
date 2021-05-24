@@ -18,7 +18,6 @@ const createPositions = (numPositions) => {
   })
 }
 
-// const SIZES = [75, 150, 250, 350]
 const SIZES = {
   small: 75,
   medium: 200,
