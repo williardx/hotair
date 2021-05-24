@@ -5,7 +5,7 @@ export default ({
   position,
   color,
   text,
-  tileHeight,
+  // tileHeight,
   day,
   startTime,
   endTime,
@@ -15,7 +15,9 @@ export default ({
   const textVerticalOffset = 20
   const calendarColumnWidthPct = 1 / 7
   const calendarRowHeightPct = 1 / 13
-  const tileWidth = 150
+  const tileWidth = calendarColumnWidthPct * window.innerWidth * 0.9
+  const tileHeight =
+    (window.innerHeight * calendarRowHeightPct * (endTime - startTime)) / 2
 
   function getLines(ctx, text, maxWidth) {
     var words = text.split(" ")
@@ -58,7 +60,7 @@ export default ({
       style={{
         position: "fixed",
         left: window.innerWidth * calendarColumnWidthPct * day + 10,
-        top: (window.innerHeight * calendarRowHeightPct * startTime) / 2 + 5,
+        top: (window.innerHeight * calendarRowHeightPct * startTime) / 2,
       }}
       ref={canvasRef}
     />
