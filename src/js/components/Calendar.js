@@ -3,6 +3,7 @@ import PlusButton from "./PlusButton"
 import EventForm from "~js/components/EventForm"
 import Grid from "~js/components/Grid"
 import Tile from "~js/components/Tile"
+import CloseButton from "~js/components/CloseButton"
 
 const SIZES = {
   small: 75,
@@ -10,7 +11,12 @@ const SIZES = {
   large: 300,
 }
 
-export default ({ isVisible, handleAddTile, tiles }) => {
+export default ({
+  isVisible,
+  handleAddTile,
+  tiles,
+  toggleCalendarVisibility,
+}) => {
   const [formVisibilityToggle, setFormVisibilityToggle] = useState(false)
 
   const toggleFormVisibility = () => {
@@ -46,6 +52,7 @@ export default ({ isVisible, handleAddTile, tiles }) => {
         />
       ))}
       <PlusButton onClick={toggleFormVisibility} />
+      <CloseButton onClick={toggleCalendarVisibility} />
       <EventForm
         isVisible={formVisibilityToggle}
         onSubmit={onEventFormSubmit}
