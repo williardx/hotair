@@ -16,6 +16,7 @@ import Sphere from "~js/components/Canvas/Sphere"
 import Environment from "~js/components/Canvas/Environment"
 import EventForm from "~js/components/EventForm"
 import PlusButton from "~js/components/PlusButton"
+import Calendar from "~js/components/Calendar"
 
 /**
  * app
@@ -32,26 +33,27 @@ const App = () => {
   }
 
   const [tiles, setTiles] = useState([
-    {
-      text: "THIS FUCKING PROJECT",
-      size: "large",
-      color: "#ff3232",
-      position: [randomRange(-1.5, 1.5), randomRange(-1, 1), 0],
-    },
-    {
-      text: "THIS FUCKING PROJECT",
-      size: "large",
-      color: "#33b679",
-      position: [randomRange(-1.5, 1.5), randomRange(-1, 1), 0],
-    },
-    {
-      text: "THIS FUCKING PROJECT",
-      size: "large",
-      color: "#f6bf26",
-      position: [randomRange(-1.5, 1.5), randomRange(-1, 1), 0],
-    },
+    // {
+    //   text: "THIS FUCKING PROJECT",
+    //   size: "large",
+    //   color: "#ff3232",
+    //   position: [randomRange(-1.5, 1.5), randomRange(-1, 1), 0],
+    // },
+    // {
+    //   text: "THIS FUCKING PROJECT",
+    //   size: "large",
+    //   color: "#33b679",
+    //   position: [randomRange(-1.5, 1.5), randomRange(-1, 1), 0],
+    // },
+    // {
+    //   text: "THIS FUCKING PROJECT",
+    //   size: "large",
+    //   color: "#f6bf26",
+    //   position: [randomRange(-1.5, 1.5), randomRange(-1, 1), 0],
+    // },
   ])
   const [formVisibilityToggle, setFormVisibilityToggle] = useState(false)
+  const [calendarVisibilityToggle, setCalendarVisibilityToggle] = useState(true)
 
   const handleAddEvent = (tile) => {
     setTiles([...tiles, tile])
@@ -64,8 +66,9 @@ const App = () => {
 
   return (
     <>
-      <PlusButton />
-      <EventForm isVisible={formVisibilityToggle} onSubmit={handleAddEvent} />
+      <PlusButton onClick={toggleFormVisibility} />
+      {/* <EventForm isVisible={formVisibilityToggle} onSubmit={handleAddEvent} /> */}
+      <Calendar isVisible={calendarVisibilityToggle} />
       <Canvas>
         <Camera />
         <Environment tiles={tiles} />
