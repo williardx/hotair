@@ -7,13 +7,14 @@ export default ({
   text,
   tileHeight,
   day,
-  starTime,
+  startTime,
   endTime,
 }) => {
   const canvasRef = useRef(null)
   const maxTextWidth = 130
   const textVerticalOffset = 20
-  const calendarColumnWidthPct = 0.142
+  const calendarColumnWidthPct = 1 / 7
+  const calendarRowHeightPct = 1 / 13
   const tileWidth = 150
 
   function getLines(ctx, text, maxWidth) {
@@ -57,7 +58,7 @@ export default ({
       style={{
         position: "fixed",
         left: window.innerWidth * calendarColumnWidthPct * day + 10,
-        top: 200,
+        top: (window.innerHeight * calendarRowHeightPct * startTime) / 2 + 5,
       }}
       ref={canvasRef}
     />

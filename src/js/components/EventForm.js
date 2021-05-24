@@ -1,4 +1,3 @@
-import { initial } from "lodash"
 import React, { useState, useCallback } from "react"
 
 export default ({ onSubmit, isVisible }) => {
@@ -7,8 +6,8 @@ export default ({ onSubmit, isVisible }) => {
     size: "small",
     color: "#4285f4",
     day: 0,
-    startTime: new Date(1970, 0, 1, 7),
-    endTime: new Date(1970, 0, 1, 7),
+    startTime: 0,
+    endTime: 1,
   }
 
   const [text, setText] = useState(initialState.text)
@@ -57,12 +56,14 @@ export default ({ onSubmit, isVisible }) => {
   const generateTimeSeries = (hourStart, hourEnd, step) => {
     const dt = new Date(1970, 0, 1, hourStart)
     const rc = []
+    let counter = 0
     while (dt.getHours() < hourEnd) {
       rc.push({
-        value: new Date(dt.getTime()),
+        value: counter,
         display: dt.toLocaleTimeString("en-US"),
       })
       dt.setMinutes(dt.getMinutes() + step)
+      counter += 1
     }
     return rc
   }
