@@ -33,12 +33,12 @@ const App = () => {
   }
 
   const [tiles, setTiles] = useState([
-    {
-      text: "THIS FUCKING PROJECT",
-      size: "large",
-      color: "#ff3232",
-      position: [randomRange(-1.5, 1.5), randomRange(-1, 1), 0],
-    },
+    // {
+    //   text: "THIS FUCKING PROJECT",
+    //   size: "large",
+    //   color: "#ff3232",
+    //   position: [randomRange(-1.5, 1.5), randomRange(-1, 1), 0],
+    // },
     // {
     //   text: "THIS FUCKING PROJECT",
     //   size: "large",

@@ -1,9 +1,23 @@
+import { initial } from "lodash"
 import React, { useState, useCallback } from "react"
 
 export default ({ onSubmit, isVisible }) => {
-  const [text, setText] = useState("")
-  const [size, setSize] = useState("small")
-  const [color, setColor] = useState("#4285f4")
+  const initialState = {
+    text: "",
+    size: "small",
+    color: "#4285f4",
+    day: 0,
+    startTime: new Date(1970, 0, 1, 7),
+    endTime: new Date(1970, 0, 1, 7),
+  }
+
+  const [text, setText] = useState(initialState.text)
+  const [size, setSize] = useState(initialState.size)
+  const [color, setColor] = useState(initialState.color)
+  const [day, setDay] = useState(initialState.day)
+  const [startTime, setStartTime] = useState(initialState.startTime)
+  const [endTime, setEndTime] = useState(initialState.endTime)
+
   const onTextInputChange = useCallback(
     (e) => {
       setText(e.target.value)
@@ -18,6 +32,42 @@ export default ({ onSubmit, isVisible }) => {
   const onSelectColorChange = (e) => {
     setColor(e.target.value)
   }
+
+  const onSelectDayChange = (e) => {
+    setDay(e.target.value)
+  }
+
+  const onSelectStartTimeChange = (e) => {
+    setStartTime(e.target.value)
+  }
+
+  const onSelectEndTimeChange = (e) => {
+    setEndTime(e.target.value)
+  }
+
+  const resetForm = () => {
+    setText(initialState.text)
+    setSize(initialState.size)
+    setColor(initialState.color)
+    setDay(initialState.day)
+    setStartTime(initialState.startTime)
+    setEndTime(initialState.endTime)
+  }
+
+  const generateTimeSeries = (hourStart, hourEnd, step) => {
+    const dt = new Date(1970, 0, 1, hourStart)
+    const rc = []
+    while (dt.getHours() < hourEnd) {
+      rc.push({
+        value: new Date(dt.getTime()),
+        display: dt.toLocaleTimeString("en-US"),
+      })
+      dt.setMinutes(dt.getMinutes() + step)
+    }
+    return rc
+  }
+
+  const times = generateTimeSeries(7, 22, 30)
 
   return (
     <div
@@ -55,16 +105,38 @@ export default ({ onSubmit, isVisible }) => {
           <option value="#cd60eb">Purple</option>
           <option value="#ff3232">Red</option>
         </select>
+        <label>Choose day</label>
+        <select value={day} onChange={onSelectDayChange}>
+          <option value={0}>周日</option>
+          <option value={1}>周一</option>
+          <option value={2}>周二</option>
+          <option value={3}>周三</option>
+          <option value={4}>周四</option>
+          <option value={5}>周五</option>
+          <option value={6}>周六</option>
+        </select>
+        <label>Choose start time</label>
+        <select value={startTime} onChange={onSelectStartTimeChange}>
+          {times.map((t) => (
+            <option key={"end" + t.display} value={t.value}>
+              {t.display}
+            </option>
+          ))}
+        </select>
+        <label>Choose end time</label>
+        <select value={endTime} onChange={onSelectEndTimeChange}>
+          {times.map((t) => (
+            <option key={"start" + t.display} value={t.value}>
+              {t.display}
+            </option>
+          ))}
+        </select>
         <button
           onClick={(e) => {
             e.preventDefault()
-            const tile = { text, size, color }
+            const tile = { text, size, color, day, startTime, endTime }
             onSubmit && onSubmit(tile)
-
-            // Reset form
-            setText("")
-            setSize("small")
-            setColor("#4285f4")
+            resetForm()
           }}
         >
           Submit

@@ -40,6 +40,9 @@ export default ({ isVisible, handleAddTile, tiles }) => {
           text={tile.text}
           tileHeight={SIZES[tile.size]}
           key={index.toString()}
+          day={tile.day}
+          startTime={tile.startTime}
+          endTime={tile.endTime}
         />
       ))}
       <PlusButton onClick={toggleFormVisibility} />

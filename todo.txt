@@ -7,7 +7,7 @@
 - Style UI for adding an event
 - Clouds move at different speeds and in different directions
 - Remove objects when they go off screen
-
+- Ability to edit tile (probably not... requires some auth capabilities)
 
 
 

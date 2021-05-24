@@ -1,7 +1,15 @@
 import React, { useRef, useEffect } from "react"
 import roundRect from "~js/helpers/roundedRectangle"
 
-export default ({ position, color, text, tileHeight }) => {
+export default ({
+  position,
+  color,
+  text,
+  tileHeight,
+  day,
+  starTime,
+  endTime,
+}) => {
   const canvasRef = useRef(null)
   const maxTextWidth = 130
   const textVerticalOffset = 20
@@ -48,7 +56,7 @@ export default ({ position, color, text, tileHeight }) => {
       height={200}
       style={{
         position: "fixed",
-        left: window.innerWidth * calendarColumnWidthPct * 2,
+        left: window.innerWidth * calendarColumnWidthPct * day + 10,
         top: 200,
       }}
       ref={canvasRef}
