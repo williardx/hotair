@@ -13,7 +13,7 @@
 
 --------------------------------------
 X Scene starts with a sky
-There are already several clouds floating in the sky
+X There are already several clouds floating in the sky
 Tiles are being added to the scene and slowly transition into clouds
     - If there are new tiles in the database then we show those
     - Otherwise, we cycle through all tiles added by users
