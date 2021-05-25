@@ -1,11 +1,24 @@
 import React, { useRef, useEffect, useMemo } from "react"
-import { useFrame } from "@react-three/fiber"
-import { ShaderMaterial, UniformsUtils, ShaderLib, CanvasTexture } from "three"
+import { useFrame, useThree } from "@react-three/fiber"
+import {
+  ShaderMaterial,
+  UniformsUtils,
+  ShaderLib,
+  CanvasTexture,
+  Frustum,
+  Matrix4,
+} from "three"
 import { useAssets, useTexture } from "~js/hooks"
 import gui from "~js/helpers/gui"
 import fragment from "~shaders/cloud.frag"
 import vertex from "~shaders/cloud.vert"
 import roundRect from "../../../../helpers/roundedRectangle"
+
+const SIZES = {
+  small: 75,
+  medium: 200,
+  large: 300,
+}
 
 /**
  * To go from opaque texture -> cloud texture
@@ -13,16 +26,12 @@ import roundRect from "../../../../helpers/roundedRectangle"
  * Start alpha max output at alpha min input, animate to larger value
  */
 
-export default ({
-  size,
-  position,
-  color,
-  shouldTransition,
-  text,
-  tileHeight,
-}) => {
+export default ({ tile, size, shouldTransition, handleRemoveCloud }) => {
+  const { text, color, position, id } = tile
+  const tileHeight = SIZES[tile.size]
   const group = useRef()
   const mesh = useRef()
+  const { camera } = useThree()
   const [width, height] = size
   const maxBlurAmount = 20
   const tileWidth = 150
@@ -127,24 +136,37 @@ export default ({
 
   useFrame(() => {
     if (material) {
-      const scalingFactor = 3
-      material.uniforms.uTime.value += 1
-      const ctx = material.uniforms.canvasTexture.value.image.getContext("2d")
-      if (ctx.blurAmount < maxBlurAmount) {
-        transitionCanvas(ctx, scalingFactor)
-        material.uniforms.canvasTexture.value.needsUpdate = true
-      }
+      // Remove cloud from scene if cloud goes off screen
+      const frustum = new Frustum()
+      frustum.setFromMatrix(
+        new Matrix4().multiplyMatrices(
+          camera.projectionMatrix,
+          camera.matrixWorldInverse
+        )
+      )
+      if (!frustum.containsPoint(mesh.current.position)) {
+        handleRemoveCloud(id)
+      } else {
+        // Otherwise keep animating
+        const scalingFactor = 3
+        material.uniforms.uTime.value += 1
+        const ctx = material.uniforms.canvasTexture.value.image.getContext("2d")
+        if (ctx.blurAmount < maxBlurAmount) {
+          transitionCanvas(ctx, scalingFactor)
+          material.uniforms.canvasTexture.value.needsUpdate = true
+        }
 
-      if (material.uniforms.uDisplStrenght1.value < 0.04) {
-        material.uniforms.uDisplStrenght1.value += 0.00015 * scalingFactor
+        if (material.uniforms.uDisplStrenght1.value < 0.04) {
+          material.uniforms.uDisplStrenght1.value += 0.00015 * scalingFactor
+        }
+        if (material.uniforms.uDisplStrenght2.value < 0.08) {
+          material.uniforms.uDisplStrenght2.value += 0.0003 * scalingFactor
+        }
+        if (material.uniforms.alphaMaxOutput.value < 0.7) {
+          material.uniforms.alphaMaxOutput.value += 0.002 * scalingFactor
+        }
+        mesh.current.position.x += 0.0001
       }
-      if (material.uniforms.uDisplStrenght2.value < 0.08) {
-        material.uniforms.uDisplStrenght2.value += 0.0003 * scalingFactor
-      }
-      if (material.uniforms.alphaMaxOutput.value < 0.7) {
-        material.uniforms.alphaMaxOutput.value += 0.002 * scalingFactor
-      }
-      mesh.current.position.x += 0.0001
     }
   })
 

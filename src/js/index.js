@@ -14,9 +14,7 @@ import Canvas from "~js/components/Canvas"
 import Camera from "~js/components/Canvas/Camera"
 import Sphere from "~js/components/Canvas/Sphere"
 import Environment from "~js/components/Canvas/Environment"
-import EventForm from "~js/components/EventForm"
 import PlusButton from "~js/components/PlusButton"
-import CloseButton from "~js/components/CloseButton"
 import Calendar from "~js/components/Calendar"
 
 /**
@@ -49,15 +47,16 @@ const App = () => {
   // The set of all tiles in the project - these are definitely visible
   // in the calendar view
   const [tiles, setTiles] = useState([
-    // {
-    //   text: "𝚆𝙾𝚁𝚂𝙷𝙸𝙿 𝚂𝙰𝚃𝙰𝙽 𖤐",
-    //   size: "large",
-    //   color: "#ff3232",
-    //   day: 3,
-    //   startTime: 10,
-    //   endTime: 15,
-    //   position: [randomRange(-1.5, 1.5), randomRange(-1, 1), 0],
-    // },
+    {
+      text: "𝚆𝙾𝚁𝚂𝙷𝙸𝙿 𝚂𝙰𝚃𝙰𝙽 𖤐",
+      size: "large",
+      color: "#ff3232",
+      day: 3,
+      startTime: 10,
+      endTime: 15,
+      position: [2, randomRange(-1, 1), 0],
+      id: Math.floor(Math.random() * 100000),
+    },
     // {
     //   text: "THIS FUCKING PROJECT",
     //   size: "large",
@@ -87,6 +86,10 @@ const App = () => {
     setNextTiles([...nextTiles, tile])
   }
 
+  const handleRemoveCloud = (cloudID) => {
+    setClouds([...clouds.filter((activeCloud) => cloudID !== activeCloud.id)])
+  }
+
   const toggleCalendarVisibility = () => {
     if (calendarVisibilityToggle) {
       // Add new tiles to the scene
@@ -95,6 +98,16 @@ const App = () => {
     }
     setCalendarVisibilityToggle(!calendarVisibilityToggle)
   }
+
+  // useEffect(() => {
+  //   async function addNewClouds() {
+  //     // Automatically add a new cloud when (1) we have nothing new to show
+  //     // and a a cloud goes off screen and (2) we get a new tile from the
+  //     // database
+  //     if (nextTiles.length === 0) {
+  //     }
+  //   }
+  // }, [])
 
   return (
     <>
@@ -107,7 +120,7 @@ const App = () => {
       />
       <Canvas>
         <Camera />
-        <Environment tiles={clouds} />
+        <Environment tiles={clouds} handleRemoveCloud={handleRemoveCloud} />
         {debugMode && <Sphere />}
       </Canvas>
     </>

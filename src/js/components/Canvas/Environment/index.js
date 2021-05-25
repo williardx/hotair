@@ -18,13 +18,7 @@ const createPositions = (numPositions) => {
   })
 }
 
-const SIZES = {
-  small: 75,
-  medium: 200,
-  large: 300,
-}
-
-export default ({ tiles }) => {
+export default ({ tiles, handleRemoveCloud }) => {
   const [shouldTransition, setShouldTransition] = useState(false)
   const POSITIONS = createPositions(tiles.length)
 
@@ -49,11 +43,9 @@ export default ({ tiles }) => {
         <Cloud
           shouldTransition={shouldTransition}
           size={[1, 1]}
-          position={tile.position}
-          color={tile.color}
-          key={index.toString()}
-          text={tile.text}
-          tileHeight={SIZES[tile.size]}
+          tile={tile}
+          key={tile.id.toString()}
+          handleRemoveCloud={handleRemoveCloud}
         />
       ))}
     </>

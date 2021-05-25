@@ -135,7 +135,15 @@ export default ({ onSubmit, isVisible }) => {
         <button
           onClick={(e) => {
             e.preventDefault()
-            const tile = { text, size, color, day, startTime, endTime }
+            const tile = {
+              text,
+              size,
+              color,
+              day,
+              startTime,
+              endTime,
+              id: Math.floor(Math.random() * 100000),
+            }
             onSubmit && onSubmit(tile)
             resetForm()
           }}
