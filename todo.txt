@@ -1,6 +1,8 @@
 - Render previous user input on load
-- Fix calendar so that tiles / calendar columns are aligned / centered
-- Improve tile placement so that the tiles form a reasonable grid / have nice overlap
+X Fix calendar so that tiles / calendar columns are aligned / centered
+- Map tile calendar position to position in sky
+X Improve tile placement so that the tiles form a reasonable grid
+- Tiles can overlap
 - Improve performance so that many tiles can be on the screen at once
 - Ability to create larger tiles
 - Style UI for adding an event
@@ -20,4 +22,4 @@ Tiles are being added to the scene and slowly transition into clouds
 X Pushing plus button (or whatever other icon) takes user to calendar view
 Calendar view shows a very cluttered calendar, all with tiles created from user input
 X User can then push plus button to add their own tile
-After a short delay scene transitions back to the sky with their tile slowly transitioning into a cloud
+X After a short delay scene transitions back to the sky with their tile slowly transitioning into a cloud

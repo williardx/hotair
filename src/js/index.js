@@ -46,11 +46,16 @@ const App = () => {
     }
   }
 
+  // The set of all tiles in the project - these are definitely visible
+  // in the calendar view
   const [tiles, setTiles] = useState([
     // {
-    //   text: "THIS FUCKING PROJECT",
+    //   text: "𝚆𝙾𝚁𝚂𝙷𝙸𝙿 𝚂𝙰𝚃𝙰𝙽 𖤐",
     //   size: "large",
     //   color: "#ff3232",
+    //   day: 3,
+    //   startTime: 10,
+    //   endTime: 15,
     //   position: [randomRange(-1.5, 1.5), randomRange(-1, 1), 0],
     // },
     // {
@@ -67,16 +72,27 @@ const App = () => {
     // },
     // ...initialTiles,
   ])
-  const [formVisibilityToggle, setFormVisibilityToggle] = useState(false)
+
+  // Tiles that are queued up to be added to sky
+  const [nextTiles, setNextTiles] = useState([])
+
+  // Tiles that are in the sky
+  const [clouds, setClouds] = useState([...tiles])
+
   const [calendarVisibilityToggle, setCalendarVisibilityToggle] =
     useState(false)
 
   const handleAddTile = (tile) => {
     setTiles([...tiles, tile])
+    setNextTiles([...nextTiles, tile])
   }
 
   const toggleCalendarVisibility = () => {
-    console.log("toggle")
+    if (calendarVisibilityToggle) {
+      // Add new tiles to the scene
+      setNextTiles([])
+      setClouds([...clouds, ...nextTiles])
+    }
     setCalendarVisibilityToggle(!calendarVisibilityToggle)
   }
 
@@ -91,7 +107,7 @@ const App = () => {
       />
       <Canvas>
         <Camera />
-        <Environment tiles={tiles} />
+        <Environment tiles={clouds} />
         {debugMode && <Sphere />}
       </Canvas>
     </>
