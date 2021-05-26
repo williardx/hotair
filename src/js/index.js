@@ -47,16 +47,16 @@ const App = () => {
   // The set of all tiles in the project - these are definitely visible
   // in the calendar view
   const [tiles, setTiles] = useState([
-    {
-      text: "𝚆𝙾𝚁𝚂𝙷𝙸𝙿 𝚂𝙰𝚃𝙰𝙽 𖤐",
-      size: "large",
-      color: "#ff3232",
-      day: 3,
-      startTime: 10,
-      endTime: 15,
-      position: [2, randomRange(-1, 1), 0],
-      id: Math.floor(Math.random() * 100000),
-    },
+    // {
+    //   text: "𝚆𝙾𝚁𝚂𝙷𝙸𝙿 𝚂𝙰𝚃𝙰𝙽 𖤐",
+    //   size: "large",
+    //   color: "#ff3232",
+    //   day: 3,
+    //   startTime: 10,
+    //   endTime: 15,
+    //   position: [2, randomRange(-1, 1), 0],
+    //   id: Math.floor(Math.random() * 100000),
+    // },
     // {
     //   text: "THIS FUCKING PROJECT",
     //   size: "large",

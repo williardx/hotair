@@ -1,13 +1,13 @@
 - Render previous user input on load
 X Fix calendar so that tiles / calendar columns are aligned / centered
-- Map tile calendar position to position in sky
+X Map tile calendar position to position in sky
 X Improve tile placement so that the tiles form a reasonable grid
 - Tiles can overlap
 - Improve performance so that many tiles can be on the screen at once
 - Ability to create larger tiles
 - Style UI for adding an event
 - Clouds move at different speeds and in different directions
-- Remove objects when they go off screen
+X Remove objects when they go off screen
 - Ability to edit tile (probably not... requires some auth capabilities)
 - Input validation
 

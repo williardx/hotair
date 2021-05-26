@@ -7,6 +7,7 @@ import {
   CanvasTexture,
   Frustum,
   Matrix4,
+  Vector3,
 } from "three"
 import { useAssets, useTexture } from "~js/hooks"
 import gui from "~js/helpers/gui"
@@ -28,10 +29,29 @@ const SIZES = {
 
 export default ({ tile, size, shouldTransition, handleRemoveCloud }) => {
   const { text, color, position, id } = tile
+  const { camera } = useThree()
+  let tilePosition
+  if (tile.x !== undefined && tile.y !== undefined) {
+    // Convert screen coordinates to world space
+    // https://stackoverflow.com/a/13091694
+    var vec = new Vector3() // create once and reuse
+    var pos = new Vector3() // create once and reuse
+    vec.set(
+      (tile.x / window.innerWidth) * 2 - 1,
+      -(tile.y / window.innerHeight) * 2 + 1,
+      0.5
+    )
+    vec.unproject(camera)
+    vec.sub(camera.position).normalize()
+    var distance = -camera.position.z / vec.z
+    pos.copy(camera.position).add(vec.multiplyScalar(distance))
+    tilePosition = [pos.x, pos.y, 0]
+  } else {
+    tilePosition = position
+  }
   const tileHeight = SIZES[tile.size]
   const group = useRef()
   const mesh = useRef()
-  const { camera } = useThree()
   const [width, height] = size
   const maxBlurAmount = 20
   const tileWidth = 150
@@ -217,7 +237,7 @@ export default ({ tile, size, shouldTransition, handleRemoveCloud }) => {
 
   return (
     <group ref={group}>
-      <mesh ref={mesh} position={position} scale={[width, height, 1]}>
+      <mesh ref={mesh} position={tilePosition} scale={[width, height, 1]}>
         <planeBufferGeometry args={[1.0, 1.0, 5, 5]} attach="geometry" />
         <primitive object={material} attach="material" />
       </mesh>

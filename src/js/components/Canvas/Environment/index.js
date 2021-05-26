@@ -24,7 +24,6 @@ export default ({ tiles, handleRemoveCloud }) => {
 
   useEffect(() => {
     const eventListener = (event) => {
-      console.log(event)
       if (event.code === "Backslash") {
         setShouldTransition(true)
       }

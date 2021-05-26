@@ -10,6 +10,9 @@ export default ({ onSubmit, isVisible }) => {
     endTime: 1,
   }
 
+  const calendarColumnWidthPct = 1 / 7
+  const calendarRowHeightPct = 1 / 13
+
   const [text, setText] = useState(initialState.text)
   const [size, setSize] = useState(initialState.size)
   const [color, setColor] = useState(initialState.color)
@@ -142,6 +145,8 @@ export default ({ onSubmit, isVisible }) => {
               day,
               startTime,
               endTime,
+              x: window.innerWidth * calendarColumnWidthPct * day + 10,
+              y: (window.innerHeight * calendarRowHeightPct * startTime) / 2,
               id: Math.floor(Math.random() * 100000),
             }
             onSubmit && onSubmit(tile)
