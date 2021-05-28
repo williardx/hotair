@@ -145,10 +145,17 @@ export default ({ onSubmit, isVisible }) => {
               day,
               startTime,
               endTime,
+              tileHeight:
+                (window.innerHeight *
+                  calendarRowHeightPct *
+                  (endTime - startTime)) /
+                2,
+              tileWidth: calendarColumnWidthPct * window.innerWidth * 0.9,
               x: window.innerWidth * calendarColumnWidthPct * day + 10,
               y: (window.innerHeight * calendarRowHeightPct * startTime) / 2,
               id: Math.floor(Math.random() * 100000),
             }
+            console.log(tile)
             onSubmit && onSubmit(tile)
             resetForm()
           }}

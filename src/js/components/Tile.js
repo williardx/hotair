@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from "react"
 import roundRect from "~js/helpers/roundedRectangle"
 
 export default ({
+  tile,
   position,
   color,
   text,
@@ -59,8 +60,8 @@ export default ({
       height={200}
       style={{
         position: "fixed",
-        left: window.innerWidth * calendarColumnWidthPct * day + 10,
-        top: (window.innerHeight * calendarRowHeightPct * startTime) / 2,
+        left: tile.x,
+        top: tile.y,
       }}
       ref={canvasRef}
     />

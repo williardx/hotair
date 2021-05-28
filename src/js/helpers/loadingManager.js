@@ -1,14 +1,19 @@
-import {LoadingManager, TextureLoader, RepeatWrapping} from 'three'
+import {
+  LoadingManager,
+  TextureLoader,
+  RepeatWrapping,
+  MirroredRepeatWrapping,
+} from "three"
 
-import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader'
-import {DRACOLoader} from 'three/examples/jsm/loaders/DRACOLoader'
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader"
+import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader"
 
 const loadingManager = new LoadingManager()
 const textureLoader = new TextureLoader(loadingManager)
 
 const gltfLoader = new GLTFLoader(loadingManager)
 const dracoLoader = new DRACOLoader()
-dracoLoader.setDecoderPath('/static-threejs/draco/')
+dracoLoader.setDecoderPath("/static-threejs/draco/")
 gltfLoader.setDRACOLoader(dracoLoader)
 
 const onLoadCallbacks = []
@@ -30,10 +35,10 @@ loadingManager.onProgress = (item, loaded, total) => {
 
 const loadTexture = (src, callback) => {
   const texture = textureLoader.load(src, () => {
-    typeof callback === 'function' && callback(texture)
+    typeof callback === "function" && callback(texture)
   })
 
-  texture.wrapS = texture.wrapT = RepeatWrapping
+  texture.wrapS = texture.wrapT = MirroredRepeatWrapping
 
   return texture
 }
@@ -52,7 +57,7 @@ const loadGLTF = async (modelSrc, diffuseSrc, normalSrc, aoSrc) => {
   const normalMap = loadTexture(normalSrc)
   const aoMap = loadTexture(aoSrc)
 
-  return {mesh, diffuseMap, normalMap, aoMap}
+  return { mesh, diffuseMap, normalMap, aoMap }
 }
 
 const onLoad = (callback) => {
@@ -65,4 +70,4 @@ const onProgress = (callback) => {
   onProgressCallbacks.push(callback)
 }
 
-export {loadGLTF, loadTexture, onLoad, onProgress}
+export { loadGLTF, loadTexture, onLoad, onProgress }

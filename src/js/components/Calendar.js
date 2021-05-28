@@ -42,6 +42,7 @@ export default ({
       {/* <Sidebar /> */}
       {tiles.map((tile, index) => (
         <Tile
+          tile={tile}
           color={tile.color}
           text={tile.text}
           tileHeight={SIZES[tile.size]}
