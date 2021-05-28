@@ -7,10 +7,9 @@ X Improve tile placement so that the tiles form a reasonable grid
 - Style UI for adding an event
 - Clouds move at different speeds and in different directions
 X Remove objects when they go off screen
-- Ability to edit tile (probably not... requires some auth capabilities)
 - Input validation
 X Fix scale of calendar tiles vs. clouds
-- Ability to create larger tiles
+X Ability to create larger tiles
 
 --------------------------------------
 X Scene starts with a sky

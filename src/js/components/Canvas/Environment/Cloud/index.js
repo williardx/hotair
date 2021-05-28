@@ -29,7 +29,7 @@ const SIZES = {
  * Start alpha max output at alpha min input, animate to larger value
  */
 
-export default ({ tile, size, shouldTransition, handleRemoveCloud }) => {
+export default ({ tile, size, handleRemoveCloud }) => {
   const { text, color, position, id } = tile
   const { camera } = useThree()
   // Need a scaling factor because the camera is at a distance
@@ -94,8 +94,8 @@ export default ({ tile, size, shouldTransition, handleRemoveCloud }) => {
   const canvasTexture = useMemo(() => {
     const canvas = document.createElement("canvas")
     const context = canvas.getContext("2d")
-    canvas.width = 512
-    canvas.height = 512
+    canvas.width = 512 * width
+    canvas.height = 512 * height
     context.font = "18pt Roboto"
     context.fillStyle = color
     const tilePosX = (canvas.width - tileWidth) / 2
@@ -268,7 +268,6 @@ export default ({ tile, size, shouldTransition, handleRemoveCloud }) => {
   //     })
   //   }
   // }, [material])
-
   return (
     <group ref={group}>
       <mesh ref={mesh} position={tilePosition} scale={[width, height, 1]}>
