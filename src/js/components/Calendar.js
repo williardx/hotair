@@ -5,12 +5,6 @@ import Grid from "~js/components/Grid"
 import Tile from "~js/components/Tile"
 import CloseButton from "~js/components/CloseButton"
 
-const SIZES = {
-  small: 75,
-  medium: 200,
-  large: 300,
-}
-
 export default ({
   isVisible,
   handleAddTile,
@@ -45,7 +39,6 @@ export default ({
           tile={tile}
           color={tile.color}
           text={tile.text}
-          tileHeight={SIZES[tile.size]}
           key={index.toString()}
           day={tile.day}
           startTime={tile.startTime}

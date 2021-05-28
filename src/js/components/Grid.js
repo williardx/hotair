@@ -11,9 +11,6 @@ export default ({ numRows }) => {
   return (
     <div className="grid">
       <div className="cell header">
-        <h1 className="day">周日</h1>
-      </div>
-      <div className="cell header">
         <h1 className="day">周一</h1>
       </div>
       <div className="cell header">
@@ -30,6 +27,9 @@ export default ({ numRows }) => {
       </div>
       <div className="cell header">
         <h1 className="day">周六</h1>
+      </div>
+      <div className="cell header">
+        <h1 className="day">周日</h1>
       </div>
       {createRows()}
     </div>

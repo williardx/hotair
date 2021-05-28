@@ -13,6 +13,24 @@ export default ({ onSubmit, isVisible }) => {
   const calendarColumnWidthPct = 1 / 7
   const calendarRowHeightPct = 1 / 13
 
+  const generateTimeSeries = (hourStart, hourEnd, step) => {
+    const dt = new Date(1970, 0, 1, hourStart)
+    const rc = []
+    let counter = 0
+    while (dt.getHours() < hourEnd) {
+      rc.push({
+        value: counter,
+        display: dt.toLocaleTimeString("en-US"),
+      })
+      dt.setMinutes(dt.getMinutes() + step)
+      counter += 1
+    }
+    return rc
+  }
+
+  const times = generateTimeSeries(7, 22, 30)
+  console.log(times)
+
   const [text, setText] = useState(initialState.text)
   const [size, setSize] = useState(initialState.size)
   const [color, setColor] = useState(initialState.color)
@@ -40,11 +58,19 @@ export default ({ onSubmit, isVisible }) => {
   }
 
   const onSelectStartTimeChange = (e) => {
-    setStartTime(e.target.value)
+    const newStartTime = parseInt(e.target.value)
+    setStartTime(newStartTime)
+    if (newStartTime > endTime) {
+      setEndTime(newStartTime + 1)
+    }
   }
 
   const onSelectEndTimeChange = (e) => {
-    setEndTime(e.target.value)
+    const newEndTime = parseInt(e.target.value)
+    setEndTime(newEndTime)
+    if (newEndTime < startTime) {
+      setStartTime(newEndTime - 1)
+    }
   }
 
   const resetForm = () => {
@@ -55,23 +81,6 @@ export default ({ onSubmit, isVisible }) => {
     setStartTime(initialState.startTime)
     setEndTime(initialState.endTime)
   }
-
-  const generateTimeSeries = (hourStart, hourEnd, step) => {
-    const dt = new Date(1970, 0, 1, hourStart)
-    const rc = []
-    let counter = 0
-    while (dt.getHours() < hourEnd) {
-      rc.push({
-        value: counter,
-        display: dt.toLocaleTimeString("en-US"),
-      })
-      dt.setMinutes(dt.getMinutes() + step)
-      counter += 1
-    }
-    return rc
-  }
-
-  const times = generateTimeSeries(7, 22, 30)
 
   return (
     <div
@@ -94,12 +103,6 @@ export default ({ onSubmit, isVisible }) => {
       >
         <label>What are you busy with?</label>
         <input onChange={onTextInputChange} value={text} type="text" />
-        <label>How much time does it take?</label>
-        <select value={size} onChange={onSelectSizeChange}>
-          <option value="small">A little</option>
-          <option value="medium">A normal amount</option>
-          <option value="large">A lot</option>
-        </select>
         <label>Choose event color</label>
         <select value={size} onChange={onSelectColorChange}>
           <option value="#4285f4">Blue</option>
@@ -111,13 +114,13 @@ export default ({ onSubmit, isVisible }) => {
         </select>
         <label>Choose day</label>
         <select value={day} onChange={onSelectDayChange}>
+          <option value={0}>周一</option>
+          <option value={1}>周二</option>
+          <option value={2}>周三</option>
+          <option value={3}>周四</option>
+          <option value={4}>周五</option>
+          <option value={5}>周六</option>
           <option value={0}>周日</option>
-          <option value={1}>周一</option>
-          <option value={2}>周二</option>
-          <option value={3}>周三</option>
-          <option value={4}>周四</option>
-          <option value={5}>周五</option>
-          <option value={6}>周六</option>
         </select>
         <label>Choose start time</label>
         <select value={startTime} onChange={onSelectStartTimeChange}>
@@ -155,7 +158,6 @@ export default ({ onSubmit, isVisible }) => {
               y: (window.innerHeight * calendarRowHeightPct * startTime) / 2,
               id: Math.floor(Math.random() * 100000),
             }
-            console.log(tile)
             onSubmit && onSubmit(tile)
             resetForm()
           }}
