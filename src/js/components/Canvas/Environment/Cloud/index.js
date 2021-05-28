@@ -219,7 +219,8 @@ export default ({ tile, size, handleRemoveCloud }) => {
         if (material.uniforms.alphaMaxOutput.value < 0.7) {
           material.uniforms.alphaMaxOutput.value += 0.002 * scalingFactor
         }
-        mesh.current.position.x += 0.0001
+        mesh.current.position.y += 0.0001
+        mesh.current.position.x += 0.00001
       }
     }
   })

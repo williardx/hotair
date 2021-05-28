@@ -1,35 +1,34 @@
 import React, { useState, useCallback } from "react"
 
+const calendarColumnWidthPct = 1 / 7
+const calendarRowHeightPct = 1 / 13
+
+const generateTimeSeries = (hourStart, hourEnd, step) => {
+  const dt = new Date(1970, 0, 1, hourStart)
+  const rc = []
+  let counter = 0
+  while (dt.getHours() < hourEnd) {
+    rc.push({
+      value: counter,
+      display: dt.toLocaleTimeString("en-US"),
+    })
+    dt.setMinutes(dt.getMinutes() + step)
+    counter += 1
+  }
+  return rc
+}
+
+const times = generateTimeSeries(7, 22, 30).slice(2)
+
 export default ({ onSubmit, isVisible }) => {
   const initialState = {
     text: "",
     size: "small",
     color: "#4285f4",
     day: 0,
-    startTime: 0,
-    endTime: 1,
+    startTime: times[0].value,
+    endTime: times[1].value,
   }
-
-  const calendarColumnWidthPct = 1 / 7
-  const calendarRowHeightPct = 1 / 13
-
-  const generateTimeSeries = (hourStart, hourEnd, step) => {
-    const dt = new Date(1970, 0, 1, hourStart)
-    const rc = []
-    let counter = 0
-    while (dt.getHours() < hourEnd) {
-      rc.push({
-        value: counter,
-        display: dt.toLocaleTimeString("en-US"),
-      })
-      dt.setMinutes(dt.getMinutes() + step)
-      counter += 1
-    }
-    return rc
-  }
-
-  const times = generateTimeSeries(7, 22, 30)
-  console.log(times)
 
   const [text, setText] = useState(initialState.text)
   const [size, setSize] = useState(initialState.size)
@@ -154,10 +153,11 @@ export default ({ onSubmit, isVisible }) => {
                   (endTime - startTime)) /
                 2,
               tileWidth: calendarColumnWidthPct * window.innerWidth * 0.9,
-              x: window.innerWidth * calendarColumnWidthPct * day + 10,
+              x: window.innerWidth * calendarColumnWidthPct * day,
               y: (window.innerHeight * calendarRowHeightPct * startTime) / 2,
               id: Math.floor(Math.random() * 100000),
             }
+            console.log(tile)
             onSubmit && onSubmit(tile)
             resetForm()
           }}

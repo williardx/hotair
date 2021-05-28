@@ -1,4 +1,5 @@
 import React from "react"
+import { BiPlus } from "react-icons/bi"
 
 export default ({ onClick }) => {
   return (
@@ -21,11 +22,11 @@ export default ({ onClick }) => {
           color: "white",
           fontSize: 80,
           position: "absolute",
-          top: -2,
-          left: 28,
+          top: 7,
+          left: 12,
         }}
       >
-        +
+        <BiPlus />
       </div>
     </button>
   )

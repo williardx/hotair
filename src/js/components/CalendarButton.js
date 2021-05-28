@@ -1,7 +1,7 @@
 import React from "react"
-import { BiCheck } from "react-icons/bi"
+import { BiCalendar } from "react-icons/bi"
 
-export default ({ onClick }) => {
+export default ({ onClick, icon }) => {
   return (
     <button
       onClick={onClick}
@@ -12,21 +12,21 @@ export default ({ onClick }) => {
         position: "fixed",
         borderRadius: 100,
         bottom: 100,
-        right: 220,
-        backgroundColor: "#289117",
+        right: 100,
+        backgroundColor: "#2693ff",
         zIndex: 1000,
       }}
     >
       <div
         style={{
           color: "white",
-          fontSize: 80,
+          fontSize: 60,
           position: "absolute",
-          top: 6,
-          left: 11,
+          top: 17,
+          left: 22,
         }}
       >
-        <BiCheck />
+        <BiCalendar />
       </div>
     </button>
   )

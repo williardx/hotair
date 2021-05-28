@@ -14,8 +14,8 @@ import Canvas from "~js/components/Canvas"
 import Camera from "~js/components/Canvas/Camera"
 import Sphere from "~js/components/Canvas/Sphere"
 import Environment from "~js/components/Canvas/Environment"
-import PlusButton from "~js/components/PlusButton"
 import Calendar from "~js/components/Calendar"
+import CalendarButton from "./components/CalendarButton"
 
 /**
  * app
@@ -46,6 +46,64 @@ const App = () => {
 
   // The set of all tiles in the project - these are definitely visible
   // in the calendar view
+
+  const savedTiles = [
+    {
+      text: "life",
+      size: "small",
+      color: "#33b679",
+      day: "2",
+      startTime: 4,
+      endTime: 9,
+      tileHeight: 196.92307692307693,
+      tileWidth: 175.62857142857143,
+      x: 390.2857142857143,
+      y: 157.53846153846155,
+      id: 92001,
+    },
+    {
+      text: "work",
+      size: "small",
+      color: "#cd60eb",
+      day: "4",
+      startTime: 12,
+      endTime: 18,
+      tileHeight: 236.30769230769232,
+      tileWidth: 175.62857142857143,
+      x: 780.5714285714286,
+      y: 472.61538461538464,
+      id: 14100,
+    },
+    {
+      text: "THIS PROJECT",
+      size: "small",
+      color: "#f6bf26",
+      day: "3",
+      startTime: 12,
+      endTime: 17,
+      tileHeight: 196.92307692307693,
+      tileWidth: 175.62857142857143,
+      x: 585.4285714285714,
+      y: 472.61538461538464,
+      id: 60997,
+    },
+    {
+      text: "startup",
+      size: "small",
+      color: "#ff3232",
+      day: "1",
+      startTime: 4,
+      endTime: 22,
+      tileHeight: 708.9230769230769,
+      tileWidth: 175.62857142857143,
+      x: 195.14285714285714,
+      y: 157.53846153846155,
+      id: 97950,
+    },
+  ]
+
+  const randomChoice = (arr) => arr[Math.floor(Math.random() * arr.length)]
+
   const [tiles, setTiles] = useState([
     // {
     //   text: "𝚆𝙾𝚁𝚂𝙷𝙸𝙿 𝚂𝙰𝚃𝙰𝙽 𖤐",
@@ -58,19 +116,19 @@ const App = () => {
     //   id: Math.floor(Math.random() * 100000),
     //   tileHeight: 200,
     // },
-    {
-      text: "work",
-      size: "small",
-      color: "#4285f4",
-      day: "1",
-      startTime: 5,
-      endTime: 23,
-      tileHeight: 708.9230769230769,
-      tileWidth: 175.62857142857143,
-      x: 205.14285714285714,
-      y: 196.92307692307693,
-      id: 40216,
-    },
+    // {
+    //   text: "work",
+    //   size: "small",
+    //   color: "#4285f4",
+    //   day: "1",
+    //   startTime: 5,
+    //   endTime: 23,
+    //   tileHeight: 708.9230769230769,
+    //   tileWidth: 175.62857142857143,
+    //   x: 205.14285714285714,
+    //   y: 196.92307692307693,
+    //   id: 40216,
+    // },
     // {
     //   text: "𝚆𝙾𝚁𝚂𝙷𝙸𝙿 𝚂𝙰𝚃𝙰𝙽 𖤐",
     //   size: "small",
@@ -120,19 +178,27 @@ const App = () => {
     setCalendarVisibilityToggle(!calendarVisibilityToggle)
   }
 
-  // useEffect(() => {
-  //   async function addNewClouds() {
-  //     // Automatically add a new cloud when (1) we have nothing new to show
-  //     // and a a cloud goes off screen and (2) we get a new tile from the
-  //     // database
-  //     if (nextTiles.length === 0) {
-  //     }
-  //   }
-  // }, [])
+  useEffect(() => {
+    async function addNewClouds() {
+      // Automatically add a new cloud when (1) we have nothing new to show
+      // and a a cloud goes off screen and (2) we get a new tile from the
+      // database
+      if (clouds.length < 3) {
+        await setTimeout(() => {
+          const activeCloudIds = clouds.map((cloud) => cloud.id)
+          const newCloud = randomChoice(
+            savedTiles.filter((cloud) => !(cloud.id in activeCloudIds))
+          )
+          setClouds([...clouds, newCloud])
+        }, 10000)
+      }
+    }
+    addNewClouds()
+  }, [clouds])
 
   return (
     <>
-      <PlusButton onClick={toggleCalendarVisibility} />
+      <CalendarButton onClick={toggleCalendarVisibility} />
       <Calendar
         tiles={tiles}
         isVisible={calendarVisibilityToggle}

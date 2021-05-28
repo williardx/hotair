@@ -3,18 +3,23 @@ X Fix calendar so that tiles / calendar columns are aligned / centered
 X Map tile calendar position to position in sky
 X Improve tile placement so that the tiles form a reasonable grid
 - Tiles can overlap
-- Improve performance so that many tiles can be on the screen at once
+? Improve performance so that many tiles can be on the screen at once
 - Style UI for adding an event
 - Clouds move at different speeds and in different directions
 X Remove objects when they go off screen
 - Input validation
 X Fix scale of calendar tiles vs. clouds
 X Ability to create larger tiles
+- Make calendar responsive
+- Make calendar bilingual
+- Handle case where user wants to add cloudsa and there are too many clouds already
+- Smooth transition in/out of calendar vs. sky
+- Smooth transition for calendar being added/removed from sky
 
 --------------------------------------
 X Scene starts with a sky
 X There are already several clouds floating in the sky
-Tiles are being added to the scene and slowly transition into clouds
+X Tiles are being added to the scene and slowly transition into clouds
     - If there are new tiles in the database then we show those
     - Otherwise, we cycle through all tiles added by users
 X Pushing plus button (or whatever other icon) takes user to calendar view
