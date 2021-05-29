@@ -12,9 +12,10 @@ X Fix scale of calendar tiles vs. clouds
 X Ability to create larger tiles
 - Make calendar responsive
 - Make calendar bilingual
-- Handle case where user wants to add cloudsa and there are too many clouds already
+- Handle case where user wants to add clouds and there are too many clouds already
 - Smooth transition in/out of calendar vs. sky
-- Smooth transition for calendar being added/removed from sky
+X Smooth transition for calendar being added to sky
+- Smooth transition for calendar being removed from sky
 
 --------------------------------------
 X Scene starts with a sky
@@ -26,3 +27,5 @@ X Pushing plus button (or whatever other icon) takes user to calendar view
 Calendar view shows a very cluttered calendar, all with tiles created from user input
 X User can then push plus button to add their own tile
 X After a short delay scene transitions back to the sky with their tile slowly transitioning into a cloud
+
+Hot Air is a calendar app with an alternative agenda. Rather than conforming to the rigid structure of software-enforced productive time, Hot Air liberates you from your productivity by releasing your busy life back into the wild.

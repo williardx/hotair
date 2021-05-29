@@ -61,6 +61,7 @@ export default ({ tile, size, handleRemoveCloud }) => {
   }
   const group = useRef()
   const mesh = useRef()
+  const initialOpacity = tile.opacity
   const [width, height] = size
   const maxBlurAmount = 20
   const maxTextWidth = 130
@@ -96,6 +97,8 @@ export default ({ tile, size, handleRemoveCloud }) => {
     const context = canvas.getContext("2d")
     canvas.width = 512 * width
     canvas.height = 512 * height
+    context.globalAlpha = initialOpacity
+    context.globalAlphaAnimation = 0
     context.font = "18pt Roboto"
     context.fillStyle = color
     const tilePosX = (canvas.width - tileWidth) / 2
@@ -125,8 +128,16 @@ export default ({ tile, size, handleRemoveCloud }) => {
     return new CanvasTexture(canvas)
   }, [color])
 
+  function easeOutQuint(x) {
+    return 1 - Math.pow(1 - x, 5)
+  }
+
   const transitionCanvas = (ctx, scalingFactor = 1) => {
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+    if (ctx.globalAlphaAnimation < 1) {
+      ctx.globalAlphaAnimation += 0.01
+      ctx.globalAlpha = easeOutQuint(ctx.globalAlphaAnimation)
+    }
     ctx.blurAmount += 0.03 * scalingFactor
     ctx.brightnessAmount += 0.001 * scalingFactor
     ctx.filter = `blur(${ctx.blurAmount}px) brightness(${ctx.brightnessAmount})`
@@ -273,7 +284,7 @@ export default ({ tile, size, handleRemoveCloud }) => {
     <group ref={group}>
       <mesh ref={mesh} position={tilePosition} scale={[width, height, 1]}>
         <planeBufferGeometry args={[1, 1, 5, 5]} attach="geometry" />
-        <primitive object={material} attach="material" />
+        <primitive object={material} attach="material" opacity={0.5} />
       </mesh>
     </group>
   )

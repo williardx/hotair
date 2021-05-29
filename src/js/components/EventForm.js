@@ -156,6 +156,7 @@ export default ({ onSubmit, isVisible }) => {
               x: window.innerWidth * calendarColumnWidthPct * day,
               y: (window.innerHeight * calendarRowHeightPct * startTime) / 2,
               id: Math.floor(Math.random() * 100000),
+              opacity: 1,
             }
             console.log(tile)
             onSubmit && onSubmit(tile)
