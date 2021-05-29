@@ -100,6 +100,19 @@ const App = () => {
       y: 157.53846153846155,
       id: 97950,
     },
+    {
+      text: "𝚆𝙾𝚁𝚂𝙷𝙸𝙿 𝚂𝙰𝚃𝙰𝙽 𖤐",
+      size: "small",
+      color: "#ff3232",
+      day: "4",
+      startTime: "13",
+      endTime: "18",
+      tileHeight: 196.92307692307693,
+      tileWidth: 175.62857142857143,
+      x: 790.5714285714286,
+      y: 512,
+      id: 59819,
+    },
   ]
 
   const randomChoice = (arr) => arr[Math.floor(Math.random() * arr.length)]
@@ -122,7 +135,7 @@ const App = () => {
     //   color: "#4285f4",
     //   day: "1",
     //   startTime: 5,
-    //   endTime: 23,
+    //   endTime: 10,
     //   tileHeight: 708.9230769230769,
     //   tileWidth: 175.62857142857143,
     //   x: 205.14285714285714,
@@ -179,21 +192,20 @@ const App = () => {
   }
 
   useEffect(() => {
-    async function addNewClouds() {
-      // Automatically add a new cloud when (1) we have nothing new to show
-      // and a a cloud goes off screen and (2) we get a new tile from the
-      // database
+    // Automatically add a new cloud when (1) we have nothing new to show
+    // and a a cloud goes off screen and (2) we get a new tile from the
+    // database
+    const interval = setInterval(() => {
       if (clouds.length < 3) {
-        await setTimeout(() => {
-          const activeCloudIds = clouds.map((cloud) => cloud.id)
-          const newCloud = randomChoice(
-            savedTiles.filter((cloud) => !(cloud.id in activeCloudIds))
-          )
-          setClouds([...clouds, newCloud])
-        }, 10000)
+        const activeCloudIds = clouds.map((cloud) => cloud.id)
+        const newCloud = randomChoice(
+          savedTiles.filter((tile) => activeCloudIds.indexOf(tile.id) === -1)
+        )
+        setClouds([...clouds, newCloud])
       }
-    }
-    addNewClouds()
+    }, 30000)
+
+    return () => clearInterval(interval)
   }, [clouds])
 
   return (
