@@ -111,32 +111,6 @@ export default ({ onSubmit, isVisible, onCancel, pendingTile }) => {
           <option value="#cd60eb">Purple</option>
           <option value="#ff3232">Red</option>
         </select>
-        <label>Choose day</label>
-        <select value={day} onChange={onSelectDayChange}>
-          <option value={0}>周一</option>
-          <option value={1}>周二</option>
-          <option value={2}>周三</option>
-          <option value={3}>周四</option>
-          <option value={4}>周五</option>
-          <option value={5}>周六</option>
-          <option value={0}>周日</option>
-        </select>
-        {/* <label>Choose start time</label>
-        <select value={startTime} onChange={onSelectStartTimeChange}>
-          {times.map((t) => (
-            <option key={"end" + t.display} value={t.value}>
-              {t.value}
-            </option>
-          ))}
-        </select>
-        <label>Choose end time</label>
-        <select value={endTime} onChange={onSelectEndTimeChange}>
-          {times.map((t) => (
-            <option key={"start" + t.display} value={t.value}>
-              {t.value}
-            </option>
-          ))}
-        </select> */}
         <button
           onClick={(e) => {
             e.preventDefault()
