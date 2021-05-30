@@ -17,12 +17,6 @@ import fragment from "~shaders/cloud.frag"
 import vertex from "~shaders/cloud.vert"
 import roundRect from "../../../../helpers/roundedRectangle"
 
-const SIZES = {
-  small: 75,
-  medium: 200,
-  large: 300,
-}
-
 /**
  * To go from opaque texture -> cloud texture
  * Start uDisplStrenght* at 0 and animate to larger value
@@ -132,7 +126,7 @@ export default ({ tile, size, handleRemoveCloud }) => {
     return 1 - Math.pow(1 - x, 5)
   }
 
-  const transitionCanvas = (ctx, scalingFactor = 1) => {
+  const transitionCanvasToCloud = (ctx, scalingFactor = 1) => {
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
     if (ctx.globalAlphaAnimation < 1) {
       ctx.globalAlphaAnimation += 0.01
@@ -140,6 +134,33 @@ export default ({ tile, size, handleRemoveCloud }) => {
     }
     ctx.blurAmount += 0.03 * scalingFactor
     ctx.brightnessAmount += 0.001 * scalingFactor
+    ctx.filter = `blur(${ctx.blurAmount}px) brightness(${ctx.brightnessAmount})`
+    ctx.fillStyle = color
+    const tilePosX = (ctx.canvas.width - tileWidth) / 2
+    const tilePosY = (ctx.canvas.height - tileHeight) / 2
+    roundRect(ctx, tilePosX, tilePosY, tileWidth, tileHeight, 10, true, false)
+    ctx.filter = "none"
+    ctx.fillStyle = "white"
+    const lines = getLines(ctx, text, maxTextWidth)
+    for (let i = 0; i < lines.length; i++) {
+      ctx.fillText(
+        lines[i],
+        tilePosX + textXOffset,
+        tilePosY + textYOffset + i * textVerticalOffset
+      )
+    }
+  }
+
+  function easeInQuint(x) {
+    return x * x * x * x * x
+  }
+
+  const fadeCanvasOut = (ctx, scalingFactor = 1) => {
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+    if (ctx.globalAlphaAnimation > 0) {
+      ctx.globalAlphaAnimation -= 0.01
+      ctx.globalAlpha = easeInQuint(ctx.globalAlphaAnimation)
+    }
     ctx.filter = `blur(${ctx.blurAmount}px) brightness(${ctx.brightnessAmount})`
     ctx.fillStyle = color
     const tilePosX = (ctx.canvas.width - tileWidth) / 2
@@ -209,16 +230,23 @@ export default ({ tile, size, handleRemoveCloud }) => {
           camera.matrixWorldInverse
         )
       )
+
+      // return
+      // Otherwise keep animating
+      const scalingFactor = 0.5
+      material.uniforms.uTime.value += 1
+      const ctx = material.uniforms.canvasTexture.value.image.getContext("2d")
+
       if (!frustum.containsPoint(mesh.current.position)) {
-        handleRemoveCloud(id)
-      } else {
-        // return
-        // Otherwise keep animating
-        const scalingFactor = 0.5
-        material.uniforms.uTime.value += 1
         const ctx = material.uniforms.canvasTexture.value.image.getContext("2d")
+        fadeCanvasOut(ctx)
+        material.uniforms.canvasTexture.value.needsUpdate = true
+        if (ctx.globalAlphaAnimation <= 0) {
+          handleRemoveCloud(id)
+        }
+      } else {
         if (ctx.blurAmount < maxBlurAmount) {
-          transitionCanvas(ctx, scalingFactor)
+          transitionCanvasToCloud(ctx, scalingFactor)
           material.uniforms.canvasTexture.value.needsUpdate = true
         }
         if (material.uniforms.uDisplStrenght1.value < 0.04) {
@@ -230,9 +258,10 @@ export default ({ tile, size, handleRemoveCloud }) => {
         if (material.uniforms.alphaMaxOutput.value < 0.7) {
           material.uniforms.alphaMaxOutput.value += 0.002 * scalingFactor
         }
-        mesh.current.position.y += 0.0001
-        mesh.current.position.x += 0.00001
       }
+
+      mesh.current.position.y += 0.0001
+      mesh.current.position.x += 0.00001
     }
   })
 

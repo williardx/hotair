@@ -15,8 +15,9 @@ X Ability to create larger tiles
 - Handle case where user wants to add clouds and there are too many clouds already
 - Smooth transition in/out of calendar vs. sky
 X Smooth transition for calendar being added to sky
-- Smooth transition for calendar being removed from sky
+X Smooth transition for calendar being removed from sky
 X UI feedback for tapping buttons
+- Ability to exit event form
 
 --------------------------------------
 X Scene starts with a sky
