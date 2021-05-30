@@ -1,10 +1,21 @@
-import React from "react"
+import React, { useState } from "react"
 import { BiPlus } from "react-icons/bi"
 
 export default ({ onClick }) => {
+  const [isPressed, setIsPressed] = useState(false)
+  const togglePress = () => {
+    setIsPressed(!isPressed)
+  }
   return (
     <button
-      onClick={onClick}
+      onClick={() => {
+        onClick()
+        togglePress()
+      }}
+      onMouseDown={togglePress}
+      onTouchStart={togglePress}
+      onTouchEnd={togglePress}
+      onTouchCancel={togglePress}
       style={{
         width: 100,
         height: 100,
@@ -13,7 +24,7 @@ export default ({ onClick }) => {
         borderRadius: 100,
         bottom: 100,
         right: 100,
-        backgroundColor: "#2693ff",
+        backgroundColor: isPressed ? "#4da6ff" : "#2693ff",
         zIndex: 1000,
       }}
     >

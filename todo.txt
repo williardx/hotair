@@ -16,6 +16,7 @@ X Ability to create larger tiles
 - Smooth transition in/out of calendar vs. sky
 X Smooth transition for calendar being added to sky
 - Smooth transition for calendar being removed from sky
+X UI feedback for tapping buttons
 
 --------------------------------------
 X Scene starts with a sky
