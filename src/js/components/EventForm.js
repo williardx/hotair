@@ -21,21 +21,10 @@ const generateTimeSeries = (hourStart, hourEnd, step) => {
 const times = generateTimeSeries(7, 22, 30).slice(2)
 
 export default ({ onSubmit, isVisible, onCancel, pendingTile }) => {
-  const initialState = {
-    text: "",
-    size: "small",
-    color: "#4285f4",
-    day: pendingTile.day,
-    startTime: pendingTile.startTime,
-    endTime: pendingTile.endTime,
-  }
-
-  const [text, setText] = useState(initialState.text)
-  const [size, setSize] = useState(initialState.size)
-  const [color, setColor] = useState(initialState.color)
-  const [day, setDay] = useState(initialState.day)
-  const [startTime, setStartTime] = useState(initialState.startTime)
-  const [endTime, setEndTime] = useState(initialState.endTime)
+  const { startTime, endTime, day } = pendingTile
+  const initialColor = "#4285f4"
+  const [text, setText] = useState("")
+  const [color, setColor] = useState(initialColor)
 
   const onTextInputChange = useCallback(
     (e) => {
@@ -44,41 +33,13 @@ export default ({ onSubmit, isVisible, onCancel, pendingTile }) => {
     [setText]
   )
 
-  const onSelectSizeChange = (e) => {
-    setSize(e.target.value)
-  }
-
   const onSelectColorChange = (e) => {
     setColor(e.target.value)
   }
 
-  const onSelectDayChange = (e) => {
-    setDay(e.target.value)
-  }
-
-  const onSelectStartTimeChange = (e) => {
-    const newStartTime = parseInt(e.target.value)
-    setStartTime(newStartTime)
-    if (newStartTime > endTime) {
-      setEndTime(newStartTime + 1)
-    }
-  }
-
-  const onSelectEndTimeChange = (e) => {
-    const newEndTime = parseInt(e.target.value)
-    setEndTime(newEndTime)
-    if (newEndTime < startTime) {
-      setStartTime(newEndTime - 1)
-    }
-  }
-
   const resetForm = () => {
-    setText(initialState.text)
-    setSize(initialState.size)
-    setColor(initialState.color)
-    setDay(initialState.day)
-    setStartTime(initialState.startTime)
-    setEndTime(initialState.endTime)
+    setText("")
+    setColor(initialColor)
   }
 
   return (
@@ -103,7 +64,7 @@ export default ({ onSubmit, isVisible, onCancel, pendingTile }) => {
         <label>What are you busy with?</label>
         <input onChange={onTextInputChange} value={text} type="text" />
         <label>Choose event color</label>
-        <select value={size} onChange={onSelectColorChange}>
+        <select value={color} onChange={onSelectColorChange}>
           <option value="#4285f4">Blue</option>
           <option value="#33b679">Green</option>
           <option value="#f4511e">Orange</option>
@@ -117,7 +78,6 @@ export default ({ onSubmit, isVisible, onCancel, pendingTile }) => {
             console.log("submitted:", startTime, endTime)
             const tile = {
               text,
-              size,
               color,
               day,
               startTime,
