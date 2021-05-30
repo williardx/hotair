@@ -1,15 +1,11 @@
 import React, { useRef, useEffect } from "react"
 import roundRect from "~js/helpers/roundedRectangle"
 
-export default ({ tile, position, color, text, day, startTime, endTime }) => {
+export default ({ tile }) => {
+  const { color, text, tileHeight, tileWidth } = tile
   const canvasRef = useRef(null)
   const maxTextWidth = 130
   const textVerticalOffset = 20
-  const calendarColumnWidthPct = 1 / 7
-  const calendarRowHeightPct = 1 / 13
-  const tileWidth = calendarColumnWidthPct * window.innerWidth * 0.9
-  const tileHeight =
-    (window.innerHeight * calendarRowHeightPct * (endTime - startTime)) / 2
 
   function getLines(ctx, text, maxWidth) {
     var words = text.split(" ")

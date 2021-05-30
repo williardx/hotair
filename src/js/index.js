@@ -196,22 +196,22 @@ const App = () => {
     setCalendarVisibilityToggle(!calendarVisibilityToggle)
   }
 
-  useEffect(() => {
-    // Automatically add a new cloud when (1) we have nothing new to show
-    // and a a cloud goes off screen and (2) we get a new tile from the
-    // database
-    const interval = setInterval(() => {
-      if (clouds.length < 3) {
-        const activeCloudIds = clouds.map((cloud) => cloud.id)
-        const newCloud = randomChoice(
-          savedTiles.filter((tile) => activeCloudIds.indexOf(tile.id) === -1)
-        )
-        setClouds([...clouds, newCloud])
-      }
-    }, 1000)
+  // useEffect(() => {
+  //   // Automatically add a new cloud when (1) we have nothing new to show
+  //   // and a a cloud goes off screen and (2) we get a new tile from the
+  //   // database
+  //   const interval = setInterval(() => {
+  //     if (clouds.length < 3) {
+  //       const activeCloudIds = clouds.map((cloud) => cloud.id)
+  //       const newCloud = randomChoice(
+  //         savedTiles.filter((tile) => activeCloudIds.indexOf(tile.id) === -1)
+  //       )
+  //       setClouds([...clouds, newCloud])
+  //     }
+  //   }, 1000)
 
-    return () => clearInterval(interval)
-  }, [clouds])
+  //   return () => clearInterval(interval)
+  // }, [clouds])
 
   return (
     <>

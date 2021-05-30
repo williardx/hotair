@@ -12,6 +12,7 @@ export default ({
   toggleCalendarVisibility,
 }) => {
   const [formVisibilityToggle, setFormVisibilityToggle] = useState(false)
+  const [pendingTile, setPendingTile] = useState(null)
 
   const toggleFormVisibility = () => {
     setFormVisibilityToggle(!formVisibilityToggle)
@@ -19,6 +20,17 @@ export default ({
 
   const onEventFormSubmit = (tile) => {
     handleAddTile(tile)
+    setPendingTile(null)
+    toggleFormVisibility()
+  }
+
+  const handleCreatePendingTile = (tile) => {
+    setPendingTile(tile)
+    toggleFormVisibility()
+  }
+
+  const handleCancelCreateTile = () => {
+    setPendingTile(null)
     toggleFormVisibility()
   }
 
@@ -33,7 +45,6 @@ export default ({
         display: isVisible ? "flex" : "none",
       }}
     >
-      {/* <Sidebar /> */}
       {tiles.map((tile, index) => (
         <Tile
           tile={tile}
@@ -45,24 +56,17 @@ export default ({
           endTime={tile.endTime}
         />
       ))}
-      <PlusButton onClick={toggleFormVisibility} />
       <CloseButton onClick={toggleCalendarVisibility} />
-      <EventForm
-        isVisible={formVisibilityToggle}
-        onSubmit={onEventFormSubmit}
-      />
-      <Grid numRows={13} />
+      {pendingTile !== null && (
+        <EventForm
+          pendingTile={pendingTile}
+          isVisible={formVisibilityToggle}
+          onSubmit={onEventFormSubmit}
+          onCancel={handleCancelCreateTile}
+          toggleFormVisibility={toggleFormVisibility}
+        />
+      )}
+      <Grid numRows={13} handleCreatePendingTile={handleCreatePendingTile} />
     </div>
-  )
-}
-
-const Sidebar = () => {
-  return (
-    <div
-      style={{
-        height: "100%",
-        width: "300px",
-      }}
-    ></div>
   )
 }

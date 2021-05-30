@@ -20,14 +20,14 @@ const generateTimeSeries = (hourStart, hourEnd, step) => {
 
 const times = generateTimeSeries(7, 22, 30).slice(2)
 
-export default ({ onSubmit, isVisible }) => {
+export default ({ onSubmit, isVisible, onCancel, pendingTile }) => {
   const initialState = {
     text: "",
     size: "small",
     color: "#4285f4",
-    day: 0,
-    startTime: times[0].value,
-    endTime: times[1].value,
+    day: pendingTile.day,
+    startTime: pendingTile.startTime,
+    endTime: pendingTile.endTime,
   }
 
   const [text, setText] = useState(initialState.text)
@@ -121,11 +121,11 @@ export default ({ onSubmit, isVisible }) => {
           <option value={5}>周六</option>
           <option value={0}>周日</option>
         </select>
-        <label>Choose start time</label>
+        {/* <label>Choose start time</label>
         <select value={startTime} onChange={onSelectStartTimeChange}>
           {times.map((t) => (
             <option key={"end" + t.display} value={t.value}>
-              {t.display}
+              {t.value}
             </option>
           ))}
         </select>
@@ -133,13 +133,14 @@ export default ({ onSubmit, isVisible }) => {
         <select value={endTime} onChange={onSelectEndTimeChange}>
           {times.map((t) => (
             <option key={"start" + t.display} value={t.value}>
-              {t.display}
+              {t.value}
             </option>
           ))}
-        </select>
+        </select> */}
         <button
           onClick={(e) => {
             e.preventDefault()
+            console.log("submitted:", startTime, endTime)
             const tile = {
               text,
               size,
@@ -148,22 +149,29 @@ export default ({ onSubmit, isVisible }) => {
               startTime,
               endTime,
               tileHeight:
-                (window.innerHeight *
-                  calendarRowHeightPct *
-                  (endTime - startTime)) /
-                2,
+                window.innerHeight *
+                calendarRowHeightPct *
+                (endTime - startTime + 1),
               tileWidth: calendarColumnWidthPct * window.innerWidth * 0.9,
               x: window.innerWidth * calendarColumnWidthPct * day,
-              y: (window.innerHeight * calendarRowHeightPct * startTime) / 2,
+              y: window.innerHeight * calendarRowHeightPct * (startTime + 1),
               id: Math.floor(Math.random() * 100000),
               opacity: 1,
             }
             console.log(tile)
-            onSubmit && onSubmit(tile)
+            onSubmit(tile)
             resetForm()
           }}
         >
           Submit
+        </button>
+        <button
+          onClick={(e) => {
+            e.preventDefault()
+            onCancel()
+          }}
+        >
+          Close
         </button>
       </form>
     </div>
