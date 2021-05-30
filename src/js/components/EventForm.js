@@ -1,8 +1,5 @@
 import React, { useState, useCallback } from "react"
 
-const calendarColumnWidthPct = 1 / 7
-const calendarRowHeightPct = 1 / 13
-
 const generateTimeSeries = (hourStart, hourEnd, step) => {
   const dt = new Date(1970, 0, 1, hourStart)
   const rc = []
@@ -20,8 +17,10 @@ const generateTimeSeries = (hourStart, hourEnd, step) => {
 
 const times = generateTimeSeries(7, 22, 30).slice(2)
 
-export default ({ onSubmit, isVisible, onCancel, pendingTile }) => {
+export default ({ onSubmit, isVisible, onCancel, pendingTile, numRows }) => {
   const { startTime, endTime, day } = pendingTile
+  const calendarColumnWidthPct = 1 / 7
+  const calendarRowHeightPct = 1 / numRows
   const initialColor = "#4285f4"
   const [text, setText] = useState("")
   const [color, setColor] = useState(initialColor)
@@ -88,7 +87,7 @@ export default ({ onSubmit, isVisible, onCancel, pendingTile }) => {
                 (endTime - startTime + 1),
               tileWidth: calendarColumnWidthPct * window.innerWidth * 0.9,
               x: window.innerWidth * calendarColumnWidthPct * day,
-              y: window.innerHeight * calendarRowHeightPct * (startTime + 1),
+              y: window.innerHeight * calendarRowHeightPct * (startTime + 2),
               id: Math.floor(Math.random() * 100000),
               opacity: 1,
             }

@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react"
 
 export default ({ numRows, handleCreatePendingTile }) => {
+  const debugGrid = false
   // function dates(current) {
   //   var week = new Array()
   //   // Starting Monday not Sunday
@@ -64,8 +65,13 @@ export default ({ numRows, handleCreatePendingTile }) => {
             row={rowIndex}
             col={colIndex}
             key={`${rowIndex}-${colIndex}`}
-            className="cell"
-          ></div>
+            style={{
+              borderRight: "1px solid #eee",
+              borderBottom: rowIndex % 2 === 1 ? "1px solid #eee" : "none",
+            }}
+          >
+            {debugGrid ? `(${rowIndex}, ${colIndex})` : ""}
+          </div>
         )
       })
     })
@@ -78,25 +84,25 @@ export default ({ numRows, handleCreatePendingTile }) => {
       onTouchEnd={handleTouchEnd}
       // onTouchMove={handleTouchMove}
     >
-      <div className="cell header">
+      <div className="header">
         <h1 className="day">周一</h1>
       </div>
-      <div className="cell header">
+      <div className="header">
         <h1 className="day">周二</h1>
       </div>
-      <div className="cell header">
+      <div className="header">
         <h1 className="day">周三</h1>
       </div>
-      <div className="cell header">
+      <div className="header">
         <h1 className="day">周四</h1>
       </div>
-      <div className="cell header">
+      <div className="header">
         <h1 className="day">周五</h1>
       </div>
-      <div className="cell header">
+      <div className="header">
         <h1 className="day">周六</h1>
       </div>
-      <div className="cell header">
+      <div className="header">
         <h1 className="day">周日</h1>
       </div>
       {createRows()}

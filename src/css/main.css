@@ -1,3 +1,7 @@
+:root {
+  --num-rows: 26;
+}
+
 html,
 body {
   box-sizing: border-box;
@@ -54,16 +58,15 @@ p {
   width: 100%;
   height: 100%;
   display: grid;
-  grid-template-rows: repeat(13, calc(100% / 13));
+  grid-template-rows: repeat(var(--num-rows), calc(100% / var(--num-rows)));
   grid-template-columns: repeat(7, 14.2%);
 }
 
-.cell {
-  border-bottom: 1px solid #eee;
+.header {
   border-right: 1px solid #eee;
-}
-
-.cell.header {
+  border-bottom: 1px solid #eee;
+  grid-row-start: 1;
+  grid-row-end: span 2;
   display: flex;
   align-items: flex-end;
   justify-content: center;

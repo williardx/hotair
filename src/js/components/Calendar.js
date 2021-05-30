@@ -11,6 +11,7 @@ export default ({
   tiles,
   toggleCalendarVisibility,
 }) => {
+  const numRows = 26
   const [formVisibilityToggle, setFormVisibilityToggle] = useState(false)
   const [pendingTile, setPendingTile] = useState(null)
 
@@ -59,6 +60,7 @@ export default ({
       <CloseButton onClick={toggleCalendarVisibility} />
       {pendingTile !== null && (
         <EventForm
+          numRows={numRows}
           pendingTile={pendingTile}
           isVisible={formVisibilityToggle}
           onSubmit={onEventFormSubmit}
@@ -66,7 +68,10 @@ export default ({
           toggleFormVisibility={toggleFormVisibility}
         />
       )}
-      <Grid numRows={13} handleCreatePendingTile={handleCreatePendingTile} />
+      <Grid
+        numRows={numRows}
+        handleCreatePendingTile={handleCreatePendingTile}
+      />
     </div>
   )
 }
