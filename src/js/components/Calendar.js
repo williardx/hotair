@@ -30,6 +30,12 @@ export default ({
     toggleFormVisibility()
   }
 
+  const handleCloseCalendar = () => {
+    if (!formVisibilityToggle) {
+      toggleCalendarVisibility()
+    }
+  }
+
   return (
     <div
       style={{
@@ -45,7 +51,10 @@ export default ({
       {tiles.map((tile, index) => (
         <Tile numRows={numRows} tile={tile} key={index.toString()} />
       ))}
-      <CloseButton onClick={toggleCalendarVisibility} />
+      <CloseButton
+        onClick={handleCloseCalendar}
+        disabled={formVisibilityToggle}
+      />
       {pendingTile !== null && (
         <EventForm
           numRows={numRows}

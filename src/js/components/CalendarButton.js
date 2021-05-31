@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { BiCalendar } from "react-icons/bi"
 
-export default ({ onClick, icon }) => {
+export default ({ onClick }) => {
   const [isPressed, setIsPressed] = useState(false)
   const togglePress = () => {
     setIsPressed(!isPressed)

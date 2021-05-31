@@ -1,10 +1,12 @@
 import React, { useState } from "react"
-import { BiCheck } from "react-icons/bi"
+import { BiCloud } from "react-icons/bi"
 
-export default ({ onClick }) => {
+export default ({ onClick, disabled }) => {
   const [isPressed, setIsPressed] = useState(false)
   const togglePress = () => {
-    setIsPressed(!isPressed)
+    if (!disabled) {
+      setIsPressed(!isPressed)
+    }
   }
   return (
     <button
@@ -24,8 +26,9 @@ export default ({ onClick }) => {
         borderRadius: 100,
         bottom: 100,
         right: 95,
-        backgroundColor: isPressed ? "#2da81a" : "#289117",
+        backgroundColor: isPressed ? "#4da6ff" : "#2693ff",
         zIndex: 1000,
+        opacity: disabled ? "50%" : "100%",
       }}
     >
       <div
@@ -37,7 +40,7 @@ export default ({ onClick }) => {
           left: 11,
         }}
       >
-        <BiCheck />
+        <BiCloud />
       </div>
     </button>
   )
