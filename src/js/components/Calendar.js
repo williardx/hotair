@@ -54,6 +54,7 @@ export default ({
           onSubmit={onEventFormSubmit}
           onCancel={handleCancelCreateTile}
           toggleFormVisibility={toggleFormVisibility}
+          setPendingTile={setPendingTile}
         />
       )}
       <Grid

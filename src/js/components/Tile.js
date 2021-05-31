@@ -49,7 +49,7 @@ export default ({ tile, numRows }) => {
         context.fillText(lines[i], 10, 25 + i * textVerticalOffset)
       }
     }
-  }, [tileHeight])
+  }, [tileHeight, color, text])
 
   return (
     <canvas

@@ -17,7 +17,14 @@ const generateTimeSeries = (hourStart, hourEnd, step) => {
 
 const times = generateTimeSeries(7, 22, 30).slice(2)
 
-export default ({ onSubmit, isVisible, onCancel, pendingTile, numRows }) => {
+export default ({
+  onSubmit,
+  isVisible,
+  onCancel,
+  pendingTile,
+  numRows,
+  setPendingTile,
+}) => {
   const { startTime, endTime, day } = pendingTile
   const calendarColumnWidthPct = 1 / 7
   const calendarRowHeightPct = 1 / numRows
@@ -25,15 +32,16 @@ export default ({ onSubmit, isVisible, onCancel, pendingTile, numRows }) => {
   const [text, setText] = useState("")
   const [color, setColor] = useState(initialColor)
 
-  const onTextInputChange = useCallback(
-    (e) => {
-      setText(e.target.value)
-    },
-    [setText]
-  )
+  const onTextInputChange = (e) => {
+    const text = e.target.value
+    setText(text)
+    setPendingTile({ ...pendingTile, text: text })
+  }
 
   const onSelectColorChange = (e) => {
-    setColor(e.target.value)
+    const color = e.target.value
+    setColor(color)
+    setPendingTile({ ...pendingTile, color: color })
   }
 
   const resetForm = () => {
@@ -45,8 +53,6 @@ export default ({ onSubmit, isVisible, onCancel, pendingTile, numRows }) => {
     <div
       style={{
         position: "fixed",
-        width: "100%",
-        height: "100%",
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "white",
