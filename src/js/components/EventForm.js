@@ -74,7 +74,6 @@ export default ({ onSubmit, isVisible, onCancel, pendingTile, numRows }) => {
         <button
           onClick={(e) => {
             e.preventDefault()
-            console.log("submitted:", startTime, endTime)
             const tile = {
               text,
               color,
@@ -91,7 +90,6 @@ export default ({ onSubmit, isVisible, onCancel, pendingTile, numRows }) => {
               id: Math.floor(Math.random() * 100000),
               opacity: 1,
             }
-            console.log(tile)
             onSubmit(tile)
             resetForm()
           }}

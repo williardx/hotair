@@ -23,7 +23,7 @@ export default ({ onClick }) => {
         position: "fixed",
         borderRadius: 100,
         bottom: 100,
-        right: 220,
+        right: 95,
         backgroundColor: isPressed ? "#2da81a" : "#289117",
         zIndex: 1000,
       }}

@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useRef } from "react"
 import PlusButton from "./PlusButton"
 import EventForm from "~js/components/EventForm"
 import Grid from "~js/components/Grid"
@@ -25,11 +25,6 @@ export default ({
     toggleFormVisibility()
   }
 
-  const handleCreatePendingTile = (tile) => {
-    setPendingTile(tile)
-    toggleFormVisibility()
-  }
-
   const handleCancelCreateTile = () => {
     setPendingTile(null)
     toggleFormVisibility()
@@ -46,16 +41,9 @@ export default ({
         display: isVisible ? "flex" : "none",
       }}
     >
+      {pendingTile && <Tile numRows={numRows} tile={pendingTile} />}
       {tiles.map((tile, index) => (
-        <Tile
-          tile={tile}
-          color={tile.color}
-          text={tile.text}
-          key={index.toString()}
-          day={tile.day}
-          startTime={tile.startTime}
-          endTime={tile.endTime}
-        />
+        <Tile numRows={numRows} tile={tile} key={index.toString()} />
       ))}
       <CloseButton onClick={toggleCalendarVisibility} />
       {pendingTile !== null && (
@@ -70,7 +58,9 @@ export default ({
       )}
       <Grid
         numRows={numRows}
-        handleCreatePendingTile={handleCreatePendingTile}
+        pendingTile={pendingTile}
+        setPendingTile={setPendingTile}
+        toggleFormVisibility={toggleFormVisibility}
       />
     </div>
   )

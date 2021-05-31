@@ -1,6 +1,11 @@
 import React, { useState, useRef } from "react"
 
-export default ({ numRows, handleCreatePendingTile }) => {
+export default ({
+  numRows,
+  pendingTile,
+  setPendingTile,
+  toggleFormVisibility,
+}) => {
   const debugGrid = false
   // function dates(current) {
   //   var week = new Array()
@@ -23,45 +28,62 @@ export default ({ numRows, handleCreatePendingTile }) => {
   //   ))
   // }
 
-  const touchStart = useRef(null)
-
   const handleTouchStart = (e) => {
-    touchStart.current = {
-      row: e.target.getAttribute("row"),
-      col: e.target.getAttribute("col"),
-    }
-    console.log("touchStart", touchStart.current)
-  }
-
-  const handleTouchEnd = (e) => {
-    const target = document.elementFromPoint(
-      e.changedTouches[0].clientX,
-      e.changedTouches[0].clientY
+    const targets = document.elementsFromPoint(
+      e.touches[0].clientX,
+      e.touches[0].clientY
     )
-    const touchEnd = {
-      row: target.getAttribute("row"),
-      col: target.getAttribute("col"),
+    const cell = targets.filter((obj) => obj?.className === "cell").pop()
+    if (cell) {
+      const touchStart = {
+        row: cell.getAttribute("row"),
+        col: cell.getAttribute("col"),
+      }
+      const day = parseInt(touchStart.col)
+      const startTime = parseInt(touchStart.row)
+      const endTime = parseInt(touchStart.row)
+      setPendingTile({
+        day,
+        startTime,
+        endTime,
+        color: "#4285f4",
+        text: "",
+        id: Math.floor(Math.random() * 100000),
+        opacity: 1,
+      })
     }
-    console.log("touchEnd", touchEnd)
-    handleCreatePendingTile({
-      day: parseInt(touchStart.current.col),
-      startTime: parseInt(touchStart.current.row),
-      endTime: parseInt(touchEnd.row),
-    })
   }
 
-  // const handleTouchMove = (e) => {
-  //   const target = document.elementFromPoint(
-  //     e.touches[0].clientX,
-  //     e.touches[0].clientY
-  //   )
-  // }
+  const handleTouchMove = (e) => {
+    const targets = document.elementsFromPoint(
+      e.touches[0].clientX,
+      e.touches[0].clientY
+    )
+    const cell = targets.filter((obj) => obj?.className === "cell").pop()
+    if (cell) {
+      const touchMove = {
+        row: parseInt(cell.getAttribute("row")),
+        col: parseInt(cell.getAttribute("col")),
+      }
+      if (touchMove.row !== pendingTile.endTime) {
+        setPendingTile({
+          ...pendingTile,
+          endTime: touchMove.row,
+        })
+      }
+    }
+  }
+
+  const handleTouchEnd = () => {
+    toggleFormVisibility()
+  }
 
   const createRows = () => {
     return Array.from(Array(numRows)).flatMap((val, rowIndex) => {
       return Array.from(Array(7)).map((_, colIndex) => {
         return (
           <div
+            className="cell"
             row={rowIndex}
             col={colIndex}
             key={`${rowIndex}-${colIndex}`}
@@ -81,8 +103,8 @@ export default ({ numRows, handleCreatePendingTile }) => {
     <div
       className="grid"
       onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
-      // onTouchMove={handleTouchMove}
     >
       <div className="header">
         <h1 className="day">周一</h1>
