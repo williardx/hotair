@@ -28,6 +28,9 @@ export default ({
   const { startTime, endTime, day } = pendingTile
   const calendarColumnWidthPct = 1 / 7
   const calendarRowHeightPct = 1 / numRows
+  const tileWidth = calendarColumnWidthPct * window.innerWidth * 0.9
+  const left = window.innerWidth * calendarColumnWidthPct * day + tileWidth + 20
+  const top = window.innerHeight * calendarRowHeightPct * (startTime + 2)
   const initialColor = "#4285f4"
   const [text, setText] = useState("")
   const [color, setColor] = useState(initialColor)
@@ -57,6 +60,8 @@ export default ({
         alignItems: "center",
         backgroundColor: "white",
         zIndex: 1000,
+        top: top,
+        left: left,
         display: isVisible ? "flex" : "none",
       }}
     >

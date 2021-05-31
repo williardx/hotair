@@ -15,6 +15,18 @@ export default ({
   const [formVisibilityToggle, setFormVisibilityToggle] = useState(false)
   const [pendingTile, setPendingTile] = useState(null)
 
+  const hideForm = () => {
+    if (formVisibilityToggle) {
+      setFormVisibilityToggle(!formVisibilityToggle)
+    }
+  }
+
+  const showForm = () => {
+    if (!formVisibilityToggle) {
+      setFormVisibilityToggle(!formVisibilityToggle)
+    }
+  }
+
   const toggleFormVisibility = () => {
     setFormVisibilityToggle(!formVisibilityToggle)
   }
@@ -27,7 +39,7 @@ export default ({
 
   const handleCancelCreateTile = () => {
     setPendingTile(null)
-    toggleFormVisibility()
+    hideForm()
   }
 
   const handleCloseCalendar = () => {
@@ -62,7 +74,6 @@ export default ({
           isVisible={formVisibilityToggle}
           onSubmit={onEventFormSubmit}
           onCancel={handleCancelCreateTile}
-          toggleFormVisibility={toggleFormVisibility}
           setPendingTile={setPendingTile}
         />
       )}
@@ -70,7 +81,9 @@ export default ({
         numRows={numRows}
         pendingTile={pendingTile}
         setPendingTile={setPendingTile}
+        handleCancelCreateTile={handleCancelCreateTile}
         toggleFormVisibility={toggleFormVisibility}
+        showForm={showForm}
       />
     </div>
   )

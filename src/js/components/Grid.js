@@ -5,6 +5,8 @@ export default ({
   pendingTile,
   setPendingTile,
   toggleFormVisibility,
+  handleCancelCreateTile,
+  showForm,
 }) => {
   const debugGrid = false
   // function dates(current) {
@@ -75,7 +77,7 @@ export default ({
   }
 
   const handleTouchEnd = () => {
-    toggleFormVisibility()
+    showForm()
   }
 
   const createRows = () => {
