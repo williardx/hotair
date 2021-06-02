@@ -78,7 +78,7 @@ export default ({
           flexDirection: "column",
         }}
       >
-        <h3 style={{ color: "#424247" }}>Why are you busy?</h3>
+        <h4 style={{ color: "#424247" }}>Why are you busy?</h4>
         <input
           ref={inputRef}
           style={{
@@ -151,13 +151,6 @@ export default ({
                 day,
                 startTime,
                 endTime,
-                tileHeight:
-                  window.innerHeight *
-                  calendarRowHeightPct *
-                  (endTime - startTime + 1),
-                tileWidth: calendarColumnWidthPct * window.innerWidth * 0.9,
-                x: window.innerWidth * calendarColumnWidthPct * day,
-                y: window.innerHeight * calendarRowHeightPct * (startTime + 2),
                 id: Math.floor(Math.random() * 100000),
                 opacity: 1,
               }

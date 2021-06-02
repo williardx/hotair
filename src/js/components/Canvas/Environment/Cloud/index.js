@@ -24,35 +24,38 @@ import roundRect from "../../../../helpers/roundedRectangle"
  */
 
 export default ({ tile, size, handleRemoveCloud }) => {
-  const { text, color, position, id } = tile
+  const { text, color, position, id, startTime, endTime, day } = tile
   const { camera } = useThree()
   // Need a scaling factor because the camera is at a distance
+  const numRows = 26
   const tileScalingFactor = 1
-  const tileHeight = tile.tileHeight * tileScalingFactor
-  const tileWidth = tile.tileWidth * tileScalingFactor
-  let tilePosition
-  if (tile.x !== undefined && tile.y !== undefined) {
-    // Convert screen coordinates to world space
-    // https://stackoverflow.com/a/13091694
-    var vec = new Vector3() // create once and reuse
-    var pos = new Vector3() // create once and reuse
+  const calendarColumnWidthPct = 1 / 7
+  const calendarRowHeightPct = 1 / numRows
+  const tileHeight =
+    window.innerHeight * calendarRowHeightPct * (endTime - startTime + 1)
+  const tileWidth = calendarColumnWidthPct * window.innerWidth * 0.9
+  const tileX = window.innerWidth * calendarColumnWidthPct * day
+  const tileY = window.innerHeight * calendarRowHeightPct * (startTime + 2)
 
-    // tile.x and tile.y are the coordinates of the top left corner
-    // of the tile in calendar view. Adjust by 1/2 tile width and
-    // tile height to align the centers of the calendar and cloud
-    vec.set(
-      ((tile.x + tileWidth / 2) / window.innerWidth) * 2 - 1,
-      -((tile.y + tileHeight / 2) / window.innerHeight) * 2 + 1,
-      0
-    )
-    vec.unproject(camera)
-    vec.sub(camera.position).normalize()
-    var distance = -camera.position.z / vec.z
-    pos.copy(camera.position).add(vec.multiplyScalar(distance))
-    tilePosition = [pos.x, pos.y, 0]
-  } else {
-    tilePosition = position
-  }
+  // Convert screen coordinates to world space
+  // https://stackoverflow.com/a/13091694
+  var vec = new Vector3() // create once and reuse
+  var pos = new Vector3() // create once and reuse
+
+  // tileX and tileY are the coordinates of the top left corner
+  // of the tile in calendar view. Adjust by 1/2 tile width and
+  // tile height to align the centers of the calendar and cloud
+  vec.set(
+    ((tileX + tileWidth / 2) / window.innerWidth) * 2 - 1,
+    -((tileY + tileHeight / 2) / window.innerHeight) * 2 + 1,
+    0
+  )
+  vec.unproject(camera)
+  vec.sub(camera.position).normalize()
+  var distance = -camera.position.z / vec.z
+  pos.copy(camera.position).add(vec.multiplyScalar(distance))
+  const tilePosition = [pos.x, pos.y, 0]
+
   const group = useRef()
   const mesh = useRef()
   const initialOpacity = tile.opacity

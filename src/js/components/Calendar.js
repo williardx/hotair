@@ -104,7 +104,6 @@ export default ({
   const handleMouseMove = (e) => {
     e.preventDefault()
     if (mouseDown.current) {
-      console.log("mousemove", e.clientX, e.clientY)
       const targets = document.elementsFromPoint(e.clientX, e.clientY)
       const cell = targets.filter((obj) => obj?.className === "cell").pop()
       if (cell) {
@@ -116,7 +115,6 @@ export default ({
   const handleMouseUp = (e) => {
     e.preventDefault()
     if (mouseDown.current) {
-      console.log("mouseup")
       mouseDown.current = false
       showForm()
     }
