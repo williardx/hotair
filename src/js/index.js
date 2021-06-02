@@ -175,8 +175,7 @@ const App = () => {
   // Tiles that are in the sky
   const [clouds, setClouds] = useState([...tiles])
 
-  const [calendarVisibilityToggle, setCalendarVisibilityToggle] =
-    useState(false)
+  const [calendarVisibilityToggle, setCalendarVisibilityToggle] = useState(true)
 
   const handleAddTile = (tile) => {
     setTiles([...tiles, tile])

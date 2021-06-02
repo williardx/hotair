@@ -1,19 +1,30 @@
-- Render previous user input on load
+Must do
+-------
+~ Style UI for adding an event
+- Tiles can overlap (or at least new tiles appear over old tiles)
+- Input validation
+- Make calendar bilingual
+- Handle case where user wants to add clouds and there are too many clouds already
+- Figure out how to do China-friendly fonts
+- Fix fade-in transition for clouds being added to scene
+- Fill calendar with my own events / content
+
+Nice to have
+------------
+- Make calendar responsive
+- Smooth transition in/out of calendar vs. sky
+- Performance optimizations (prefer scale down)
+
+Done
+----
+X Render previous user input on load
 X Fix calendar so that tiles / calendar columns are aligned / centered
 X Map tile calendar position to position in sky
 X Improve tile placement so that the tiles form a reasonable grid
-- Tiles can overlap
 ? Improve performance so that many tiles can be on the screen at once
-- Style UI for adding an event
-- Clouds move at different speeds and in different directions
 X Remove objects when they go off screen
-- Input validation
 X Fix scale of calendar tiles vs. clouds
 X Ability to create larger tiles
-- Make calendar responsive
-- Make calendar bilingual
-- Handle case where user wants to add clouds and there are too many clouds already
-? Smooth transition in/out of calendar vs. sky
 X Smooth transition for calendar being added to sky
 X Smooth transition for calendar being removed from sky
 X UI feedback for tapping buttons

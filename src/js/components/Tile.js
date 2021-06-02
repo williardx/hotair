@@ -39,7 +39,7 @@ export default ({ tile, numRows }) => {
     canvas.width = tileWidth
     canvas.height = tileHeight
     context.clearRect(0, 0, canvas.width, canvas.height)
-    context.font = "18pt Roboto"
+    context.font = "18pt sans-serif"
     context.fillStyle = color
     roundRect(context, 0, 0, tileWidth, tileHeight, 10, true, false)
     context.fillStyle = "white"

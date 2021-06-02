@@ -1,21 +1,5 @@
-import React, { useState, useCallback } from "react"
-
-const generateTimeSeries = (hourStart, hourEnd, step) => {
-  const dt = new Date(1970, 0, 1, hourStart)
-  const rc = []
-  let counter = 0
-  while (dt.getHours() < hourEnd) {
-    rc.push({
-      value: counter,
-      display: dt.toLocaleTimeString("en-US"),
-    })
-    dt.setMinutes(dt.getMinutes() + step)
-    counter += 1
-  }
-  return rc
-}
-
-const times = generateTimeSeries(7, 22, 30).slice(2)
+import React, { useState, useRef, useEffect } from "react"
+import { BiCheck, BiX } from "react-icons/bi"
 
 export default ({
   onSubmit,
@@ -34,6 +18,7 @@ export default ({
   const initialColor = "#4285f4"
   const [text, setText] = useState("")
   const [color, setColor] = useState(initialColor)
+  const inputRef = useRef(null)
 
   const onTextInputChange = (e) => {
     const text = e.target.value
@@ -42,7 +27,7 @@ export default ({
   }
 
   const onSelectColorChange = (e) => {
-    const color = e.target.value
+    const color = e.target.getAttribute("color")
     setColor(color)
     setPendingTile({ ...pendingTile, color: color })
   }
@@ -51,6 +36,23 @@ export default ({
     setText("")
     setColor(initialColor)
   }
+
+  const ColorOption = ({ color }) => {
+    return (
+      <div
+        onClick={onSelectColorChange}
+        color={color}
+        className="colorOption"
+        style={{
+          backgroundColor: color,
+        }}
+      />
+    )
+  }
+
+  useEffect(() => {
+    inputRef.current.focus()
+  }, [isVisible])
 
   return (
     <div
@@ -64,6 +66,10 @@ export default ({
         top: top,
         left: left,
         display: isVisible ? "flex" : "none",
+        border: "1px solid #d0d0d0",
+        padding: 20,
+        borderRadius: 10,
+        fontSize: 20,
       }}
     >
       <form
@@ -72,50 +78,96 @@ export default ({
           flexDirection: "column",
         }}
       >
-        <label>What are you busy with?</label>
-        <input onChange={onTextInputChange} value={text} type="text" />
-        <label>Choose event color</label>
-        <select value={color} onChange={onSelectColorChange}>
-          <option value="#4285f4">Blue</option>
-          <option value="#33b679">Green</option>
-          <option value="#f4511e">Orange</option>
-          <option value="#f6bf26">Yellow</option>
-          <option value="#cd60eb">Purple</option>
-          <option value="#ff3232">Red</option>
-        </select>
-        <button
-          onClick={(e) => {
-            e.preventDefault()
-            const tile = {
-              text,
-              color,
-              day,
-              startTime,
-              endTime,
-              tileHeight:
-                window.innerHeight *
-                calendarRowHeightPct *
-                (endTime - startTime + 1),
-              tileWidth: calendarColumnWidthPct * window.innerWidth * 0.9,
-              x: window.innerWidth * calendarColumnWidthPct * day,
-              y: window.innerHeight * calendarRowHeightPct * (startTime + 2),
-              id: Math.floor(Math.random() * 100000),
-              opacity: 1,
-            }
-            onSubmit(tile)
-            resetForm()
+        <h3 style={{ color: "#424247" }}>Why are you busy?</h3>
+        <input
+          ref={inputRef}
+          style={{
+            marginTop: 5,
+            padding: 2,
+            border: 0,
+            outline: 0,
+            borderBottom: "1px #969696 solid",
+          }}
+          onChange={onTextInputChange}
+          value={text}
+          type="text"
+        />
+        <div style={{ marginTop: 10 }}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+            }}
+          >
+            <ColorOption color="#4285f4" />
+            <ColorOption color="#33b679" />
+            <ColorOption color="#f4511e" />
+          </div>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+            }}
+          >
+            <ColorOption color="#f6bf26" />
+            <ColorOption color="#cd60eb" />
+            <ColorOption color="#ff3232" />
+          </div>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            marginTop: 20,
           }}
         >
-          Submit
-        </button>
-        <button
-          onClick={(e) => {
-            e.preventDefault()
-            onCancel()
-          }}
-        >
-          Close
-        </button>
+          <button
+            className="eventFormButton"
+            style={{
+              border: "1px solid #cccccc",
+              backgroundColor: "white",
+              color: "#929292",
+            }}
+            onClick={(e) => {
+              e.preventDefault()
+              onCancel()
+            }}
+          >
+            <BiX />
+          </button>
+          <button
+            className="eventFormButton"
+            style={{
+              backgroundColor: "#2693ff",
+              color: "white",
+            }}
+            onClick={(e) => {
+              e.preventDefault()
+              const tile = {
+                text,
+                color,
+                day,
+                startTime,
+                endTime,
+                tileHeight:
+                  window.innerHeight *
+                  calendarRowHeightPct *
+                  (endTime - startTime + 1),
+                tileWidth: calendarColumnWidthPct * window.innerWidth * 0.9,
+                x: window.innerWidth * calendarColumnWidthPct * day,
+                y: window.innerHeight * calendarRowHeightPct * (startTime + 2),
+                id: Math.floor(Math.random() * 100000),
+                opacity: 1,
+              }
+              onSubmit(tile)
+              resetForm()
+            }}
+          >
+            <BiCheck />
+          </button>
+        </div>
       </form>
     </div>
   )
