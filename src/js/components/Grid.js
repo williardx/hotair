@@ -1,13 +1,6 @@
-import React, { useState, useRef } from "react"
+import React from "react"
 
-export default ({
-  numRows,
-  pendingTile,
-  setPendingTile,
-  toggleFormVisibility,
-  handleCancelCreateTile,
-  showForm,
-}) => {
+export default ({ numRows, pendingTile, setPendingTile, showForm }) => {
   const debugGrid = false
   // function dates(current) {
   //   var week = new Array()
@@ -30,11 +23,8 @@ export default ({
   //   ))
   // }
 
-  const handleTouchStart = (e) => {
-    const targets = document.elementsFromPoint(
-      e.touches[0].clientX,
-      e.touches[0].clientY
-    )
+  const createPendingTile = (x, y) => {
+    const targets = document.elementsFromPoint(x, y)
     const cell = targets.filter((obj) => obj?.className === "cell").pop()
     if (cell) {
       const touchStart = {
@@ -56,11 +46,8 @@ export default ({
     }
   }
 
-  const handleTouchMove = (e) => {
-    const targets = document.elementsFromPoint(
-      e.touches[0].clientX,
-      e.touches[0].clientY
-    )
+  const updatePendingTile = (x, y) => {
+    const targets = document.elementsFromPoint(x, y)
     const cell = targets.filter((obj) => obj?.className === "cell").pop()
     if (cell) {
       const touchMove = {
@@ -76,7 +63,15 @@ export default ({
     }
   }
 
-  const handleTouchEnd = () => {
+  const handleTouchStart = (e) => {
+    createPendingTile(e.touches[0].clientX, e.touches[0].clientY)
+  }
+
+  const handleTouchMove = (e) => {
+    updatePendingTile(e.touches[0].clientX, e.touches[0].clientY)
+  }
+
+  const handleTouchEnd = (e) => {
     showForm()
   }
 

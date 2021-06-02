@@ -19,7 +19,7 @@ X Smooth transition for calendar being removed from sky
 X UI feedback for tapping buttons
 X Ability to exit event form
 X Draw tile on drag
-- Preview text in calendar tile
+X Preview text in calendar tile
 
 --------------------------------------
 X Scene starts with a sky

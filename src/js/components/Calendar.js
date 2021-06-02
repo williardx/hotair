@@ -14,6 +14,7 @@ export default ({
   const numRows = 26
   const [formVisibilityToggle, setFormVisibilityToggle] = useState(false)
   const [pendingTile, setPendingTile] = useState(null)
+  const mouseDown = useRef(false)
 
   const hideForm = () => {
     if (formVisibilityToggle) {
@@ -48,6 +49,79 @@ export default ({
     }
   }
 
+  const tappedOnInput = (targets) => {
+    return (
+      targets.filter(
+        (obj) => obj?.id === "event-form" || obj?.id === "close-button"
+      ).length > 0
+    )
+  }
+
+  const createPendingTile = (cell) => {
+    const start = {
+      row: cell.getAttribute("row"),
+      col: cell.getAttribute("col"),
+    }
+    const day = parseInt(start.col)
+    const startTime = parseInt(start.row)
+    const endTime = parseInt(start.row)
+    setPendingTile({
+      day,
+      startTime,
+      endTime,
+      color: "#4285f4",
+      text: "",
+      id: Math.floor(Math.random() * 100000),
+      opacity: 1,
+    })
+  }
+
+  const updatePendingTile = (cell) => {
+    const move = {
+      row: parseInt(cell.getAttribute("row")),
+      col: parseInt(cell.getAttribute("col")),
+    }
+    if (move.row !== pendingTile.endTime) {
+      setPendingTile({
+        ...pendingTile,
+        endTime: move.row,
+      })
+    }
+  }
+
+  const handleMouseDown = (e) => {
+    const targets = document.elementsFromPoint(e.clientX, e.clientY)
+    if (tappedOnInput(targets)) {
+      return
+    }
+    const cell = targets.filter((obj) => obj?.className === "cell").pop()
+    if (cell) {
+      mouseDown.current = true
+      createPendingTile(cell)
+    }
+  }
+
+  const handleMouseMove = (e) => {
+    e.preventDefault()
+    if (mouseDown.current) {
+      console.log("mousemove", e.clientX, e.clientY)
+      const targets = document.elementsFromPoint(e.clientX, e.clientY)
+      const cell = targets.filter((obj) => obj?.className === "cell").pop()
+      if (cell) {
+        updatePendingTile(cell)
+      }
+    }
+  }
+
+  const handleMouseUp = (e) => {
+    e.preventDefault()
+    if (mouseDown.current) {
+      console.log("mouseup")
+      mouseDown.current = false
+      showForm()
+    }
+  }
+
   return (
     <div
       style={{
@@ -58,6 +132,9 @@ export default ({
         zIndex: 1000,
         display: isVisible ? "flex" : "none",
       }}
+      onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
     >
       {pendingTile && <Tile numRows={numRows} tile={pendingTile} />}
       {tiles.map((tile, index) => (

@@ -10,6 +10,7 @@ export default ({ onClick, disabled }) => {
   }
   return (
     <button
+      id="close-button"
       onClick={() => {
         onClick()
         togglePress()

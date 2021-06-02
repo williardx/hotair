@@ -54,6 +54,7 @@ export default ({
 
   return (
     <div
+      id="event-form"
       style={{
         position: "fixed",
         justifyContent: "center",
