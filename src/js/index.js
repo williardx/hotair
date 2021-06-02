@@ -47,7 +47,9 @@ const App = () => {
   // The set of all tiles in the project - these are definitely visible
   // in the calendar view
 
-  const savedTiles = [
+  const randomChoice = (arr) => arr[Math.floor(Math.random() * arr.length)]
+
+  const [tiles, setTiles] = useState([
     {
       text: "life",
       size: "small",
@@ -55,10 +57,6 @@ const App = () => {
       day: "2",
       startTime: 4,
       endTime: 9,
-      tileHeight: 196.92307692307693,
-      tileWidth: 175.62857142857143,
-      x: 390.2857142857143,
-      y: 157.53846153846155,
       id: 92001,
       opacity: 0,
     },
@@ -69,10 +67,6 @@ const App = () => {
       day: "4",
       startTime: 12,
       endTime: 18,
-      tileHeight: 236.30769230769232,
-      tileWidth: 175.62857142857143,
-      x: 780.5714285714286,
-      y: 472.61538461538464,
       id: 14100,
       opacity: 0,
     },
@@ -83,10 +77,6 @@ const App = () => {
       day: "3",
       startTime: 12,
       endTime: 17,
-      tileHeight: 196.92307692307693,
-      tileWidth: 175.62857142857143,
-      x: 585.4285714285714,
-      y: 472.61538461538464,
       id: 60997,
       opacity: 0,
     },
@@ -96,86 +86,38 @@ const App = () => {
       color: "#ff3232",
       day: "1",
       startTime: 4,
-      endTime: 22,
-      tileHeight: 300,
-      tileWidth: 175.62857142857143,
-      x: 195.14285714285714,
-      y: 157.53846153846155,
+      endTime: 15,
       id: 97950,
       opacity: 0,
     },
     {
-      text: "𝚆𝙾𝚁𝚂𝙷𝙸𝙿 𝚂𝙰𝚃𝙰𝙽 𖤐",
-      size: "small",
-      color: "#ff3232",
-      day: "4",
-      startTime: "13",
-      endTime: "18",
-      tileHeight: 196.92307692307693,
-      tileWidth: 175.62857142857143,
-      x: 790.5714285714286,
-      y: 512,
-      id: 59819,
+      text: "lol art",
+      color: "#4285f4",
+      day: 5,
+      startTime: 6,
+      endTime: 11,
+      id: 89468,
       opacity: 0,
     },
-  ]
-
-  const randomChoice = (arr) => arr[Math.floor(Math.random() * arr.length)]
-
-  const [tiles, setTiles] = useState([
-    // {
-    //   text: "𝚆𝙾𝚁𝚂𝙷𝙸𝙿 𝚂𝙰𝚃𝙰𝙽 𖤐",
-    //   size: "large",
-    //   color: "#ff3232",
-    //   day: 3,
-    //   startTime: 10,
-    //   endTime: 15,
-    //   position: [0, 0, 0],
-    //   id: Math.floor(Math.random() * 100000),
-    //   tileHeight: 200,
-    // },
-    // {
-    //   text: "work",
-    //   size: "small",
-    //   color: "#4285f4",
-    //   day: "1",
-    //   startTime: 5,
-    //   endTime: 10,
-    //   tileHeight: 708.9230769230769,
-    //   tileWidth: 175.62857142857143,
-    //   x: 205.14285714285714,
-    //   y: 196.92307692307693,
-    //   id: 40216,
-    // },
-    // {
-    //   text: "𝚆𝙾𝚁𝚂𝙷𝙸𝙿 𝚂𝙰𝚃𝙰𝙽 𖤐",
-    //   size: "small",
-    //   color: "#ff3232",
-    //   day: "4",
-    //   startTime: "13",
-    //   endTime: "18",
-    //   tileHeight: 196.92307692307693,
-    //   tileWidth: 175.62857142857143,
-    //   x: 790.5714285714286,
-    //   y: 512,
-    //   id: 59819,
-    // },
-    // {
-    //   text: "THIS FUCKING PROJECT",
-    //   size: "large",
-    //   color: "#f6bf26",
-    //   position: [randomRange(-1.5, 1.5), randomRange(-1, 1), 0],
-    // },
-    // ...initialTiles,
+    {
+      text: "Fixing my toilet over and over again",
+      color: "#f4511e",
+      day: 3,
+      startTime: 5,
+      endTime: 9,
+      id: 64432,
+      opacity: 1,
+    },
   ])
 
   // Tiles that are queued up to be added to sky
   const [nextTiles, setNextTiles] = useState([])
 
   // Tiles that are in the sky
-  const [clouds, setClouds] = useState([...tiles])
+  const [clouds, setClouds] = useState([])
 
-  const [calendarVisibilityToggle, setCalendarVisibilityToggle] = useState(true)
+  const [calendarVisibilityToggle, setCalendarVisibilityToggle] =
+    useState(false)
 
   const handleAddTile = (tile) => {
     setTiles([...tiles, tile])
@@ -195,22 +137,22 @@ const App = () => {
     setCalendarVisibilityToggle(!calendarVisibilityToggle)
   }
 
-  // useEffect(() => {
-  //   // Automatically add a new cloud when (1) we have nothing new to show
-  //   // and a a cloud goes off screen and (2) we get a new tile from the
-  //   // database
-  //   const interval = setInterval(() => {
-  //     if (clouds.length < 3) {
-  //       const activeCloudIds = clouds.map((cloud) => cloud.id)
-  //       const newCloud = randomChoice(
-  //         savedTiles.filter((tile) => activeCloudIds.indexOf(tile.id) === -1)
-  //       )
-  //       setClouds([...clouds, newCloud])
-  //     }
-  //   }, 1000)
+  useEffect(() => {
+    // Automatically add a new cloud when (1) we have nothing new to show
+    // and a a cloud goes off screen and (2) we get a new tile from the
+    // database
+    const interval = setInterval(() => {
+      if (clouds.length < 3) {
+        const activeCloudIds = clouds.map((cloud) => cloud.id)
+        const newCloud = randomChoice(
+          tiles.filter((tile) => activeCloudIds.indexOf(tile.id) === -1)
+        )
+        setClouds([...clouds, newCloud])
+      }
+    }, 30000)
 
-  //   return () => clearInterval(interval)
-  // }, [clouds])
+    return () => clearInterval(interval)
+  }, [clouds])
 
   return (
     <>

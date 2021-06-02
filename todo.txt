@@ -6,14 +6,15 @@ Must do
 - Make calendar bilingual
 - Handle case where user wants to add clouds and there are too many clouds already
 - Figure out how to do China-friendly fonts
-- Fix fade-in transition for clouds being added to scene
 - Fill calendar with my own events / content
+- Deploy website
 
 Nice to have
 ------------
 - Make calendar responsive
 - Smooth transition in/out of calendar vs. sky
 - Performance optimizations (prefer scale down)
+- Users can see other users' input from around the world
 
 Done
 ----

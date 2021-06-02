@@ -22,11 +22,9 @@ export default ({ tiles, handleRemoveCloud }) => {
     <>
       <Background shouldTransition={shouldTransition} />
       {tiles.map((tile) => {
-        const scaleHeight = tile.tileHeight > 512 * 0.8 ? 2 : 1
         return (
           <Cloud
             shouldTransition={shouldTransition}
-            size={[1, scaleHeight]}
             tile={tile}
             key={tile.id.toString()}
             handleRemoveCloud={handleRemoveCloud}

@@ -33,6 +33,8 @@ export default ({ tile, size, handleRemoveCloud }) => {
   const calendarRowHeightPct = 1 / numRows
   const tileHeight =
     window.innerHeight * calendarRowHeightPct * (endTime - startTime + 1)
+  const scaleWidth = 1
+  const scaleHeight = tileHeight > 512 * 0.8 ? 2 : 1
   const tileWidth = calendarColumnWidthPct * window.innerWidth * 0.9
   const tileX = window.innerWidth * calendarColumnWidthPct * day
   const tileY = window.innerHeight * calendarRowHeightPct * (startTime + 2)
@@ -59,7 +61,6 @@ export default ({ tile, size, handleRemoveCloud }) => {
   const group = useRef()
   const mesh = useRef()
   const initialOpacity = tile.opacity
-  const [width, height] = size
   const maxBlurAmount = 20
   const maxTextWidth = 130
   const textVerticalOffset = 20
@@ -68,7 +69,7 @@ export default ({ tile, size, handleRemoveCloud }) => {
 
   const src2 = useAssets("images/clouds/2.jpg")
   const t2 = useTexture(src2)
-  t2.repeat.set(width, height)
+  t2.repeat.set(scaleWidth, scaleHeight)
 
   function getLines(ctx, text, maxWidth) {
     var words = text.split(" ")
@@ -92,8 +93,8 @@ export default ({ tile, size, handleRemoveCloud }) => {
   const canvasTexture = useMemo(() => {
     const canvas = document.createElement("canvas")
     const context = canvas.getContext("2d")
-    canvas.width = 512 * width
-    canvas.height = 512 * height
+    canvas.width = 512 * scaleWidth
+    canvas.height = 512 * scaleHeight
     context.globalAlpha = initialOpacity
     context.globalAlphaAnimation = initialOpacity
     context.font = "18pt sans-serif"
@@ -236,7 +237,7 @@ export default ({ tile, size, handleRemoveCloud }) => {
 
       // return
       // Otherwise keep animating
-      const scalingFactor = 0.5
+      const scalingFactor = 0.25
       material.uniforms.uTime.value += 1
       const ctx = material.uniforms.canvasTexture.value.image.getContext("2d")
 
@@ -314,7 +315,7 @@ export default ({ tile, size, handleRemoveCloud }) => {
   // }, [material])
   return (
     <group ref={group}>
-      <mesh ref={mesh} position={tilePosition} scale={[width, height, 1]}>
+      <mesh ref={mesh} position={tilePosition} scale={[1, scaleHeight, 1]}>
         <planeBufferGeometry args={[1, 1, 5, 5]} attach="geometry" />
         <primitive object={material} attach="material" opacity={0.5} />
       </mesh>
