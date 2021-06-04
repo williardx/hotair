@@ -138,6 +138,15 @@ export default ({
     e.preventDefault()
     if (mouseDown.current) {
       mouseDown.current = false
+      const overlappingTiles = tiles.filter((tile) =>
+        isOverlapping(pendingTile, tile)
+      )
+      setPendingTile({
+        ...pendingTile,
+        zIndex: overlappingTiles.length, // This value never changes
+        overlappingTiles: overlappingTiles,
+        numOverlappingTiles: overlappingTiles.length, // This value updates
+      })
       showForm()
     }
   }

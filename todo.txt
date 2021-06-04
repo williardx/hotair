@@ -1,20 +1,25 @@
-Must do for 6/18 deadline
--------------------------
+Must do
+-------
 ~ Style UI for adding an event
-X Tiles can overlap (or at least new tiles appear over old tiles)
+X Tiles can overlap in an interesting way (or at least new tiles appear over old tiles)
+X Event form opens on left/right depending on where tile is in calendar
 - Input validation
+- Truncate lines of long strings correctly in tile
+- Handle narrow tiles
+    - Truncate long text (show ellipsis)
+    - Adjust font size down for narrower tiles
+- Tap on event shows full event title (if it's hidden)
 - Make calendar bilingual
 - Handle case where user wants to add clouds and there are too many clouds already
 - Figure out how to do China-friendly fonts
 - Fill calendar with my own events / content
-- Deploy website
-- Favicon
-- Event form opens on left/right depending on where tile is in calendar
-- Tap on event shows event title (if it's hidden)
 - Tiles have elevation/drop shadow over each other
+- Favicon
+- Deploy website
 
 Nice to have
 ------------
+- Make calendar tiling masonry more intuitive
 - Browser compatibility with Safari
 - Make calendar responsive
 - Smooth transition in/out of calendar vs. sky

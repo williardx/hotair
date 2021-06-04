@@ -11,15 +11,25 @@ export default ({
 }) => {
   const { startTime, endTime, day, numOverlappingTiles, overlappingTiles } =
     pendingTile
+  const formWidth = 250
   const calendarColumnWidthPct = 1 / 7
   const calendarRowHeightPct = 1 / numRows
   const tileWidth = calendarColumnWidthPct * window.innerWidth * 0.9
-  const left = window.innerWidth * calendarColumnWidthPct * day + tileWidth + 20
+  const tileLeft = window.innerWidth * calendarColumnWidthPct * day
+  const left = day < 4 ? tileLeft + tileWidth + 20 : tileLeft - formWidth - 20
   const top = window.innerHeight * calendarRowHeightPct * (startTime + 2)
   const initialColor = "#4285f4"
   const [text, setText] = useState("")
   const [color, setColor] = useState(initialColor)
+  const [isSubmitPressed, setIsSubmitPressed] = useState(false)
   const inputRef = useRef(null)
+  const isSubmitDisabled = text.length === 0
+
+  const togglePress = () => {
+    if (!isSubmitDisabled) {
+      setIsSubmitPressed(!isSubmitPressed)
+    }
+  }
 
   const onTextInputChange = (e) => {
     const text = e.target.value
@@ -71,6 +81,7 @@ export default ({
         padding: 20,
         borderRadius: 10,
         fontSize: 20,
+        width: formWidth,
       }}
     >
       <form
@@ -81,6 +92,7 @@ export default ({
       >
         <h4 style={{ color: "#424247" }}>Why are you busy?</h4>
         <input
+          required
           ref={inputRef}
           style={{
             marginTop: 5,
@@ -139,11 +151,17 @@ export default ({
             <BiX />
           </button>
           <button
+            disabled={isSubmitDisabled}
             className="eventFormButton"
             style={{
-              backgroundColor: "#2693ff",
+              backgroundColor: isSubmitPressed ? "#4da6ff" : "#2693ff",
               color: "white",
+              opacity: isSubmitDisabled ? "50%" : "100%",
             }}
+            onMouseDown={togglePress}
+            onTouchStart={togglePress}
+            onTouchEnd={togglePress}
+            onTouchCancel={togglePress}
             onClick={(e) => {
               e.preventDefault()
               const tile = {

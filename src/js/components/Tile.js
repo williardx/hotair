@@ -28,7 +28,7 @@ export default ({ tile, numRows, isPending }) => {
   const tileY = window.innerHeight * calendarRowHeightPct * (startTime + 2)
   const canvasRef = useRef(null)
   const maxTextWidth = tileWidth - 10
-  const textVerticalOffset = 20
+  const textVerticalOffset = 25
 
   function getLines(ctx, text, maxWidth) {
     var words = text.split(" ")
