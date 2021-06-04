@@ -14,7 +14,7 @@ export default ({
   const formWidth = 250
   const calendarColumnWidthPct = 1 / 7
   const calendarRowHeightPct = 1 / numRows
-  const tileWidth = calendarColumnWidthPct * window.innerWidth * 0.9
+  const tileWidth = calendarColumnWidthPct * window.innerWidth * 0.8
   const tileLeft = window.innerWidth * calendarColumnWidthPct * day
   const left = day < 4 ? tileLeft + tileWidth + 20 : tileLeft - formWidth - 20
   const top = window.innerHeight * calendarRowHeightPct * (startTime + 2)

@@ -3,6 +3,7 @@ import EventForm from "~js/components/EventForm"
 import Grid from "~js/components/Grid"
 import Tile from "~js/components/Tile"
 import CloseButton from "~js/components/CloseButton"
+import TileModal from "~js/components/TileModal"
 
 export default ({
   isVisible,
@@ -13,7 +14,10 @@ export default ({
 }) => {
   const numRows = 26
   const [formVisibilityToggle, setFormVisibilityToggle] = useState(false)
+  const [tileModalVisibilityToggle, setTileModalVisibilityToggle] =
+    useState(false)
   const [pendingTile, setPendingTile] = useState(null)
+  const [selectedTile, setSelectedTile] = useState(null)
   const mouseDown = useRef(false)
 
   const hideForm = () => {
@@ -67,10 +71,27 @@ export default ({
     }
   }
 
+  const handleOpenModal = (tile) => {
+    setSelectedTile(tile)
+    setTileModalVisibilityToggle(!tileModalVisibilityToggle)
+  }
+
+  const handleCloseModal = () => {
+    setSelectedTile(null)
+    setTileModalVisibilityToggle(!tileModalVisibilityToggle)
+  }
+
+  const tappedOnTile = (targets) => {
+    return targets.filter((obj) => obj?.className === "tile").length > 0
+  }
+
   const tappedOnInput = (targets) => {
     return (
       targets.filter(
-        (obj) => obj?.id === "event-form" || obj?.id === "close-button"
+        (obj) =>
+          obj?.id === "event-form" ||
+          obj?.id === "close-button" ||
+          obj?.id === "tile-modal"
       ).length > 0
     )
   }
@@ -113,7 +134,7 @@ export default ({
 
   const handleMouseDown = (e) => {
     const targets = document.elementsFromPoint(e.clientX, e.clientY)
-    if (tappedOnInput(targets)) {
+    if (tappedOnInput(targets) || tappedOnTile(targets)) {
       return
     }
     const cell = getCell(targets)
@@ -138,15 +159,17 @@ export default ({
     e.preventDefault()
     if (mouseDown.current) {
       mouseDown.current = false
-      const overlappingTiles = tiles.filter((tile) =>
-        isOverlapping(pendingTile, tile)
-      )
-      setPendingTile({
-        ...pendingTile,
-        zIndex: overlappingTiles.length, // This value never changes
-        overlappingTiles: overlappingTiles,
-        numOverlappingTiles: overlappingTiles.length, // This value updates
-      })
+      if (pendingTile) {
+        const overlappingTiles = tiles.filter((tile) =>
+          isOverlapping(pendingTile, tile)
+        )
+        setPendingTile({
+          ...pendingTile,
+          zIndex: overlappingTiles.length, // This value never changes
+          overlappingTiles: overlappingTiles,
+          numOverlappingTiles: overlappingTiles.length, // This value updates
+        })
+      }
       showForm()
     }
   }
@@ -156,7 +179,7 @@ export default ({
       e.touches[0].clientX,
       e.touches[0].clientY
     )
-    if (tappedOnInput(targets)) {
+    if (tappedOnInput(targets) || tappedOnTile(targets)) {
       return
     }
     const cell = getCell(targets)
@@ -181,8 +204,6 @@ export default ({
     !(tileA.startTime > tileB.endTime || tileA.endTime < tileB.startTime)
 
   const handleTouchEnd = (e) => {
-    // on touch end compute the number of overlapping tiles
-    // Iterate through every tile. If The tile is not in the same day, continue
     const targets = document.elementsFromPoint(
       e.changedTouches[0].clientX,
       e.changedTouches[0].clientY
@@ -190,15 +211,17 @@ export default ({
     if (tappedOnInput(targets)) {
       return
     }
-    const overlappingTiles = tiles.filter((tile) =>
-      isOverlapping(pendingTile, tile)
-    )
-    setPendingTile({
-      ...pendingTile,
-      zIndex: overlappingTiles.length, // This value never changes
-      overlappingTiles: overlappingTiles,
-      numOverlappingTiles: overlappingTiles.length, // This value updates
-    })
+    if (pendingTile) {
+      const overlappingTiles = tiles.filter((tile) =>
+        isOverlapping(pendingTile, tile)
+      )
+      setPendingTile({
+        ...pendingTile,
+        zIndex: overlappingTiles.length, // This value never changes
+        overlappingTiles: overlappingTiles,
+        numOverlappingTiles: overlappingTiles.length, // This value updates
+      })
+    }
     showForm()
   }
 
@@ -224,7 +247,12 @@ export default ({
         <Tile numRows={numRows} tile={pendingTile} isPending={true} />
       )}
       {tiles.map((tile, index) => (
-        <Tile numRows={numRows} tile={tile} key={index.toString()} />
+        <Tile
+          numRows={numRows}
+          tile={tile}
+          key={index.toString()}
+          handleOpenModal={handleOpenModal}
+        />
       ))}
       <CloseButton
         onClick={handleCloseCalendar}
@@ -239,6 +267,13 @@ export default ({
           onCancel={handleCancelCreateTile}
           setPendingTile={setPendingTile}
           setTiles={setTiles}
+        />
+      )}
+      {selectedTile !== null && (
+        <TileModal
+          tile={selectedTile}
+          numRows={numRows}
+          handleCloseModal={handleCloseModal}
         />
       )}
       <Grid

@@ -8,7 +8,7 @@ X Wrap strings correctly in tile
 - Handle narrow tiles
     - Truncate long text (show ellipsis)
     - Adjust font size down for narrower tiles
-- Tap on event shows full event title (if it's hidden)
+X Tap on event shows full event title
 - Make calendar bilingual
 - Handle case where user wants to add clouds and there are too many clouds already
 - Figure out how to do China-friendly fonts
@@ -19,12 +19,13 @@ X Wrap strings correctly in tile
 
 Nice to have
 ------------
+- Ability to draw tile up instead of just down
 - Tiles have elevation/drop shadow over each other
 - Make calendar tiling masonry more intuitive
 - Browser compatibility with Safari
 - Make calendar responsive
 - Smooth transition in/out of calendar vs. sky
-- Performance optimizations (prefer scale down)
+- Performance optimizations
 - Users can see other users' input from around the world
 
 Open q's

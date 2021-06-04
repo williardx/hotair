@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from "react"
 import roundRect from "~js/helpers/roundedRectangle"
 import getLines from "~js/helpers/getLines"
 
-export default ({ tile, numRows, isPending }) => {
+export default ({ tile, numRows, isPending, handleOpenModal }) => {
   const {
     color,
     text,
@@ -14,10 +14,9 @@ export default ({ tile, numRows, isPending }) => {
   } = tile
   const calendarColumnWidthPct = 1 / 7
   const calendarRowHeightPct = 1 / numRows
-  const fullTileWidth = calendarColumnWidthPct * window.innerWidth * 0.9
+  const fullTileWidth = calendarColumnWidthPct * window.innerWidth * 0.8
   const tileWidth =
-    (calendarColumnWidthPct * window.innerWidth * 0.9) /
-    (isPending ? 1 : (numOverlappingTiles ?? 0) + 1)
+    fullTileWidth / (isPending ? 1 : (numOverlappingTiles ?? 0) + 1)
   const tileHeight =
     window.innerHeight * calendarRowHeightPct * (endTime - startTime + 1)
   const tileX =
@@ -44,7 +43,6 @@ export default ({ tile, numRows, isPending }) => {
     context.fillStyle = "white"
     if (text) {
       const lines = getLines(context, text, maxTextWidth)
-      console.log(text, lines)
       for (let i = 0; i < lines.length; i++) {
         context.fillText(lines[i], 10, 25 + i * textVerticalOffset)
       }
@@ -53,6 +51,7 @@ export default ({ tile, numRows, isPending }) => {
 
   return (
     <canvas
+      onClick={() => !isPending && handleOpenModal(tile)}
       className="tile"
       width={150}
       height={200}
