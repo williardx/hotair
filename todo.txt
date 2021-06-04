@@ -4,7 +4,7 @@ Must do
 X Tiles can overlap in an interesting way (or at least new tiles appear over old tiles)
 X Event form opens on left/right depending on where tile is in calendar
 X Input validation
-- Truncate lines of long strings correctly in tile
+X Wrap strings correctly in tile
 - Handle narrow tiles
     - Truncate long text (show ellipsis)
     - Adjust font size down for narrower tiles
@@ -13,13 +13,13 @@ X Input validation
 - Handle case where user wants to add clouds and there are too many clouds already
 - Figure out how to do China-friendly fonts
 - Fill calendar with my own events / content
-- Tiles have elevation/drop shadow over each other
 - Favicon
 - Deploy website
 
 
 Nice to have
 ------------
+- Tiles have elevation/drop shadow over each other
 - Make calendar tiling masonry more intuitive
 - Browser compatibility with Safari
 - Make calendar responsive
@@ -52,8 +52,8 @@ X Preview text in calendar tile
 X Scene starts with a sky
 X There are already several clouds floating in the sky
 X Tiles are being added to the scene and slowly transition into clouds
-    - If there are new tiles in the database then we show those
-    - Otherwise, we cycle through all tiles added by users
+    X If there are new tiles in the database then we show those
+    X Otherwise, we cycle through all tiles added by users
 X Pushing plus button (or whatever other icon) takes user to calendar view
 Calendar view shows a very cluttered calendar, all with tiles created from user input
 X User can then push plus button to add their own tile

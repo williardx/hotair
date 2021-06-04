@@ -15,7 +15,8 @@ import { useAssets, useTexture } from "~js/hooks"
 import gui from "~js/helpers/gui"
 import fragment from "~shaders/cloud.frag"
 import vertex from "~shaders/cloud.vert"
-import roundRect from "../../../../helpers/roundedRectangle"
+import roundRect from "~js/helpers/roundedRectangle"
+import getLines from "~js/helpers/getLines"
 
 /**
  * To go from opaque texture -> cloud texture
@@ -62,7 +63,7 @@ export default ({ tile, size, handleRemoveCloud }) => {
   const mesh = useRef()
   const initialOpacity = tile.opacity
   const maxBlurAmount = 20
-  const maxTextWidth = 130
+  const maxTextWidth = tileWidth - 10
   const textVerticalOffset = 25
   const textXOffset = 10
   const textYOffset = 25
@@ -70,25 +71,6 @@ export default ({ tile, size, handleRemoveCloud }) => {
   const src2 = useAssets("images/clouds/2.jpg")
   const t2 = useTexture(src2)
   t2.repeat.set(scaleWidth, scaleHeight)
-
-  function getLines(ctx, text, maxWidth) {
-    var words = text.split(" ")
-    var lines = []
-    var currentLine = words[0]
-
-    for (var i = 1; i < words.length; i++) {
-      var word = words[i]
-      var width = ctx.measureText(currentLine + " " + word).width
-      if (width < maxWidth) {
-        currentLine += " " + word
-      } else {
-        lines.push(currentLine)
-        currentLine = word
-      }
-    }
-    lines.push(currentLine)
-    return lines
-  }
 
   const canvasTexture = useMemo(() => {
     const canvas = document.createElement("canvas")

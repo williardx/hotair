@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from "react"
 import roundRect from "~js/helpers/roundedRectangle"
+import getLines from "~js/helpers/getLines"
 
 export default ({ tile, numRows, isPending }) => {
   const {
@@ -30,25 +31,6 @@ export default ({ tile, numRows, isPending }) => {
   const maxTextWidth = tileWidth - 10
   const textVerticalOffset = 25
 
-  function getLines(ctx, text, maxWidth) {
-    var words = text.split(" ")
-    var lines = []
-    var currentLine = words[0]
-
-    for (var i = 1; i < words.length; i++) {
-      var word = words[i]
-      var width = ctx.measureText(currentLine + " " + word).width
-      if (width < maxWidth) {
-        currentLine += " " + word
-      } else {
-        lines.push(currentLine)
-        currentLine = word
-      }
-    }
-    lines.push(currentLine)
-    return lines
-  }
-
   useEffect(() => {
     const canvas = canvasRef.current
     const context = canvas.getContext("2d")
@@ -62,6 +44,7 @@ export default ({ tile, numRows, isPending }) => {
     context.fillStyle = "white"
     if (text) {
       const lines = getLines(context, text, maxTextWidth)
+      console.log(text, lines)
       for (let i = 0; i < lines.length; i++) {
         context.fillText(lines[i], 10, 25 + i * textVerticalOffset)
       }

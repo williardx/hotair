@@ -87,7 +87,7 @@ const App = () => {
       numOverlappingTiles: 0,
     },
     {
-      text: "𖤐𖤐𖤐𖤐𖤐𖤐𖤐 🤘🤘🤘🤘🤘🤘 66666666666 𖤐𖤐𖤐𖤐𖤐𖤐𖤐 🤘🤘🤘🤘🤘🤘 66666666666 𖤐𖤐𖤐𖤐𖤐𖤐𖤐 🤘🤘🤘🤘🤘🤘 66666666666 𖤐𖤐𖤐𖤐𖤐𖤐𖤐 🤘🤘🤘🤘🤘🤘 66666666666 𖤐𖤐𖤐𖤐𖤐𖤐𖤐 🤘🤘🤘🤘🤘🤘 66666666666 𖤐𖤐𖤐𖤐𖤐𖤐𖤐 🤘🤘🤘🤘🤘🤘 66666666666 ",
+      text: "startup",
       size: "small",
       color: "#ff3232",
       day: 1,
