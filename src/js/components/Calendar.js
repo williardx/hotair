@@ -73,6 +73,7 @@ export default ({
       text: "",
       id: Math.floor(Math.random() * 100000),
       opacity: 1,
+      zIndex: 1000,
     })
   }
 
@@ -89,12 +90,15 @@ export default ({
     }
   }
 
+  const getCell = (targets) =>
+    targets.filter((obj) => obj?.className === "cell").pop()
+
   const handleMouseDown = (e) => {
     const targets = document.elementsFromPoint(e.clientX, e.clientY)
     if (tappedOnInput(targets)) {
       return
     }
-    const cell = targets.filter((obj) => obj?.className === "cell").pop()
+    const cell = getCell(targets)
     if (cell) {
       mouseDown.current = true
       createPendingTile(cell)
@@ -105,7 +109,7 @@ export default ({
     e.preventDefault()
     if (mouseDown.current) {
       const targets = document.elementsFromPoint(e.clientX, e.clientY)
-      const cell = targets.filter((obj) => obj?.className === "cell").pop()
+      const cell = getCell(targets)
       if (cell) {
         updatePendingTile(cell)
       }
@@ -120,6 +124,52 @@ export default ({
     }
   }
 
+  const handleTouchStart = (e) => {
+    const targets = document.elementsFromPoint(
+      e.touches[0].clientX,
+      e.touches[0].clientY
+    )
+    if (tappedOnInput(targets)) {
+      return
+    }
+    const cell = getCell(targets)
+    if (cell) {
+      createPendingTile(cell)
+    }
+  }
+
+  const handleTouchMove = (e) => {
+    const targets = document.elementsFromPoint(
+      e.touches[0].clientX,
+      e.touches[0].clientY
+    )
+    const cell = getCell(targets)
+    if (cell) {
+      updatePendingTile(cell)
+    }
+  }
+
+  const isOverlapping = (tileA, tileB) =>
+    tileA.day === tileB.day &&
+    !(tileA.startTime > tileB.endTime || tileA.endTime < tileB.startTime)
+
+  const handleTouchEnd = (e) => {
+    // on touch end compute the number of overlapping tiles
+    // Iterate through every tile. If The tile is not in the same day, continue
+    const targets = document.elementsFromPoint(
+      e.changedTouches[0].clientX,
+      e.changedTouches[0].clientY
+    )
+    if (tappedOnInput(targets)) {
+      return
+    }
+    const overlappingTiles = tiles.filter((tile) =>
+      isOverlapping(pendingTile, tile)
+    )
+    console.log(overlappingTiles)
+    showForm()
+  }
+
   return (
     <div
       style={{
@@ -129,10 +179,14 @@ export default ({
         backgroundColor: "white",
         zIndex: 1000,
         display: isVisible ? "flex" : "none",
+        cursor: "pointer",
       }}
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
     >
       {pendingTile && <Tile numRows={numRows} tile={pendingTile} />}
       {tiles.map((tile, index) => (

@@ -53,12 +53,14 @@ export default ({ tile, numRows }) => {
 
   return (
     <canvas
+      className="tile"
       width={150}
       height={200}
       style={{
         position: "fixed",
         left: tileX,
         top: tileY,
+        zIndex: tile.zIndex,
       }}
       ref={canvasRef}
     />

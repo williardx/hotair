@@ -100,7 +100,7 @@ const App = () => {
       opacity: 0,
     },
     {
-      text: "Fixing my toilet over and over again",
+      text: "thinking thinking thinking",
       color: "#f4511e",
       day: 3,
       startTime: 5,
@@ -116,8 +116,7 @@ const App = () => {
   // Tiles that are in the sky
   const [clouds, setClouds] = useState([])
 
-  const [calendarVisibilityToggle, setCalendarVisibilityToggle] =
-    useState(false)
+  const [calendarVisibilityToggle, setCalendarVisibilityToggle] = useState(true)
 
   const handleAddTile = (tile) => {
     setTiles([...tiles, tile])

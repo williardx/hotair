@@ -1,6 +1,6 @@
 import React from "react"
 
-export default ({ numRows, pendingTile, setPendingTile, showForm }) => {
+export default ({ numRows }) => {
   const debugGrid = false
   // function dates(current) {
   //   var week = new Array()
@@ -22,58 +22,6 @@ export default ({ numRows, pendingTile, setPendingTile, showForm }) => {
   //     </div>
   //   ))
   // }
-
-  const createPendingTile = (x, y) => {
-    const targets = document.elementsFromPoint(x, y)
-    const cell = targets.filter((obj) => obj?.className === "cell").pop()
-    if (cell) {
-      const touchStart = {
-        row: cell.getAttribute("row"),
-        col: cell.getAttribute("col"),
-      }
-      const day = parseInt(touchStart.col)
-      const startTime = parseInt(touchStart.row)
-      const endTime = parseInt(touchStart.row)
-      setPendingTile({
-        day,
-        startTime,
-        endTime,
-        color: "#4285f4",
-        text: "",
-        id: Math.floor(Math.random() * 100000),
-        opacity: 1,
-      })
-    }
-  }
-
-  const updatePendingTile = (x, y) => {
-    const targets = document.elementsFromPoint(x, y)
-    const cell = targets.filter((obj) => obj?.className === "cell").pop()
-    if (cell) {
-      const touchMove = {
-        row: parseInt(cell.getAttribute("row")),
-        col: parseInt(cell.getAttribute("col")),
-      }
-      if (touchMove.row !== pendingTile.endTime) {
-        setPendingTile({
-          ...pendingTile,
-          endTime: touchMove.row,
-        })
-      }
-    }
-  }
-
-  const handleTouchStart = (e) => {
-    createPendingTile(e.touches[0].clientX, e.touches[0].clientY)
-  }
-
-  const handleTouchMove = (e) => {
-    updatePendingTile(e.touches[0].clientX, e.touches[0].clientY)
-  }
-
-  const handleTouchEnd = (e) => {
-    showForm()
-  }
 
   const createRows = () => {
     return Array.from(Array(numRows)).flatMap((val, rowIndex) => {
@@ -99,9 +47,9 @@ export default ({ numRows, pendingTile, setPendingTile, showForm }) => {
   return (
     <div
       className="grid"
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
+      // onTouchStart={handleTouchStart}
+      // onTouchMove={handleTouchMove}
+      // onTouchEnd={handleTouchEnd}
     >
       <div className="header">
         <h1 className="day">周一</h1>
