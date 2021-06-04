@@ -92,7 +92,8 @@ export default ({
       >
         <h4 style={{ color: "#424247" }}>Why are you busy?</h4>
         <input
-          required
+          // TODO: Calculate constant in maxLength instead of eyeballing it
+          maxLength={26 * (endTime - startTime)}
           ref={inputRef}
           style={{
             marginTop: 5,

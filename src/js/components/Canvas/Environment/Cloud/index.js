@@ -63,7 +63,7 @@ export default ({ tile, size, handleRemoveCloud }) => {
   const initialOpacity = tile.opacity
   const maxBlurAmount = 20
   const maxTextWidth = 130
-  const textVerticalOffset = 20
+  const textVerticalOffset = 25
   const textXOffset = 10
   const textYOffset = 25
 

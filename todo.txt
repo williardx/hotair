@@ -3,7 +3,7 @@ Must do
 ~ Style UI for adding an event
 X Tiles can overlap in an interesting way (or at least new tiles appear over old tiles)
 X Event form opens on left/right depending on where tile is in calendar
-- Input validation
+X Input validation
 - Truncate lines of long strings correctly in tile
 - Handle narrow tiles
     - Truncate long text (show ellipsis)
@@ -17,6 +17,7 @@ X Event form opens on left/right depending on where tile is in calendar
 - Favicon
 - Deploy website
 
+
 Nice to have
 ------------
 - Make calendar tiling masonry more intuitive
@@ -25,6 +26,10 @@ Nice to have
 - Smooth transition in/out of calendar vs. sky
 - Performance optimizations (prefer scale down)
 - Users can see other users' input from around the world
+
+Open q's
+--------
+- Hide the text after the tile transitions to cloud
 
 Done
 ----
