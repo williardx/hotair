@@ -1,5 +1,4 @@
 import React, { useState, useRef } from "react"
-import PlusButton from "./PlusButton"
 import EventForm from "~js/components/EventForm"
 import Grid from "~js/components/Grid"
 import Tile from "~js/components/Tile"
@@ -10,6 +9,7 @@ export default ({
   handleAddTile,
   tiles,
   toggleCalendarVisibility,
+  setTiles,
 }) => {
   const numRows = 26
   const [formVisibilityToggle, setFormVisibilityToggle] = useState(false)
@@ -33,6 +33,24 @@ export default ({
   }
 
   const onEventFormSubmit = (tile) => {
+    const { numOverlappingTiles, overlappingTiles } = tile
+    if (numOverlappingTiles > 0) {
+      const updatedTiles = overlappingTiles.map((ot) => {
+        if (numOverlappingTiles > ot.numOverlappingTiles) {
+          return {
+            ...ot,
+            numOverlappingTiles,
+          }
+        } else {
+          return ot
+        }
+      })
+      updatedTiles.forEach((ut) => {
+        const index = tiles.findIndex((t) => t.id === ut.id)
+        tiles[index] = ut
+      })
+      setTiles([...tiles])
+    }
     handleAddTile(tile)
     setPendingTile(null)
     toggleFormVisibility()
@@ -166,7 +184,12 @@ export default ({
     const overlappingTiles = tiles.filter((tile) =>
       isOverlapping(pendingTile, tile)
     )
-    console.log(overlappingTiles)
+    setPendingTile({
+      ...pendingTile,
+      zIndex: overlappingTiles.length, // This value never changes
+      overlappingTiles: overlappingTiles,
+      numOverlappingTiles: overlappingTiles.length, // This value updates
+    })
     showForm()
   }
 
@@ -188,7 +211,9 @@ export default ({
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
     >
-      {pendingTile && <Tile numRows={numRows} tile={pendingTile} />}
+      {pendingTile && (
+        <Tile numRows={numRows} tile={pendingTile} isPending={true} />
+      )}
       {tiles.map((tile, index) => (
         <Tile numRows={numRows} tile={tile} key={index.toString()} />
       ))}
@@ -204,6 +229,7 @@ export default ({
           onSubmit={onEventFormSubmit}
           onCancel={handleCancelCreateTile}
           setPendingTile={setPendingTile}
+          setTiles={setTiles}
         />
       )}
       <Grid

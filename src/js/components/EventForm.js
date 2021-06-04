@@ -9,7 +9,8 @@ export default ({
   numRows,
   setPendingTile,
 }) => {
-  const { startTime, endTime, day } = pendingTile
+  const { startTime, endTime, day, numOverlappingTiles, overlappingTiles } =
+    pendingTile
   const calendarColumnWidthPct = 1 / 7
   const calendarRowHeightPct = 1 / numRows
   const tileWidth = calendarColumnWidthPct * window.innerWidth * 0.9
@@ -151,6 +152,9 @@ export default ({
                 day,
                 startTime,
                 endTime,
+                initNumOverlappingTiles: numOverlappingTiles,
+                numOverlappingTiles,
+                overlappingTiles,
                 id: Math.floor(Math.random() * 100000),
                 opacity: 1,
               }

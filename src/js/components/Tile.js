@@ -1,17 +1,33 @@
 import React, { useRef, useEffect } from "react"
 import roundRect from "~js/helpers/roundedRectangle"
 
-export default ({ tile, numRows }) => {
-  const { color, text, startTime, day, endTime } = tile
+export default ({ tile, numRows, isPending }) => {
+  const {
+    color,
+    text,
+    startTime,
+    day,
+    endTime,
+    numOverlappingTiles = 0,
+    initNumOverlappingTiles = 0,
+  } = tile
   const calendarColumnWidthPct = 1 / 7
   const calendarRowHeightPct = 1 / numRows
-  const tileWidth = calendarColumnWidthPct * window.innerWidth * 0.9
+  const fullTileWidth = calendarColumnWidthPct * window.innerWidth * 0.9
+  const tileWidth =
+    (calendarColumnWidthPct * window.innerWidth * 0.9) /
+    (isPending ? 1 : (numOverlappingTiles ?? 0) + 1)
   const tileHeight =
     window.innerHeight * calendarRowHeightPct * (endTime - startTime + 1)
-  const tileX = window.innerWidth * calendarColumnWidthPct * day
+  const tileX =
+    window.innerWidth * calendarColumnWidthPct * day +
+    (numOverlappingTiles > 0
+      ? (fullTileWidth / (numOverlappingTiles + 1) - 10) *
+        initNumOverlappingTiles
+      : 0)
   const tileY = window.innerHeight * calendarRowHeightPct * (startTime + 2)
   const canvasRef = useRef(null)
-  const maxTextWidth = 130
+  const maxTextWidth = tileWidth - 10
   const textVerticalOffset = 20
 
   function getLines(ctx, text, maxWidth) {
@@ -50,7 +66,7 @@ export default ({ tile, numRows }) => {
         context.fillText(lines[i], 10, 25 + i * textVerticalOffset)
       }
     }
-  }, [tileHeight, color, text])
+  }, [tileWidth, tileHeight, color, text])
 
   return (
     <canvas

@@ -1,7 +1,7 @@
 Must do for 6/18 deadline
 -------------------------
 ~ Style UI for adding an event
-- Tiles can overlap (or at least new tiles appear over old tiles)
+X Tiles can overlap (or at least new tiles appear over old tiles)
 - Input validation
 - Make calendar bilingual
 - Handle case where user wants to add clouds and there are too many clouds already

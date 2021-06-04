@@ -54,41 +54,49 @@ const App = () => {
       text: "life",
       size: "small",
       color: "#33b679",
-      day: "2",
+      day: 2,
       startTime: 4,
       endTime: 9,
       id: 92001,
       opacity: 0,
+      initNumOverlappingTiles: 0,
+      numOverlappingTiles: 0,
     },
     {
       text: "work",
       size: "small",
       color: "#cd60eb",
-      day: "4",
+      day: 4,
       startTime: 12,
       endTime: 18,
       id: 14100,
       opacity: 0,
+      initNumOverlappingTiles: 0,
+      numOverlappingTiles: 0,
     },
     {
       text: "THIS PROJECT",
       size: "small",
       color: "#f6bf26",
-      day: "3",
+      day: 3,
       startTime: 12,
       endTime: 17,
       id: 60997,
       opacity: 0,
+      initNumOverlappingTiles: 0,
+      numOverlappingTiles: 0,
     },
     {
       text: "startup",
       size: "small",
       color: "#ff3232",
-      day: "1",
+      day: 1,
       startTime: 4,
       endTime: 15,
       id: 97950,
       opacity: 0,
+      initNumOverlappingTiles: 0,
+      numOverlappingTiles: 0,
     },
     {
       text: "lol art",
@@ -98,6 +106,8 @@ const App = () => {
       endTime: 11,
       id: 89468,
       opacity: 0,
+      initNumOverlappingTiles: 0,
+      numOverlappingTiles: 0,
     },
     {
       text: "thinking thinking thinking",
@@ -107,6 +117,8 @@ const App = () => {
       endTime: 9,
       id: 64432,
       opacity: 1,
+      initNumOverlappingTiles: 0,
+      numOverlappingTiles: 0,
     },
   ])
 
@@ -158,6 +170,7 @@ const App = () => {
       <CalendarButton onClick={toggleCalendarVisibility} />
       <Calendar
         tiles={tiles}
+        setTiles={setTiles}
         isVisible={calendarVisibilityToggle}
         handleAddTile={handleAddTile}
         toggleCalendarVisibility={toggleCalendarVisibility}
