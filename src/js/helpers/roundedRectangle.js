@@ -58,6 +58,7 @@ export default function roundRect(
     ctx.fill()
   }
   if (stroke) {
+    ctx.strokeStyle = "#FFFFFF"
     ctx.stroke()
   }
 }

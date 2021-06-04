@@ -41,7 +41,8 @@ export default ({ tile, numRows }) => {
     context.clearRect(0, 0, canvas.width, canvas.height)
     context.font = "18pt sans-serif"
     context.fillStyle = color
-    roundRect(context, 0, 0, tileWidth, tileHeight, 10, true, false)
+    // Subtract one to ensure the white stroke is visible
+    roundRect(context, 0, 0, tileWidth - 1, tileHeight - 1, 10, true, true)
     context.fillStyle = "white"
     if (text) {
       const lines = getLines(context, text, maxTextWidth)
