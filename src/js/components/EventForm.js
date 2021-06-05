@@ -48,7 +48,7 @@ export default ({
     setColor(initialColor)
   }
 
-  const ColorOption = ({ color }) => {
+  const ColorOption = ({ color, selectedColor }) => {
     return (
       <div
         onClick={onSelectColorChange}
@@ -56,6 +56,7 @@ export default ({
         className="colorOption"
         style={{
           backgroundColor: color,
+          opacity: color === selectedColor ? "100%" : "50%",
         }}
       />
     )
@@ -91,6 +92,7 @@ export default ({
         }}
       >
         <h4 style={{ color: "#424247" }}>Why are you busy?</h4>
+        <h5 style={{ color: "#424247" }}>你为什么忙？</h5>
         <input
           // TODO: Calculate constant in maxLength instead of eyeballing it
           maxLength={26 * (endTime - startTime)}
@@ -114,9 +116,9 @@ export default ({
               justifyContent: "center",
             }}
           >
-            <ColorOption color="#4285f4" />
-            <ColorOption color="#33b679" />
-            <ColorOption color="#f4511e" />
+            <ColorOption color="#4285f4" selectedColor={color} />
+            <ColorOption color="#33b679" selectedColor={color} />
+            <ColorOption color="#f4511e" selectedColor={color} />
           </div>
           <div
             style={{
@@ -125,9 +127,9 @@ export default ({
               justifyContent: "center",
             }}
           >
-            <ColorOption color="#f6bf26" />
-            <ColorOption color="#cd60eb" />
-            <ColorOption color="#ff3232" />
+            <ColorOption color="#f6bf26" selectedColor={color} />
+            <ColorOption color="#cd60eb" selectedColor={color} />
+            <ColorOption color="#ff3232" selectedColor={color} />
           </div>
         </div>
         <div

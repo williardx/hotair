@@ -1,21 +1,30 @@
 Must do
 -------
 ~ Style UI for adding an event
+    - Make it look good 😭
 X Tiles can overlap in an interesting way (or at least new tiles appear over old tiles)
 X Event form opens on left/right depending on where tile is in calendar
 X Input validation
 X Wrap strings correctly in tile
+- Fix bug where you can't type on a half hour size event
 - Handle narrow tiles
     - Truncate long text (show ellipsis)
     - Adjust font size down for narrower tiles
 X Tap on event shows full event title
-- Make calendar bilingual
+X Make calendar bilingual
 - Handle case where user wants to add clouds and there are too many clouds already
 - Figure out how to do China-friendly fonts
 - Fill calendar with my own events / content
 - Favicon
 - Deploy website
 
+iPad Issues
+-----------
+- !!! Implement blur/brighten effect with GLSL
+- !!! Fix screen flickering with calendar when creating an event - disable highlight?
+- !!! Fix tile sizing on iPad
+- Fix calendar tap actions
+- Fix black flicker as cloud appears on screen
 
 Nice to have
 ------------

@@ -52,25 +52,25 @@ export default ({ numRows }) => {
       // onTouchEnd={handleTouchEnd}
     >
       <div className="header">
-        <h1 className="day">周一</h1>
+        <h1 className="day">Sun</h1>
       </div>
       <div className="header">
-        <h1 className="day">周二</h1>
+        <h1 className="day">Mon</h1>
       </div>
       <div className="header">
-        <h1 className="day">周三</h1>
+        <h1 className="day">Tue</h1>
       </div>
       <div className="header">
-        <h1 className="day">周四</h1>
+        <h1 className="day">Wed</h1>
       </div>
       <div className="header">
-        <h1 className="day">周五</h1>
+        <h1 className="day">Thu</h1>
       </div>
       <div className="header">
-        <h1 className="day">周六</h1>
+        <h1 className="day">Fri</h1>
       </div>
       <div className="header">
-        <h1 className="day">周日</h1>
+        <h1 className="day">Sat</h1>
       </div>
       {createRows()}
     </div>
