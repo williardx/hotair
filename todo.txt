@@ -17,6 +17,7 @@ X Make calendar bilingual
 - Fill calendar with my own events / content
 - Favicon
 - Deploy website
+X Possible bug: adding pending tile to tiles will cause it to show up prematurely in sky
 
 iPad Issues
 -----------

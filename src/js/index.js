@@ -119,7 +119,6 @@ const App = () => {
   const [calendarVisibilityToggle, setCalendarVisibilityToggle] = useState(true)
 
   const handleAddTile = (tile) => {
-    setTiles([...tiles, tile])
     setNextTiles([...nextTiles, tile])
   }
 
@@ -135,6 +134,7 @@ const App = () => {
       } else {
         nextClouds = [...clouds.slice(nextTiles.length), ...nextTiles]
       }
+      setTiles([...tiles, ...nextTiles])
       setNextTiles([])
       setClouds(nextClouds)
     }
@@ -163,6 +163,7 @@ const App = () => {
       <CalendarButton onClick={toggleCalendarVisibility} />
       <Calendar
         tiles={tiles}
+        nextTiles={nextTiles}
         setTiles={setTiles}
         isVisible={calendarVisibilityToggle}
         handleAddTile={handleAddTile}

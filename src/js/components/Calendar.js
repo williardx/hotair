@@ -11,6 +11,7 @@ export default ({
   tiles,
   toggleCalendarVisibility,
   setTiles,
+  nextTiles,
 }) => {
   const numRows = 26
   const [formVisibilityToggle, setFormVisibilityToggle] = useState(false)
@@ -246,6 +247,14 @@ export default ({
       {pendingTile && (
         <Tile numRows={numRows} tile={pendingTile} isPending={true} />
       )}
+      {nextTiles.map((tile, index) => (
+        <Tile
+          numRows={numRows}
+          tile={tile}
+          key={index.toString()}
+          handleOpenModal={handleOpenModal}
+        />
+      ))}
       {tiles.map((tile, index) => (
         <Tile
           numRows={numRows}
