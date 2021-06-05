@@ -31,19 +31,6 @@ const App = () => {
     return lower + Math.random() * (upper - lower)
   }
 
-  const initialTiles = []
-  for (let row = 0; row < 7; row++) {
-    for (let col = 1; col < 13; col++) {
-      initialTiles.push({
-        text: col % 2 === 0 ? "work" : "𝚆𝙾𝚁𝚂𝙷𝙸𝙿 𝚂𝙰𝚃𝙰𝙽 𖤐",
-        day: row,
-        startTime: col * 2,
-        endTime: col * 2 + 2,
-        color: col % 2 === 0 ? "#4285f4" : "#ff3232",
-      })
-    }
-  }
-
   // The set of all tiles in the project - these are definitely visible
   // in the calendar view
 
@@ -127,6 +114,7 @@ const App = () => {
 
   // Tiles that are in the sky
   const [clouds, setClouds] = useState([])
+  const maxNumClouds = 4
 
   const [calendarVisibilityToggle, setCalendarVisibilityToggle] = useState(true)
 
@@ -140,24 +128,37 @@ const App = () => {
   }
 
   const toggleCalendarVisibility = () => {
-    if (calendarVisibilityToggle) {
-      // Add new tiles to the scene
-      setNextTiles([])
-      setClouds([...clouds, ...nextTiles])
+    if (calendarVisibilityToggle && nextTiles.length > 0) {
+      const numTilesToAdd = Math.min(maxNumClouds, nextTiles.length)
+      const nextClouds = [
+        ...clouds.slice(0, clouds.length - numTilesToAdd),
+        ...nextTiles.slice(0, numTilesToAdd),
+      ]
+      // Put new user-generated tiles at the front of the line since
+      // they're more likely to be there
+      setNextTiles([...nextTiles.slice(numTilesToAdd), ...nextTiles])
+      setClouds(nextClouds)
     }
     setCalendarVisibilityToggle(!calendarVisibilityToggle)
   }
 
   useEffect(() => {
-    // Automatically add a new cloud when (1) we have nothing new to show
-    // and a a cloud goes off screen and (2) we get a new tile from the
-    // database
+    // Automatically add a new cloud when we have nothing new to show
+    // and a cloud goes off screen
     const interval = setInterval(() => {
-      if (clouds.length < 3) {
-        const activeCloudIds = clouds.map((cloud) => cloud.id)
-        const newCloud = randomChoice(
-          tiles.filter((tile) => activeCloudIds.indexOf(tile.id) === -1)
-        )
+      if (clouds.length < maxNumClouds) {
+        let newCloud
+        // If we have queued up tiles add them first
+        if (nextTiles.length > 0) {
+          newCloud = nextTiles.pop()
+          setNextTiles(nextTiles)
+        } else {
+          // Otherwise randomly pick from the tiles in the calendar
+          const activeCloudIds = clouds.map((cloud) => cloud.id)
+          newCloud = randomChoice(
+            tiles.filter((tile) => activeCloudIds.indexOf(tile.id) === -1)
+          )
+        }
         setClouds([...clouds, newCloud])
       }
     }, 30000)
