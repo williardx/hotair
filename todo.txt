@@ -6,7 +6,7 @@ X Tiles can overlap in an interesting way (or at least new tiles appear over old
 X Event form opens on left/right depending on where tile is in calendar
 X Input validation
 X Wrap strings correctly in tile
-- Fix bug where you can't type on a half hour size event
+X Fix bug where you can't type on a half hour size event
 - Handle narrow tiles
     - Truncate long text (show ellipsis)
     - Adjust font size down for narrower tiles

@@ -97,7 +97,7 @@ export default ({
         <h5 style={{ color: "#424247" }}>你为什么忙？</h5>
         <input
           // TODO: Calculate constant in maxLength instead of eyeballing it
-          maxLength={26 * (endTime - startTime)}
+          maxLength={23 * (endTime - startTime + 1)}
           ref={inputRef}
           style={{
             marginTop: 5,
