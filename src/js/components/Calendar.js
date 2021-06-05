@@ -4,6 +4,7 @@ import Grid from "~js/components/Grid"
 import Tile from "~js/components/Tile"
 import CloseButton from "~js/components/CloseButton"
 import TileModal from "~js/components/TileModal"
+import randomChoice from "~js/helpers/randomChoice"
 
 export default ({
   isVisible,
@@ -109,7 +110,14 @@ export default ({
       day,
       startTime,
       endTime,
-      color: "#4285f4",
+      color: randomChoice([
+        "#4285f4",
+        "#33b679",
+        "#f4511e",
+        "#f6bf26",
+        "#cd60eb",
+        "#ff3232",
+      ]),
       text: "",
       id: Math.floor(Math.random() * 100000),
       opacity: 1,

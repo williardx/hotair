@@ -15,7 +15,8 @@ import Camera from "~js/components/Canvas/Camera"
 import Sphere from "~js/components/Canvas/Sphere"
 import Environment from "~js/components/Canvas/Environment"
 import Calendar from "~js/components/Calendar"
-import CalendarButton from "./components/CalendarButton"
+import CalendarButton from "~js/components/CalendarButton"
+import randomChoice from "~js/helpers/randomChoice"
 
 /**
  * app
@@ -30,11 +31,6 @@ const App = () => {
   const randomRange = (lower, upper) => {
     return lower + Math.random() * (upper - lower)
   }
-
-  // The set of all tiles in the project - these are definitely visible
-  // in the calendar view
-
-  const randomChoice = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
   const [tiles, setTiles] = useState([
     {

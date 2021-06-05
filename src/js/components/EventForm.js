@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react"
 import { BiCheck, BiX } from "react-icons/bi"
+import randomChoice from "~js/helpers/randomChoice"
 
 export default ({
   onSubmit,
@@ -9,8 +10,14 @@ export default ({
   numRows,
   setPendingTile,
 }) => {
-  const { startTime, endTime, day, numOverlappingTiles, overlappingTiles } =
-    pendingTile
+  const {
+    startTime,
+    endTime,
+    day,
+    numOverlappingTiles,
+    overlappingTiles,
+    color: initialColor,
+  } = pendingTile
   const formWidth = 250
   const calendarColumnWidthPct = 1 / 7
   const calendarRowHeightPct = 1 / numRows
@@ -18,7 +25,6 @@ export default ({
   const tileLeft = window.innerWidth * calendarColumnWidthPct * day
   const left = day < 4 ? tileLeft + tileWidth + 20 : tileLeft - formWidth - 20
   const top = window.innerHeight * calendarRowHeightPct * (startTime + 2)
-  const initialColor = "#4285f4"
   const [text, setText] = useState("")
   const [color, setColor] = useState(initialColor)
   const [isSubmitPressed, setIsSubmitPressed] = useState(false)
