@@ -97,6 +97,7 @@ p {
   font-size: 36px;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
 #tile-modal {

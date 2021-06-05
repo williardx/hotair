@@ -57,6 +57,7 @@ export default ({
         style={{
           backgroundColor: color,
           opacity: color === selectedColor ? "100%" : "50%",
+          cursor: "pointer",
         }}
       />
     )
@@ -83,6 +84,7 @@ export default ({
         borderRadius: 10,
         fontSize: 20,
         width: formWidth,
+        cursor: "initial",
       }}
     >
       <form
