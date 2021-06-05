@@ -8,8 +8,6 @@ import {
   Frustum,
   Matrix4,
   Vector3,
-  MeshBasicMaterial,
-  TextureLoader,
 } from "three"
 import { useAssets, useTexture } from "~js/hooks"
 import gui from "~js/helpers/gui"
@@ -17,21 +15,19 @@ import fragment from "~shaders/cloud.frag"
 import vertex from "~shaders/cloud.vert"
 import roundRect from "~js/helpers/roundedRectangle"
 import getLines from "~js/helpers/getLines"
-
+import { NUM_ROWS } from "~js/constants"
 /**
  * To go from opaque texture -> cloud texture
  * Start uDisplStrenght* at 0 and animate to larger value
  * Start alpha max output at alpha min input, animate to larger value
  */
 
-export default ({ tile, size, handleRemoveCloud }) => {
+export default ({ tile, handleRemoveCloud }) => {
   const { text, color, position, id, startTime, endTime, day } = tile
   const { camera } = useThree()
   // Need a scaling factor because the camera is at a distance
-  const numRows = 26
-  const tileScalingFactor = 1
   const calendarColumnWidthPct = 1 / 7
-  const calendarRowHeightPct = 1 / numRows
+  const calendarRowHeightPct = 1 / NUM_ROWS
   const tileHeight =
     window.innerHeight * calendarRowHeightPct * (endTime - startTime + 1)
   const scaleWidth = 1

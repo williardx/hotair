@@ -5,7 +5,7 @@ import Tile from "~js/components/Tile"
 import CloseButton from "~js/components/CloseButton"
 import TileModal from "~js/components/TileModal"
 import randomChoice from "~js/helpers/randomChoice"
-import { MAX_NUM_CLOUDS, NUM_ROWS } from "~js/constants"
+import { MAX_NUM_CLOUDS } from "~js/constants"
 
 export default ({
   isVisible,
@@ -15,7 +15,6 @@ export default ({
   setTiles,
   nextTiles,
 }) => {
-  const numRows = 26
   const [formVisibilityToggle, setFormVisibilityToggle] = useState(false)
   const [tileModalVisibilityToggle, setTileModalVisibilityToggle] =
     useState(false)
@@ -260,12 +259,9 @@ export default ({
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
     >
-      {pendingTile && (
-        <Tile numRows={numRows} tile={pendingTile} isPending={true} />
-      )}
+      {pendingTile && <Tile tile={pendingTile} isPending={true} />}
       {nextTiles.map((tile, index) => (
         <Tile
-          numRows={numRows}
           tile={tile}
           key={index.toString()}
           handleOpenModal={handleOpenModal}
@@ -273,7 +269,6 @@ export default ({
       ))}
       {tiles.map((tile, index) => (
         <Tile
-          numRows={numRows}
           tile={tile}
           key={index.toString()}
           handleOpenModal={handleOpenModal}
@@ -286,7 +281,6 @@ export default ({
       />
       {pendingTile !== null && (
         <EventForm
-          numRows={numRows}
           pendingTile={pendingTile}
           isVisible={formVisibilityToggle}
           onSubmit={onEventFormSubmit}
@@ -296,14 +290,9 @@ export default ({
         />
       )}
       {selectedTile !== null && (
-        <TileModal
-          tile={selectedTile}
-          numRows={numRows}
-          handleCloseModal={handleCloseModal}
-        />
+        <TileModal tile={selectedTile} handleCloseModal={handleCloseModal} />
       )}
       <Grid
-        numRows={numRows}
         pendingTile={pendingTile}
         setPendingTile={setPendingTile}
         handleCancelCreateTile={handleCancelCreateTile}

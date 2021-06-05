@@ -1,8 +1,9 @@
 import React, { useRef, useEffect } from "react"
 import roundRect from "~js/helpers/roundedRectangle"
 import getLines from "~js/helpers/getLines"
+import { NUM_ROWS } from "~js/constants"
 
-export default ({ tile, numRows, isPending, handleOpenModal }) => {
+export default ({ tile, isPending, handleOpenModal }) => {
   const {
     color,
     text,
@@ -13,7 +14,7 @@ export default ({ tile, numRows, isPending, handleOpenModal }) => {
     initNumOverlappingTiles = 0,
   } = tile
   const calendarColumnWidthPct = 1 / 7
-  const calendarRowHeightPct = 1 / numRows
+  const calendarRowHeightPct = 1 / NUM_ROWS
   const fullTileWidth = calendarColumnWidthPct * window.innerWidth * 0.8
   const tileWidth =
     fullTileWidth / (isPending ? 1 : (numOverlappingTiles ?? 0) + 1)

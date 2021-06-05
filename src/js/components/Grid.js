@@ -1,6 +1,7 @@
 import React from "react"
+import { NUM_ROWS } from "~js/constants"
 
-export default ({ numRows }) => {
+export default () => {
   const debugGrid = false
   // function dates(current) {
   //   var week = new Array()
@@ -24,7 +25,7 @@ export default ({ numRows }) => {
   // }
 
   const createRows = () => {
-    return Array.from(Array(numRows)).flatMap((val, rowIndex) => {
+    return Array.from(Array(NUM_ROWS)).flatMap((val, rowIndex) => {
       return Array.from(Array(7)).map((_, colIndex) => {
         return (
           <div
