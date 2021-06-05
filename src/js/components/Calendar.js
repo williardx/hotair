@@ -5,6 +5,7 @@ import Tile from "~js/components/Tile"
 import CloseButton from "~js/components/CloseButton"
 import TileModal from "~js/components/TileModal"
 import randomChoice from "~js/helpers/randomChoice"
+import { MAX_NUM_CLOUDS, NUM_ROWS } from "~js/constants"
 
 export default ({
   isVisible,
@@ -20,6 +21,7 @@ export default ({
     useState(false)
   const [pendingTile, setPendingTile] = useState(null)
   const [selectedTile, setSelectedTile] = useState(null)
+  const shouldPulse = nextTiles.length === MAX_NUM_CLOUDS
   const mouseDown = useRef(false)
 
   const hideForm = () => {
@@ -142,6 +144,9 @@ export default ({
     targets.filter((obj) => obj?.className === "cell").pop()
 
   const handleMouseDown = (e) => {
+    if (nextTiles.length >= MAX_NUM_CLOUDS) {
+      return
+    }
     const targets = document.elementsFromPoint(e.clientX, e.clientY)
     if (tappedOnInput(targets) || tappedOnTile(targets)) {
       return
@@ -155,7 +160,7 @@ export default ({
 
   const handleMouseMove = (e) => {
     e.preventDefault()
-    if (mouseDown.current) {
+    if (mouseDown.current && pendingTile !== null) {
       const targets = document.elementsFromPoint(e.clientX, e.clientY)
       const cell = getCell(targets)
       if (cell) {
@@ -184,6 +189,9 @@ export default ({
   }
 
   const handleTouchStart = (e) => {
+    if (nextTiles.length >= MAX_NUM_CLOUDS) {
+      return
+    }
     const targets = document.elementsFromPoint(
       e.touches[0].clientX,
       e.touches[0].clientY
@@ -274,6 +282,7 @@ export default ({
       <CloseButton
         onClick={handleCloseCalendar}
         disabled={formVisibilityToggle}
+        shouldPulse={shouldPulse}
       />
       {pendingTile !== null && (
         <EventForm

@@ -1,5 +1,7 @@
 :root {
   --num-rows: 26;
+  --shadow-color: rgb(38, 147, 255, 1);
+  --shadow-color-no-alpha: rgb(38, 147, 255, 0);
 }
 
 html,
@@ -107,4 +109,38 @@ p {
   border: 1px solid #d0d0d0;
   border-radius: 10px;
   padding: 20px;
+}
+
+.pulse {
+  box-shadow: 0 0 0 var(--shadow-color);
+  animation: pulse 2s infinite;
+}
+.pulse:hover {
+  animation: none;
+}
+
+@-webkit-keyframes pulse {
+  0% {
+    -webkit-box-shadow: 0 0 0 0 var(--shadow-color);
+  }
+  70% {
+    -webkit-box-shadow: 0 0 0 15px var(--shadow-color-no-alpha);
+  }
+  100% {
+    -webkit-box-shadow: 0 0 0 0 var(--shadow-color-no-alpha);
+  }
+}
+@keyframes pulse {
+  0% {
+    -moz-box-shadow: 0 0 0 0 var(--shadow-color);
+    box-shadow: 0 0 0 0 var(--shadow-color);
+  }
+  70% {
+    -moz-box-shadow: 0 0 0 15px var(--shadow-color-no-alpha);
+    box-shadow: 0 0 0 15px var(--shadow-color-no-alpha);
+  }
+  100% {
+    -moz-box-shadow: 0 0 0 0 var(--shadow-color-no-alpha);
+    box-shadow: 0 0 0 0 var(--shadow-color-no-alpha);
+  }
 }

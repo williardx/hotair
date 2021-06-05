@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { BiCloud } from "react-icons/bi"
 
-export default ({ onClick, disabled }) => {
+export default ({ onClick, disabled, shouldPulse }) => {
   const [isPressed, setIsPressed] = useState(false)
   const togglePress = () => {
     if (!disabled) {
@@ -11,6 +11,7 @@ export default ({ onClick, disabled }) => {
   return (
     <button
       id="close-button"
+      className={shouldPulse ? "pulse" : ""}
       onClick={() => {
         onClick()
         togglePress()

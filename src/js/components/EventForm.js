@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from "react"
 import { BiCheck, BiX } from "react-icons/bi"
-import randomChoice from "~js/helpers/randomChoice"
 
 export default ({
   onSubmit,
