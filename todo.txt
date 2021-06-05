@@ -1,22 +1,20 @@
 Must do
 -------
-~ Style UI for adding an event
-    - Make it look good 😭
+- Figure out how to do China-friendly fonts
+- Deploy website
+- Make it look good 😭
+- Fill calendar with my own events / content
+- Favicon
+X Fix tiling issue where new tiles aren't updating # of overlapping tiles beyond 2
+X Style UI for adding an event
 X Tiles can overlap in an interesting way (or at least new tiles appear over old tiles)
 X Event form opens on left/right depending on where tile is in calendar
 X Input validation
 X Wrap strings correctly in tile
 X Fix bug where you can't type on a half hour size event
-- Handle narrow tiles
-    - Truncate long text (show ellipsis)
-    - Adjust font size down for narrower tiles
 X Tap on event shows full event title
 X Make calendar bilingual
 X Handle case where user wants to add clouds and there are too many clouds already
-- Figure out how to do China-friendly fonts
-- Fill calendar with my own events / content
-- Favicon
-- Deploy website
 X Possible bug: adding pending tile to tiles will cause it to show up prematurely in sky
 
 iPad Issues

@@ -164,6 +164,7 @@ const App = () => {
         isVisible={calendarVisibilityToggle}
         handleAddTile={handleAddTile}
         toggleCalendarVisibility={toggleCalendarVisibility}
+        setNextTiles={setNextTiles}
       />
       <Canvas>
         <Camera />

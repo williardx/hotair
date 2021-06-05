@@ -14,6 +14,7 @@ export default ({
   toggleCalendarVisibility,
   setTiles,
   nextTiles,
+  setNextTiles,
 }) => {
   const [formVisibilityToggle, setFormVisibilityToggle] = useState(false)
   const [tileModalVisibilityToggle, setTileModalVisibilityToggle] =
@@ -53,10 +54,16 @@ export default ({
         }
       })
       updatedTiles.forEach((ut) => {
-        const index = tiles.findIndex((t) => t.id === ut.id)
-        tiles[index] = ut
+        const tilesIndex = tiles.findIndex((t) => t.id === ut.id)
+        if (tilesIndex > -1) {
+          tiles[tilesIndex] = ut
+        } else {
+          const nextTilesIndex = nextTiles.findIndex((t) => t.id === ut.id)
+          nextTiles[nextTilesIndex] = ut
+        }
       })
       setTiles([...tiles])
+      setNextTiles([...nextTiles])
     }
     handleAddTile(tile)
     setPendingTile(null)
@@ -173,9 +180,9 @@ export default ({
     if (mouseDown.current) {
       mouseDown.current = false
       if (pendingTile) {
-        const overlappingTiles = tiles.filter((tile) =>
-          isOverlapping(pendingTile, tile)
-        )
+        const overlappingTiles = tiles
+          .concat(nextTiles)
+          .filter((tile) => isOverlapping(pendingTile, tile))
         setPendingTile({
           ...pendingTile,
           zIndex: overlappingTiles.length, // This value never changes
@@ -228,9 +235,9 @@ export default ({
       return
     }
     if (pendingTile) {
-      const overlappingTiles = tiles.filter((tile) =>
-        isOverlapping(pendingTile, tile)
-      )
+      const overlappingTiles = tiles
+        .concat(nextTiles)
+        .filter((tile) => isOverlapping(pendingTile, tile))
       setPendingTile({
         ...pendingTile,
         zIndex: overlappingTiles.length, // This value never changes
