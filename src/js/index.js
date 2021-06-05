@@ -114,7 +114,7 @@ const App = () => {
 
   // Tiles that are in the sky
   const [clouds, setClouds] = useState([])
-  const maxNumClouds = 4
+  const maxNumClouds = 3
 
   const [calendarVisibilityToggle, setCalendarVisibilityToggle] = useState(true)
 
@@ -129,14 +129,13 @@ const App = () => {
 
   const toggleCalendarVisibility = () => {
     if (calendarVisibilityToggle && nextTiles.length > 0) {
-      const numTilesToAdd = Math.min(maxNumClouds, nextTiles.length)
-      const nextClouds = [
-        ...clouds.slice(0, clouds.length - numTilesToAdd),
-        ...nextTiles.slice(0, numTilesToAdd),
-      ]
-      // Put new user-generated tiles at the front of the line since
-      // they're more likely to be there
-      setNextTiles([...nextTiles.slice(numTilesToAdd), ...nextTiles])
+      let nextClouds
+      if (clouds.length + nextTiles.length <= maxNumClouds) {
+        nextClouds = [...clouds, ...nextTiles]
+      } else {
+        nextClouds = [...clouds.slice(nextTiles.length), ...nextTiles]
+      }
+      setNextTiles([])
       setClouds(nextClouds)
     }
     setCalendarVisibilityToggle(!calendarVisibilityToggle)
@@ -147,18 +146,11 @@ const App = () => {
     // and a cloud goes off screen
     const interval = setInterval(() => {
       if (clouds.length < maxNumClouds) {
-        let newCloud
-        // If we have queued up tiles add them first
-        if (nextTiles.length > 0) {
-          newCloud = nextTiles.pop()
-          setNextTiles(nextTiles)
-        } else {
-          // Otherwise randomly pick from the tiles in the calendar
-          const activeCloudIds = clouds.map((cloud) => cloud.id)
-          newCloud = randomChoice(
-            tiles.filter((tile) => activeCloudIds.indexOf(tile.id) === -1)
-          )
-        }
+        // Otherwise randomly pick from the tiles in the calendar
+        const activeCloudIds = clouds.map((cloud) => cloud.id)
+        const newCloud = randomChoice(
+          tiles.filter((tile) => activeCloudIds.indexOf(tile.id) === -1)
+        )
         setClouds([...clouds, newCloud])
       }
     }, 30000)
