@@ -12,7 +12,7 @@ X Fix bug where you can't type on a half hour size event
     - Adjust font size down for narrower tiles
 X Tap on event shows full event title
 X Make calendar bilingual
-- Handle case where user wants to add clouds and there are too many clouds already
+X Handle case where user wants to add clouds and there are too many clouds already
 - Figure out how to do China-friendly fonts
 - Fill calendar with my own events / content
 - Favicon
