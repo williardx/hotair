@@ -1,7 +1,7 @@
 Must do
 -------
 - Make *everything* look good 😭
-- Fill calendar with my own events / content
+- Fill calendar with meaningful content
 X Favicon
 X Choose & buy domain name
 X Deploy website
