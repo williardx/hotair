@@ -4,22 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link
+      rel="preload"
+      as="font"
+      href="/assets/fonts/NotoSansSc-Light.otf"
+      type="font/otf"
+      crossorigin="anonymous"
+    />
     <title>Hot Air</title>
-    <script>
-      ;(function () {
-        var script = document.createElement("script")
-        script.onload = function () {
-          var stats = new Stats()
-          document.body.appendChild(stats.dom)
-          requestAnimationFrame(function loop() {
-            stats.update()
-            requestAnimationFrame(loop)
-          })
-        }
-        script.src = "//mrdoob.github.io/stats.js/build/stats.min.js"
-        document.head.appendChild(script)
-      })()
-    </script>
   </head>
   <body>
     <div id="app"></div>

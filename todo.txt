@@ -1,9 +1,10 @@
 Must do
 -------
-- Deploy website
-- Make it look good 😭
+- Make *everything* look good 😭
 - Fill calendar with my own events / content
-- Favicon
+X Favicon
+X Choose & buy domain name
+X Deploy website
 X Figure out how to do China-friendly fonts
 X Figure out why font not rendering on initial tiles
 X Fix tiling issue where new tiles aren't updating # of overlapping tiles beyond 2
@@ -28,6 +29,9 @@ iPad Issues
 
 Nice to have
 ------------
+- Page SEO
+- Optimize page load time
+    - Reduce font file size
 - Ability to draw tile up instead of just down
 - Tiles have elevation/drop shadow over each other
 - Make calendar tiling masonry more intuitive
