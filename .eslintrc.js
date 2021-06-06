@@ -12,11 +12,12 @@ module.exports = {
     ecmaFeatures: {
       jsx: true,
     },
-    ecmaVersion: 2018,
+    ecmaVersion: 2020,
     sourceType: "module",
   },
   plugins: ["react", "react-hooks"],
   rules: {
+    "react-hooks/exhaustive-deps": "warn",
     indent: ["error", 2, { SwitchCase: 1 }],
     "valid-jsdoc": 0,
     "require-jsdoc": 0,
@@ -29,6 +30,8 @@ module.exports = {
     "react/jsx-first-prop-new-line": "error",
     "react/jsx-max-props-per-line": ["error", { maximum: 1 }],
     "react-hooks/rules-of-hooks": "error",
-    quotes: "double",
+    "object-curly-spacing": ["warn", "always"],
+    "react/jsx-max-props-per-line": 0,
+    quotes: 0,
   },
 }

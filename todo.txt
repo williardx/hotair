@@ -1,10 +1,11 @@
 Must do
 -------
-X Figure out how to do China-friendly fonts
 - Deploy website
 - Make it look good 😭
 - Fill calendar with my own events / content
 - Favicon
+X Figure out how to do China-friendly fonts
+X Figure out why font not rendering on initial tiles
 X Fix tiling issue where new tiles aren't updating # of overlapping tiles beyond 2
 X Style UI for adding an event
 X Tiles can overlap in an interesting way (or at least new tiles appear over old tiles)

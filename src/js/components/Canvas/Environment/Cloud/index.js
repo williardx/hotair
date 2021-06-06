@@ -10,7 +10,6 @@ import {
   Vector3,
 } from "three"
 import { useAssets, useTexture } from "~js/hooks"
-import gui from "~js/helpers/gui"
 import fragment from "~shaders/cloud.frag"
 import vertex from "~shaders/cloud.vert"
 import roundRect from "~js/helpers/roundedRectangle"
@@ -23,7 +22,7 @@ import { NUM_ROWS } from "~js/constants"
  */
 
 export default ({ tile, handleRemoveCloud }) => {
-  const { text, color, position, id, startTime, endTime, day } = tile
+  const { text, color, id, startTime, endTime, day } = tile
   const { camera } = useThree()
   // Need a scaling factor because the camera is at a distance
   const calendarColumnWidthPct = 1 / 7
@@ -38,8 +37,8 @@ export default ({ tile, handleRemoveCloud }) => {
 
   // Convert screen coordinates to world space
   // https://stackoverflow.com/a/13091694
-  var vec = new Vector3() // create once and reuse
-  var pos = new Vector3() // create once and reuse
+  const vec = new Vector3() // create once and reuse
+  const pos = new Vector3() // create once and reuse
 
   // tileX and tileY are the coordinates of the top left corner
   // of the tile in calendar view. Adjust by 1/2 tile width and
@@ -47,11 +46,11 @@ export default ({ tile, handleRemoveCloud }) => {
   vec.set(
     ((tileX + tileWidth / 2) / window.innerWidth) * 2 - 1,
     -((tileY + tileHeight / 2) / window.innerHeight) * 2 + 1,
-    0
+    0,
   )
   vec.unproject(camera)
   vec.sub(camera.position).normalize()
-  var distance = -camera.position.z / vec.z
+  const distance = -camera.position.z / vec.z
   pos.copy(camera.position).add(vec.multiplyScalar(distance))
   const tilePosition = [pos.x, pos.y, 0]
 
@@ -87,7 +86,7 @@ export default ({ tile, handleRemoveCloud }) => {
       tileHeight,
       10,
       true,
-      false
+      false,
     )
     context.fillStyle = "white"
     const lines = getLines(context, text, maxTextWidth)
@@ -95,14 +94,22 @@ export default ({ tile, handleRemoveCloud }) => {
       context.fillText(
         lines[i],
         tilePosX + textXOffset,
-        tilePosY + textYOffset + i * textVerticalOffset
+        tilePosY + textYOffset + i * textVerticalOffset,
       )
     }
     context.blurAmount = 0
     context.brightnessAmount = 1
     context.borderRadius = 10
     return new CanvasTexture(canvas)
-  }, [color])
+  }, [
+    color,
+    initialOpacity,
+    maxTextWidth,
+    scaleHeight,
+    text,
+    tileHeight,
+    tileWidth,
+  ])
 
   function easeOutQuint(x) {
     return 1 - Math.pow(1 - x, 5)
@@ -128,7 +135,7 @@ export default ({ tile, handleRemoveCloud }) => {
       ctx.fillText(
         lines[i],
         tilePosX + textXOffset,
-        tilePosY + textYOffset + i * textVerticalOffset
+        tilePosY + textYOffset + i * textVerticalOffset,
       )
     }
   }
@@ -155,7 +162,7 @@ export default ({ tile, handleRemoveCloud }) => {
       ctx.fillText(
         lines[i],
         tilePosX + textXOffset,
-        tilePosY + textYOffset + i * textVerticalOffset
+        tilePosY + textYOffset + i * textVerticalOffset,
       )
     }
   }
@@ -177,7 +184,7 @@ export default ({ tile, handleRemoveCloud }) => {
       uGamma: { value: 3 },
       canvasTexture: { type: "t", value: canvasTexture },
     }),
-    []
+    [canvasTexture, t2],
   )
 
   const material = useMemo(() => {
@@ -192,7 +199,7 @@ export default ({ tile, handleRemoveCloud }) => {
     })
 
     return mat
-  }, [])
+  }, [myUniforms])
 
   // const material = new MeshBasicMaterial({ map: t2 })
 
@@ -200,7 +207,7 @@ export default ({ tile, handleRemoveCloud }) => {
     if (material) {
       material.uniforms.uTxtCloudNoise.value = t2
     }
-  }, [t2])
+  }, [material, t2])
 
   useFrame(() => {
     if (material) {
@@ -209,8 +216,8 @@ export default ({ tile, handleRemoveCloud }) => {
       frustum.setFromMatrix(
         new Matrix4().multiplyMatrices(
           camera.projectionMatrix,
-          camera.matrixWorldInverse
-        )
+          camera.matrixWorldInverse,
+        ),
       )
 
       // return

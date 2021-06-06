@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react"
+import React, { useRef, useEffect, useState } from "react"
 import roundRect from "~js/helpers/roundedRectangle"
 import getLines from "~js/helpers/getLines"
 import { NUM_ROWS } from "~js/constants"
@@ -13,6 +13,9 @@ export default ({ tile, isPending, handleOpenModal }) => {
     numOverlappingTiles = 0,
     initNumOverlappingTiles = 0,
   } = tile
+
+  const [fontLoaded, setFontLoaded] = useState(false)
+
   const calendarColumnWidthPct = 1 / 7
   const calendarRowHeightPct = 1 / NUM_ROWS
   const fullTileWidth = calendarColumnWidthPct * window.innerWidth * 0.8
@@ -32,6 +35,12 @@ export default ({ tile, isPending, handleOpenModal }) => {
   const textVerticalOffset = 25
 
   useEffect(() => {
+    document.fonts.ready.then(() => {
+      setFontLoaded(true)
+    })
+  }, [setFontLoaded])
+
+  useEffect(() => {
     const canvas = canvasRef.current
     const context = canvas.getContext("2d")
     canvas.width = tileWidth
@@ -48,7 +57,7 @@ export default ({ tile, isPending, handleOpenModal }) => {
         context.fillText(lines[i], 10, 25 + i * textVerticalOffset)
       }
     }
-  }, [tileWidth, tileHeight, color, text])
+  }, [tileWidth, tileHeight, color, text, fontLoaded])
 
   return (
     <canvas

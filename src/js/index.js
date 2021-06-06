@@ -5,8 +5,6 @@ import "regenerator-runtime/runtime"
 
 import React, { useEffect, useCallback, useState } from "react"
 import { render } from "react-dom"
-
-import gui from "~js/helpers/gui"
 import { useDebugMode } from "~js/hooks"
 
 import Canvas from "~js/components/Canvas"
@@ -22,14 +20,6 @@ import randomChoice from "~js/helpers/randomChoice"
  */
 const App = () => {
   const debugMode = useDebugMode()
-
-  // useEffect(() => {
-  //   gui.init()
-  // }, [])
-
-  const randomRange = (lower, upper) => {
-    return lower + Math.random() * (upper - lower)
-  }
 
   const [tiles, setTiles] = useState([
     {
@@ -111,7 +101,8 @@ const App = () => {
   const [clouds, setClouds] = useState([])
   const maxNumClouds = 3
 
-  const [calendarVisibilityToggle, setCalendarVisibilityToggle] = useState(true)
+  const [calendarVisibilityToggle, setCalendarVisibilityToggle] =
+    useState(false)
 
   const handleAddTile = (tile) => {
     setNextTiles([...nextTiles, tile])
@@ -136,22 +127,28 @@ const App = () => {
     setCalendarVisibilityToggle(!calendarVisibilityToggle)
   }
 
+  const addCloudsToSky = useCallback(() => {
+    if (clouds.length < maxNumClouds) {
+      // Otherwise randomly pick from the tiles in the calendar
+      const activeCloudIds = clouds.map((cloud) => cloud.id)
+      const newCloud = randomChoice(
+        tiles.filter((tile) => activeCloudIds.indexOf(tile.id) === -1),
+      )
+      setClouds([...clouds, newCloud])
+    }
+  }, [clouds, tiles])
+
+  useEffect(() => {
+    setTimeout(addCloudsToSky, 5000)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   useEffect(() => {
     // Automatically add a new cloud when we have nothing new to show
     // and a cloud goes off screen
-    const interval = setInterval(() => {
-      if (clouds.length < maxNumClouds) {
-        // Otherwise randomly pick from the tiles in the calendar
-        const activeCloudIds = clouds.map((cloud) => cloud.id)
-        const newCloud = randomChoice(
-          tiles.filter((tile) => activeCloudIds.indexOf(tile.id) === -1)
-        )
-        setClouds([...clouds, newCloud])
-      }
-    }, 30000)
-
+    const interval = setInterval(addCloudsToSky, 60000)
     return () => clearInterval(interval)
-  }, [clouds])
+  }, [addCloudsToSky])
 
   return (
     <>
