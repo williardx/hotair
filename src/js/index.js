@@ -1,5 +1,4 @@
 import "normalize.css"
-import "~css/fonts.css"
 import "~css/main.css"
 import "core-js/stable"
 import "regenerator-runtime/runtime"

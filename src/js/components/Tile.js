@@ -37,7 +37,7 @@ export default ({ tile, isPending, handleOpenModal }) => {
     canvas.width = tileWidth
     canvas.height = tileHeight
     context.clearRect(0, 0, canvas.width, canvas.height)
-    context.font = "18pt sans-serif"
+    context.font = "18pt NotoSansSC"
     context.fillStyle = color
     // Subtract one to ensure the white stroke is visible
     roundRect(context, 0, 0, tileWidth - 1, tileHeight - 1, 10, true, true)

@@ -1,6 +1,6 @@
 Must do
 -------
-- Figure out how to do China-friendly fonts
+X Figure out how to do China-friendly fonts
 - Deploy website
 - Make it look good 😭
 - Fill calendar with my own events / content
