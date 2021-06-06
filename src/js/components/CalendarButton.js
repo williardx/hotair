@@ -34,7 +34,7 @@ export default ({ onClick }) => {
           fontSize: 60,
           position: "absolute",
           top: 17,
-          left: 22,
+          left: 20,
         }}
       >
         <BiCalendar />
