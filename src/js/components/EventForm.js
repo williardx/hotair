@@ -17,7 +17,7 @@ export default ({
     overlappingTiles,
     color: initialColor,
   } = pendingTile
-  const formWidth = 250
+  const formWidth = 275
   const calendarColumnWidthPct = 1 / 7
   const calendarRowHeightPct = 1 / NUM_ROWS
   const tileWidth = calendarColumnWidthPct * window.innerWidth * 0.8
@@ -99,9 +99,9 @@ export default ({
         }}
       >
         <h4 style={{ color: "#424247", marginBottom: 5 }}>
-          Why are you so busy?
+          What are you busy with?
         </h4>
-        <h5 style={{ color: "rgb(132 132 132)" }}>你为什么那么忙？</h5>
+        <h5 style={{ color: "rgb(132 132 132)" }}>你在忙什么？</h5>
         <input
           // TODO: Calculate constant in maxLength instead of eyeballing it
           maxLength={23 * (endTime - startTime + 1)}
