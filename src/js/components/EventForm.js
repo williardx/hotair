@@ -98,24 +98,28 @@ export default ({
           flexDirection: "column",
         }}
       >
-        <h4 style={{ color: "#424247" }}>Why are you busy?</h4>
-        <h5 style={{ color: "#424247" }}>你为什么忙？</h5>
+        <h4 style={{ color: "#424247", marginBottom: 5 }}>
+          Why are you so busy?
+        </h4>
+        <h5 style={{ color: "rgb(132 132 132)" }}>你为什么那么忙？</h5>
         <input
           // TODO: Calculate constant in maxLength instead of eyeballing it
           maxLength={23 * (endTime - startTime + 1)}
           ref={inputRef}
           style={{
-            marginTop: 5,
-            padding: 2,
+            marginTop: 15,
+            marginBottom: 15,
+            padding: 5,
             border: 0,
             outline: 0,
-            borderBottom: "1px #969696 solid",
+            borderBottom: "1px rgb(189 189 189) solid",
+            lineHeight: "initial",
           }}
           onChange={onTextInputChange}
           value={text}
           type="text"
         />
-        <div style={{ marginTop: 10 }}>
+        <div style={{ marginTop: 10, marginBottom: 10 }}>
           <div
             style={{
               display: "flex",
@@ -126,14 +130,6 @@ export default ({
             <ColorOption color="#4285f4" selectedColor={color} />
             <ColorOption color="#33b679" selectedColor={color} />
             <ColorOption color="#f4511e" selectedColor={color} />
-          </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "center",
-            }}
-          >
             <ColorOption color="#f6bf26" selectedColor={color} />
             <ColorOption color="#cd60eb" selectedColor={color} />
             <ColorOption color="#ff3232" selectedColor={color} />
