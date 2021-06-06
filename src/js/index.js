@@ -142,15 +142,17 @@ const App = () => {
   return (
     <>
       <CalendarButton onClick={toggleCalendarVisibility} />
-      <Calendar
-        tiles={tiles}
-        nextTiles={nextTiles}
-        setTiles={setTiles}
-        isVisible={calendarVisibilityToggle}
-        handleAddTile={handleAddTile}
-        toggleCalendarVisibility={toggleCalendarVisibility}
-        setNextTiles={setNextTiles}
-      />
+      {calendarVisibilityToggle && (
+        <Calendar
+          tiles={tiles}
+          nextTiles={nextTiles}
+          setTiles={setTiles}
+          isVisible={calendarVisibilityToggle}
+          handleAddTile={handleAddTile}
+          toggleCalendarVisibility={toggleCalendarVisibility}
+          setNextTiles={setNextTiles}
+        />
+      )}
       <Canvas>
         <Camera />
         <Environment tiles={clouds} handleRemoveCloud={handleRemoveCloud} />

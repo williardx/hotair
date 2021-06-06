@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react"
+import React, { useState, useRef, useEffect } from "react"
 import EventForm from "~js/components/EventForm"
 import Grid from "~js/components/Grid"
 import Tile from "~js/components/Tile"
@@ -23,6 +23,8 @@ export default ({
   const [selectedTile, setSelectedTile] = useState(null)
   const shouldPulse = nextTiles.length === MAX_NUM_CLOUDS
   const mouseDown = useRef(false)
+  const lastMouseMove = useRef(null)
+  const intervalInitTimestamp = useRef(null)
 
   const hideForm = () => {
     if (formVisibilityToggle) {
@@ -77,6 +79,9 @@ export default ({
 
   const handleCloseCalendar = () => {
     if (!formVisibilityToggle) {
+      if (pendingTile) {
+        setPendingTile(null)
+      }
       toggleCalendarVisibility()
     }
   }
@@ -101,7 +106,7 @@ export default ({
         (obj) =>
           obj?.id === "event-form" ||
           obj?.id === "close-button" ||
-          obj?.id === "tile-modal"
+          obj?.id === "tile-modal",
       ).length > 0
     )
   }
@@ -166,6 +171,7 @@ export default ({
 
   const handleMouseMove = (e) => {
     e.preventDefault()
+    lastMouseMove.current = Date.now()
     if (mouseDown.current && pendingTile !== null) {
       const targets = document.elementsFromPoint(e.clientX, e.clientY)
       const cell = getCell(targets)
@@ -200,7 +206,7 @@ export default ({
     }
     const targets = document.elementsFromPoint(
       e.touches[0].clientX,
-      e.touches[0].clientY
+      e.touches[0].clientY,
     )
     if (tappedOnInput(targets) || tappedOnTile(targets)) {
       return
@@ -214,7 +220,7 @@ export default ({
   const handleTouchMove = (e) => {
     const targets = document.elementsFromPoint(
       e.touches[0].clientX,
-      e.touches[0].clientY
+      e.touches[0].clientY,
     )
     const cell = getCell(targets)
     if (cell) {
@@ -229,7 +235,7 @@ export default ({
   const handleTouchEnd = (e) => {
     const targets = document.elementsFromPoint(
       e.changedTouches[0].clientX,
-      e.changedTouches[0].clientY
+      e.changedTouches[0].clientY,
     )
     if (tappedOnInput(targets)) {
       return
@@ -247,6 +253,24 @@ export default ({
     }
     showForm()
   }
+
+  // Check every so often that someone is using the calendar. If not
+  // turn it back to sky view which is more interesting.
+  const closeCalendarInterval = 60000 * 5
+  useEffect(() => {
+    intervalInitTimestamp.current = Date.now()
+    const interval = setInterval(() => {
+      if (
+        lastMouseMove.current === null ||
+        lastMouseMove.current - intervalInitTimestamp.current <= 0
+      ) {
+        handleCloseCalendar()
+      } else {
+        intervalInitTimestamp.current = Date.now()
+      }
+    }, closeCalendarInterval)
+    return () => clearInterval(interval)
+  }, [])
 
   return (
     <div
