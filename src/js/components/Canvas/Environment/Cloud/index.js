@@ -100,6 +100,8 @@ export default ({ tile, handleRemoveCloud }) => {
     context.blurAmount = 0
     context.brightnessAmount = 1
     context.borderRadius = 10
+    context.textAlpha = 1
+    context.textAlphaAnimation = 0
     return new CanvasTexture(canvas)
   }, [
     color,
@@ -121,6 +123,10 @@ export default ({ tile, handleRemoveCloud }) => {
       ctx.globalAlphaAnimation += 0.01
       ctx.globalAlpha = easeOutQuint(ctx.globalAlphaAnimation)
     }
+    if (ctx.textAlphaAnimation < 1) {
+      ctx.textAlphaAnimation += 0.001
+      ctx.textAlpha = 1 - easeInQuint(ctx.textAlphaAnimation)
+    }
     ctx.blurAmount += 0.03 * scalingFactor
     ctx.brightnessAmount += 0.001 * scalingFactor
     ctx.filter = `blur(${ctx.blurAmount}px) brightness(${ctx.brightnessAmount})`
@@ -129,7 +135,7 @@ export default ({ tile, handleRemoveCloud }) => {
     const tilePosY = (ctx.canvas.height - tileHeight) / 2
     roundRect(ctx, tilePosX, tilePosY, tileWidth, tileHeight, 10, true, false)
     ctx.filter = "none"
-    ctx.fillStyle = "white"
+    ctx.fillStyle = `rgba(255, 255, 255, ${ctx.textAlpha})`
     const lines = getLines(ctx, text, maxTextWidth)
     for (let i = 0; i < lines.length; i++) {
       ctx.fillText(

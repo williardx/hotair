@@ -39,7 +39,7 @@ Nice to have
 
 Open q's
 --------
-- Hide the text after the tile transitions to cloud
+X Hide the text after the tile transitions to cloud
 
 Done
 ----
