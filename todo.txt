@@ -1,7 +1,14 @@
 Must do
 -------
-- Make *everything* look good 😭
+- Clean up rough edges / make calendar more intuitive
+    - Make it obvious calendar button is clickable
+    - Highlight current cell on hover in calendar view
+    - Add help button in calendar view
+    - Automatically increase calendar tile length if user types in longer string
+    - Handle adding calendar event at bottom of calendar
 - Fill calendar with meaningful content
+- Improve basic interaction
+    - Allow user to add more than 3 tiles at a time
 X Favicon
 X Choose & buy domain name
 X Deploy website

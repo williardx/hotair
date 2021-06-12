@@ -8,10 +8,11 @@ export default ({ onClick, disabled, shouldPulse }) => {
       setIsPressed(!isPressed)
     }
   }
+  const className = disabled ? "disabled" : shouldPulse ? "pulse" : ""
   return (
     <button
       id="close-button"
-      className={shouldPulse ? "pulse" : ""}
+      className={className}
       onClick={() => {
         onClick()
         togglePress()
@@ -21,16 +22,7 @@ export default ({ onClick, disabled, shouldPulse }) => {
       onTouchEnd={togglePress}
       onTouchCancel={togglePress}
       style={{
-        width: 100,
-        height: 100,
-        border: "none",
-        position: "fixed",
-        borderRadius: 100,
-        bottom: 100,
-        right: 95,
-        backgroundColor: isPressed ? "#4da6ff" : "#2693ff",
-        zIndex: 1000,
-        opacity: disabled ? "50%" : "100%",
+        backgroundColor: isPressed ? "#85c2ff" : "",
       }}
     >
       <div
