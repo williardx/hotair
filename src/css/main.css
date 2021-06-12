@@ -88,6 +88,14 @@ p {
   font-weight: initial;
 }
 
+.cell:not(.disabled):hover {
+  background-color: #f5f5f5;
+}
+
+.tile:not(.pending):hover {
+  filter: brightness(110%);
+}
+
 .colorOption {
   width: 30px;
   height: 30px;

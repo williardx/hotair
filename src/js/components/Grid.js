@@ -1,35 +1,14 @@
 import React from "react"
 import { NUM_ROWS } from "~js/constants"
 
-export default () => {
+export default ({ disabled }) => {
   const debugGrid = false
-  // function dates(current) {
-  //   var week = new Array()
-  //   // Starting Monday not Sunday
-  //   current.setDate(current.getDate() - current.getDay() + 1)
-  //   for (var i = 0; i < 7; i++) {
-  //     week.push(new Date(current))
-  //     current.setDate(current.getDate() + 1)
-  //   }
-  //   return week
-  // }
-
-  // const createHeaderRow = () => {
-  //   return dates(new Date()).map((d) => (
-  //     <div className="cell header">
-  //       <h1 className="day">
-  //         {d.toLocaleDateString("zh-ZH", { month: "long", day: "numeric" })}
-  //       </h1>
-  //     </div>
-  //   ))
-  // }
-
   const createRows = () => {
     return Array.from(Array(NUM_ROWS)).flatMap((val, rowIndex) => {
       return Array.from(Array(7)).map((_, colIndex) => {
         return (
           <div
-            className="cell"
+            className={`cell${disabled ? " disabled" : ""}`}
             row={rowIndex}
             col={colIndex}
             key={`${rowIndex}-${colIndex}`}

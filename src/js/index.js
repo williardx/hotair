@@ -61,7 +61,7 @@ const App = () => {
     {
       text: "startup",
       size: "small",
-      color: "#ff3232",
+      color: "#f02400",
       day: 1,
       startTime: 4,
       endTime: 10,
@@ -72,7 +72,7 @@ const App = () => {
     },
     {
       text: "thinking thinking thinking",
-      color: "#f4511e",
+      color: "#ff7c1f",
       day: 3,
       startTime: 5,
       endTime: 9,

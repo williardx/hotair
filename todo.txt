@@ -1,13 +1,15 @@
 Must do
 -------
 - Clean up rough edges / make calendar more intuitive
-    - Make it obvious calendar button is clickable
-    - Highlight current cell on hover in calendar view
-    - Add help button in calendar view
+    X Make it obvious calendar button is clickable
+    X Highlight current cell on hover in calendar view
+    X Make click/drag calendar tile creation more obvious
     - Automatically increase calendar tile length if user types in longer string
     - Handle adding calendar event at bottom of calendar
+    - Add help button in calendar view (if I absolutely have to)
 - Fill calendar with meaningful content
 - Improve basic interaction
+    - Add delete button
     - Allow user to add more than 3 tiles at a time
 X Favicon
 X Choose & buy domain name

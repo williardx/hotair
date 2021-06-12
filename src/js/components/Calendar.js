@@ -5,7 +5,7 @@ import Tile from "~js/components/Tile"
 import CloseButton from "~js/components/CloseButton"
 import TileModal from "~js/components/TileModal"
 import randomChoice from "~js/helpers/randomChoice"
-import { MAX_NUM_CLOUDS } from "~js/constants"
+import { MAX_NUM_CLOUDS, COLORS } from "~js/constants"
 
 export default ({
   isVisible,
@@ -22,7 +22,7 @@ export default ({
   const [pendingTile, setPendingTile] = useState(null)
   const [selectedTile, setSelectedTile] = useState(null)
   const shouldPulse = nextTiles.length === MAX_NUM_CLOUDS
-  const mouseDown = useRef(false)
+  const isDrawingTile = useRef(false)
   const lastMouseMove = useRef(null)
   const intervalInitTimestamp = useRef(null)
 
@@ -123,14 +123,7 @@ export default ({
       day,
       startTime,
       endTime,
-      color: randomChoice([
-        "#4285f4",
-        "#33b679",
-        "#f4511e",
-        "#f6bf26",
-        "#cd60eb",
-        "#ff3232",
-      ]),
+      color: randomChoice(COLORS),
       text: "",
       id: Math.floor(Math.random() * 100000),
       opacity: 1,
@@ -152,39 +145,27 @@ export default ({
   }
 
   const getCell = (targets) =>
-    targets.filter((obj) => obj?.className === "cell").pop()
+    targets.filter((obj) => obj?.className.startsWith("cell")).pop()
 
-  const handleMouseDown = (e) => {
-    if (nextTiles.length >= MAX_NUM_CLOUDS) {
-      return
-    }
-    const targets = document.elementsFromPoint(e.clientX, e.clientY)
-    if (tappedOnInput(targets) || tappedOnTile(targets)) {
-      return
-    }
-    const cell = getCell(targets)
-    if (cell) {
-      mouseDown.current = true
-      createPendingTile(cell)
-    }
-  }
-
-  const handleMouseMove = (e) => {
-    e.preventDefault()
-    lastMouseMove.current = Date.now()
-    if (mouseDown.current && pendingTile !== null) {
-      const targets = document.elementsFromPoint(e.clientX, e.clientY)
-      const cell = getCell(targets)
-      if (cell) {
-        updatePendingTile(cell)
+  const handleClick = (e) => {
+    if (!isDrawingTile.current) {
+      if (nextTiles.length >= MAX_NUM_CLOUDS) {
+        return
       }
-    }
-  }
-
-  const handleMouseUp = (e) => {
-    e.preventDefault()
-    if (mouseDown.current) {
-      mouseDown.current = false
+      const targets = document.elementsFromPoint(e.clientX, e.clientY)
+      if (tappedOnInput(targets) || tappedOnTile(targets)) {
+        return
+      }
+      if (!pendingTile) {
+        const cell = getCell(targets)
+        if (cell) {
+          isDrawingTile.current = true
+          createPendingTile(cell)
+        }
+      }
+    } else {
+      e.preventDefault()
+      isDrawingTile.current = false
       if (pendingTile) {
         const overlappingTiles = tiles
           .concat(nextTiles)
@@ -197,6 +178,20 @@ export default ({
         })
       }
       showForm()
+    }
+  }
+
+  const handleMouseMove = (e) => {
+    e.preventDefault()
+    lastMouseMove.current = Date.now()
+    if (isDrawingTile.current) {
+      if (pendingTile !== null) {
+        const targets = document.elementsFromPoint(e.clientX, e.clientY)
+        const cell = getCell(targets)
+        if (cell) {
+          updatePendingTile(cell)
+        }
+      }
     }
   }
 
@@ -283,9 +278,8 @@ export default ({
         display: isVisible ? "flex" : "none",
         cursor: "pointer",
       }}
-      onMouseDown={handleMouseDown}
+      onClick={handleClick}
       onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
@@ -307,7 +301,7 @@ export default ({
       ))}
       <CloseButton
         onClick={handleCloseCalendar}
-        disabled={formVisibilityToggle}
+        disabled={pendingTile !== null}
         shouldPulse={shouldPulse}
       />
       {pendingTile !== null && (
@@ -324,11 +318,7 @@ export default ({
         <TileModal tile={selectedTile} handleCloseModal={handleCloseModal} />
       )}
       <Grid
-        pendingTile={pendingTile}
-        setPendingTile={setPendingTile}
-        handleCancelCreateTile={handleCancelCreateTile}
-        toggleFormVisibility={toggleFormVisibility}
-        showForm={showForm}
+        disabled={pendingTile !== null || nextTiles.length >= MAX_NUM_CLOUDS}
       />
     </div>
   )

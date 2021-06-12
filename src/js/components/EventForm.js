@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react"
 import { BiCheck, BiX } from "react-icons/bi"
-import { NUM_ROWS } from "~js/constants"
+import { NUM_ROWS, COLORS } from "~js/constants"
 
 export default ({
   onSubmit,
@@ -127,12 +127,13 @@ export default ({
               justifyContent: "center",
             }}
           >
-            <ColorOption color="#4285f4" selectedColor={color} />
-            <ColorOption color="#33b679" selectedColor={color} />
-            <ColorOption color="#f4511e" selectedColor={color} />
-            <ColorOption color="#f6bf26" selectedColor={color} />
-            <ColorOption color="#cd60eb" selectedColor={color} />
-            <ColorOption color="#ff3232" selectedColor={color} />
+            {COLORS.map((colorCode) => (
+              <ColorOption
+                key={colorCode}
+                color={colorCode}
+                selectedColor={color}
+              />
+            ))}
           </div>
         </div>
         <div

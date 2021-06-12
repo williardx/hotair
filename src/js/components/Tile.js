@@ -62,7 +62,7 @@ export default ({ tile, isPending, handleOpenModal }) => {
   return (
     <canvas
       onClick={() => !isPending && handleOpenModal(tile)}
-      className="tile"
+      className={`tile${isPending ? " pending" : ""}`}
       width={150}
       height={200}
       style={{
