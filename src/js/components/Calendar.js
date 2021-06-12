@@ -288,6 +288,7 @@ export default ({
         <Tile
           tile={pendingTile}
           isPending={true}
+          isFormOpen={formVisibilityToggle}
           setPendingTile={setPendingTile}
         />
       )}

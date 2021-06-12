@@ -3,7 +3,13 @@ import roundRect from "~js/helpers/roundedRectangle"
 import getLines from "~js/helpers/getLines"
 import { NUM_ROWS } from "~js/constants"
 
-export default ({ tile, isPending, handleOpenModal, setPendingTile }) => {
+export default ({
+  tile,
+  isPending,
+  handleOpenModal,
+  setPendingTile,
+  isFormOpen,
+}) => {
   const {
     color,
     text,
@@ -69,7 +75,9 @@ export default ({ tile, isPending, handleOpenModal, setPendingTile }) => {
   return (
     <canvas
       onClick={() => !isPending && handleOpenModal(tile)}
-      className={`tile${isPending ? " pending" : ""}`}
+      className={`tile${isPending ? " pending" : ""}${
+        isFormOpen ? " editing" : ""
+      }`}
       width={150}
       height={200}
       style={{

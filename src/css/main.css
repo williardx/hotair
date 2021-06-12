@@ -92,6 +92,14 @@ p {
   background-color: #f5f5f5;
 }
 
+.tile.pending:hover {
+  cursor: row-resize;
+}
+
+.tile.pending.editing:hover {
+  cursor: default;
+}
+
 .tile:not(.pending):hover {
   filter: brightness(110%);
 }
