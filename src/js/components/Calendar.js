@@ -284,7 +284,13 @@ export default ({
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
     >
-      {pendingTile && <Tile tile={pendingTile} isPending={true} />}
+      {pendingTile && (
+        <Tile
+          tile={pendingTile}
+          isPending={true}
+          setPendingTile={setPendingTile}
+        />
+      )}
       {nextTiles.map((tile, index) => (
         <Tile
           tile={tile}

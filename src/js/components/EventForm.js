@@ -103,8 +103,6 @@ export default ({
         </h4>
         <h5 style={{ color: "rgb(132 132 132)" }}>你在忙什么？</h5>
         <input
-          // TODO: Calculate constant in maxLength instead of eyeballing it
-          maxLength={23 * (endTime - startTime + 1)}
           ref={inputRef}
           style={{
             marginTop: 15,

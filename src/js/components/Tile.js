@@ -3,7 +3,7 @@ import roundRect from "~js/helpers/roundedRectangle"
 import getLines from "~js/helpers/getLines"
 import { NUM_ROWS } from "~js/constants"
 
-export default ({ tile, isPending, handleOpenModal }) => {
+export default ({ tile, isPending, handleOpenModal, setPendingTile }) => {
   const {
     color,
     text,
@@ -54,6 +54,13 @@ export default ({ tile, isPending, handleOpenModal }) => {
     if (text) {
       const lines = getLines(context, text, maxTextWidth)
       for (let i = 0; i < lines.length; i++) {
+        const offset = 25 + i * textVerticalOffset
+        if (isPending && offset > tileHeight) {
+          setPendingTile({
+            ...tile,
+            endTime: Math.min(tile.endTime + 1, NUM_ROWS),
+          })
+        }
         context.fillText(lines[i], 10, 25 + i * textVerticalOffset)
       }
     }
