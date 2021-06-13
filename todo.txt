@@ -5,7 +5,7 @@ Must do
     X Highlight current cell on hover in calendar view
     X Make click/drag calendar tile creation more obvious
     X Automatically increase calendar tile length if user types in longer string
-    - Handle adding calendar event at bottom of calendar
+    - Handle adding calendar events at edges of calendar
     - Add help button in calendar view (if I absolutely have to)
 - Fill calendar with meaningful content
 - Improve basic interaction
