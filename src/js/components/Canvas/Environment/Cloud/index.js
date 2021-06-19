@@ -58,10 +58,10 @@ export default ({ tile, handleRemoveCloud }) => {
   const mesh = useRef()
   const initialOpacity = tile.opacity
   const maxBlurAmount = 20
-  const maxTextWidth = tileWidth - 10
+  const maxTextWidth = tileWidth - 30
   const textVerticalOffset = 25
-  const textXOffset = 10
-  const textYOffset = 25
+  const textXOffset = 15
+  const textYOffset = 30
 
   const src2 = useAssets("images/clouds/2.jpg")
   const t2 = useTexture(src2)

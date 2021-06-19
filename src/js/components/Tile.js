@@ -37,7 +37,7 @@ export default ({
       : 0)
   const tileY = window.innerHeight * calendarRowHeightPct * (startTime + 2)
   const canvasRef = useRef(null)
-  const maxTextWidth = tileWidth - 10
+  const maxTextWidth = tileWidth - 30
   const textVerticalOffset = 25
 
   useEffect(() => {
@@ -67,7 +67,7 @@ export default ({
             endTime: Math.min(tile.endTime + 1, NUM_ROWS),
           })
         }
-        context.fillText(lines[i], 10, 25 + i * textVerticalOffset)
+        context.fillText(lines[i], 15, 30 + i * textVerticalOffset)
       }
     }
   }, [tileWidth, tileHeight, color, text, fontLoaded])
