@@ -18,7 +18,6 @@ export default ({
     endTime,
     numOverlappingTiles = 0,
     initNumOverlappingTiles = 0,
-    id,
   } = tile
 
   const [fontLoaded, setFontLoaded] = useState(false)
@@ -76,7 +75,6 @@ export default ({
   return (
     <canvas
       onClick={() => !isPending && handleOpenModal(tile)}
-      tileId={`${id}`}
       className={`tile${isPending ? " pending" : ""}${
         isFormOpen ? " editing" : ""
       }`}

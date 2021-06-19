@@ -23,7 +23,9 @@ export default ({
   const tileWidth = calendarColumnWidthPct * window.innerWidth * 0.8
   const tileLeft = window.innerWidth * calendarColumnWidthPct * day
   const left = day < 4 ? tileLeft + tileWidth + 20 : tileLeft - formWidth - 20
-  const top = window.innerHeight * calendarRowHeightPct * (startTime + 2)
+  const topRowAdjustment = startTime > 20 ? -4 : startTime >= 17 ? -2 : 2
+  const top =
+    window.innerHeight * calendarRowHeightPct * (startTime + topRowAdjustment)
   const [text, setText] = useState("")
   const [color, setColor] = useState(initialColor)
   const [isSubmitPressed, setIsSubmitPressed] = useState(false)
