@@ -74,6 +74,7 @@ export default ({
 
   const handleCancelCreateTile = () => {
     setPendingTile(null)
+    isDrawingTile.current = false
     hideForm()
   }
 
@@ -266,6 +267,17 @@ export default ({
     }, closeCalendarInterval)
     return () => clearInterval(interval)
   }, [])
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Escape" && pendingTile !== null) {
+      handleCancelCreateTile()
+    }
+  }
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyDown)
+    return () => document.removeEventListener("keydown", handleKeyDown)
+  })
 
   return (
     <div
