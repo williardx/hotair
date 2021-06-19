@@ -275,7 +275,9 @@ export default ({
   }
 
   const handleDeleteTile = (tile) => {
+    const newNextTiles = nextTiles.filter((t) => t.id !== tile.id)
     const newTiles = tiles.filter((t) => t.id !== tile.id)
+    setNextTiles(newNextTiles)
     setTiles(newTiles)
     handleCloseModal()
   }
