@@ -274,6 +274,12 @@ export default ({
     }
   }
 
+  const handleDeleteTile = (tile) => {
+    const newTiles = tiles.filter((t) => t.id !== tile.id)
+    setTiles(newTiles)
+    handleCloseModal()
+  }
+
   useEffect(() => {
     document.addEventListener("keydown", handleKeyDown)
     return () => document.removeEventListener("keydown", handleKeyDown)
@@ -334,7 +340,11 @@ export default ({
         />
       )}
       {selectedTile !== null && (
-        <TileModal tile={selectedTile} handleCloseModal={handleCloseModal} />
+        <TileModal
+          tile={selectedTile}
+          handleCloseModal={handleCloseModal}
+          handleDeleteTile={handleDeleteTile}
+        />
       )}
       <Grid
         disabled={pendingTile !== null || nextTiles.length >= MAX_NUM_CLOUDS}

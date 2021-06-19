@@ -1,8 +1,8 @@
 import React from "react"
-import { BiX } from "react-icons/bi"
+import { BiX, BiTrash } from "react-icons/bi"
 import { NUM_ROWS } from "~js/constants"
 
-export default ({ tile, handleCloseModal }) => {
+export default ({ tile, handleCloseModal, handleDeleteTile }) => {
   const { day, startTime } = tile
   const modalWidth = 200
   const calendarColumnWidthPct = 1 / 7
@@ -22,9 +22,22 @@ export default ({ tile, handleCloseModal }) => {
           justifyContent: "flex-end",
         }}
       >
-        <BiX onClick={handleCloseModal} />
+        <BiTrash
+          style={{ marginRight: 5 }}
+          color="rgb(232 160 160)"
+          onClick={() => handleDeleteTile(tile)}
+        />
+        <BiX size={23} color="rgb(160 160 160)" onClick={handleCloseModal} />
       </div>
-      <h4>{tile.text}</h4>
+      <h3>{tile.text}</h3>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "flex-end",
+          justifyContent: "center",
+        }}
+      ></div>
     </div>
   )
 }
