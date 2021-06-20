@@ -188,50 +188,6 @@ export default ({
     }
   }
 
-  const handleTouchStart = (e) => {
-    if (nextTiles.length >= MAX_NUM_CLOUDS) {
-      return
-    }
-    const targets = document.elementsFromPoint(
-      e.touches[0].clientX,
-      e.touches[0].clientY,
-    )
-    if (tappedOnInput(targets) || tappedOnTile(targets)) {
-      return
-    }
-    const cell = getCell(targets)
-    if (cell) {
-      createPendingTile(cell)
-    }
-  }
-
-  const handleTouchMove = (e) => {
-    const targets = document.elementsFromPoint(
-      e.touches[0].clientX,
-      e.touches[0].clientY,
-    )
-    const cell = getCell(targets)
-    if (cell) {
-      updatePendingTile(cell)
-    }
-  }
-
-  const handleTouchEnd = (e) => {
-    const targets = document.elementsFromPoint(
-      e.changedTouches[0].clientX,
-      e.changedTouches[0].clientY,
-    )
-    if (tappedOnInput(targets)) {
-      return
-    }
-    if (pendingTile) {
-      setPendingTile({
-        ...pendingTile,
-      })
-    }
-    showForm()
-  }
-
   // Check every so often that someone is using the calendar. If not
   // turn it back to sky view which is more interesting.
   const closeCalendarInterval = 60000 * 5
@@ -301,9 +257,6 @@ export default ({
       }}
       onClick={handleClick}
       onMouseMove={handleMouseMove}
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
     >
       {pendingTile && (
         <Tile
