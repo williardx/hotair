@@ -17,7 +17,7 @@ export default ({
   const fullTileWidth = calendarColumnWidthPct * window.innerWidth * 0.8
   const tileWidth = fullTileWidth * (isPending ? 1 : position.dx)
   const tileHeight =
-    window.innerHeight * calendarRowHeightPct * (endTime - startTime + 1)
+    window.innerHeight * calendarRowHeightPct * (endTime - 1 - startTime + 1)
   const tileX =
     window.innerWidth * calendarColumnWidthPct * day +
     fullTileWidth * (isPending ? 0 : position.x)
@@ -50,7 +50,7 @@ export default ({
         if (isPending && offset > tileHeight) {
           setPendingTile({
             ...tile,
-            endTime: Math.min(tile.endTime + 1, NUM_ROWS),
+            endTime: Math.min(tile.endTime, NUM_ROWS),
           })
         }
         context.fillText(lines[i], 15, 30 + i * textVerticalOffset)

@@ -28,7 +28,7 @@ export default ({ tile, handleRemoveCloud }) => {
   const calendarColumnWidthPct = 1 / 7
   const calendarRowHeightPct = 1 / NUM_ROWS
   const tileHeight =
-    window.innerHeight * calendarRowHeightPct * (endTime - startTime + 1)
+    window.innerHeight * calendarRowHeightPct * (endTime - 1 - startTime + 1)
   const scaleWidth = 1
   const scaleHeight = tileHeight > 512 * 0.8 ? 2 : 1
   const tileWidth = calendarColumnWidthPct * window.innerWidth * 0.9

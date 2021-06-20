@@ -112,12 +112,12 @@ export default ({
 
   const createPendingTile = (cell) => {
     const start = {
-      row: cell.getAttribute("row"),
-      col: cell.getAttribute("col"),
+      row: parseInt(cell.getAttribute("row")),
+      col: parseInt(cell.getAttribute("col")),
     }
-    const day = parseInt(start.col)
-    const startTime = parseInt(start.row)
-    const endTime = parseInt(start.row)
+    const day = start.col
+    const startTime = start.row
+    const endTime = start.row + 1
     setPendingTile({
       day,
       startTime,
@@ -132,7 +132,7 @@ export default ({
 
   const updatePendingTile = (cell) => {
     const move = {
-      row: parseInt(cell.getAttribute("row")),
+      row: parseInt(cell.getAttribute("row")) + 1,
       col: parseInt(cell.getAttribute("col")),
     }
     if (move.row !== pendingTile.endTime) {
