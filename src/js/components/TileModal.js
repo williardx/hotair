@@ -31,7 +31,7 @@ export default ({ tile, handleCloseModal, handleDeleteTile }) => {
         />
         <BiX size={23} color="rgb(160 160 160)" onClick={handleCloseModal} />
       </div>
-      <h3>{tile.text}</h3>
+      <div style={{ overflowWrap: "anywhere" }}>{tile.text}</div>
       <div
         style={{
           display: "flex",
