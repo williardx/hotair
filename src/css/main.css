@@ -141,6 +141,27 @@ p {
   cursor: pointer;
 }
 
+#erase-button {
+  width: 50px;
+  height: 50px;
+  border: none;
+  position: fixed;
+  border-radius: 100px;
+  bottom: 28px;
+  right: 117px;
+  background-color: #bfbfbf;
+  z-index: 1000;
+  cursor: pointer;
+}
+
+#erase-button:hover {
+  background-color: #d8d8d8;
+}
+
+#erase-button.disabled {
+  opacity: 50%;
+}
+
 #close-button:hover {
   background-color: #4da6ff;
 }

@@ -3,6 +3,7 @@ import EventForm from "~js/components/EventForm"
 import Grid from "~js/components/Grid"
 import Tile from "~js/components/Tile"
 import CloseButton from "~js/components/CloseButton"
+import EraseButton from "~js/components/EraseButton"
 import TileModal from "~js/components/TileModal"
 import randomChoice from "~js/helpers/randomChoice"
 import { MAX_NUM_CLOUDS, COLORS } from "~js/constants"
@@ -239,6 +240,11 @@ export default ({
     handleCloseModal()
   }
 
+  const handleDeleteAllTiles = () => {
+    setNextTiles([])
+    setTiles([])
+  }
+
   useEffect(() => {
     document.addEventListener("keydown", handleKeyDown)
     return () => document.removeEventListener("keydown", handleKeyDown)
@@ -284,6 +290,10 @@ export default ({
         onClick={handleCloseCalendar}
         disabled={pendingTile !== null}
         shouldPulse={shouldPulse}
+      />
+      <EraseButton
+        onClick={handleDeleteAllTiles}
+        disabled={pendingTile !== null}
       />
       {pendingTile !== null && (
         <EventForm
