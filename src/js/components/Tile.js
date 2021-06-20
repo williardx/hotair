@@ -10,31 +10,17 @@ export default ({
   setPendingTile,
   isFormOpen,
 }) => {
-  const {
-    color,
-    text,
-    startTime,
-    day,
-    endTime,
-    numOverlappingTiles = 0,
-    initNumOverlappingTiles = 0,
-  } = tile
-
+  const { color, text, startTime, day, endTime, position } = tile
   const [fontLoaded, setFontLoaded] = useState(false)
-
   const calendarColumnWidthPct = 1 / 7
   const calendarRowHeightPct = 1 / NUM_ROWS
   const fullTileWidth = calendarColumnWidthPct * window.innerWidth * 0.8
-  const tileWidth =
-    fullTileWidth / (isPending ? 1 : (numOverlappingTiles ?? 0) + 1)
+  const tileWidth = fullTileWidth * (isPending ? 1 : position.dx)
   const tileHeight =
     window.innerHeight * calendarRowHeightPct * (endTime - startTime + 1)
   const tileX =
     window.innerWidth * calendarColumnWidthPct * day +
-    (numOverlappingTiles > 0
-      ? (fullTileWidth / (numOverlappingTiles + 1) - 10) *
-        initNumOverlappingTiles
-      : 0)
+    fullTileWidth * (isPending ? 0 : position.x)
   const tileY = window.innerHeight * calendarRowHeightPct * (startTime + 2)
   const canvasRef = useRef(null)
   const maxTextWidth = tileWidth - 30

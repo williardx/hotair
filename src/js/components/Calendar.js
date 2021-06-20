@@ -6,6 +6,7 @@ import CloseButton from "~js/components/CloseButton"
 import TileModal from "~js/components/TileModal"
 import randomChoice from "~js/helpers/randomChoice"
 import { MAX_NUM_CLOUDS, COLORS } from "~js/constants"
+import calendarTiler from "~js/helpers/calendarTiler"
 
 export default ({
   isVisible,
@@ -43,30 +44,27 @@ export default ({
   }
 
   const onEventFormSubmit = (tile) => {
-    const { numOverlappingTiles, overlappingTiles } = tile
-    if (numOverlappingTiles > 0) {
-      const updatedTiles = overlappingTiles.map((ot) => {
-        if (numOverlappingTiles > ot.numOverlappingTiles) {
-          return {
-            ...ot,
-            numOverlappingTiles,
-          }
-        } else {
-          return ot
-        }
-      })
-      updatedTiles.forEach((ut) => {
-        const tilesIndex = tiles.findIndex((t) => t.id === ut.id)
+    const allTilesOnDay = tiles
+      .concat(nextTiles)
+      .concat([tile])
+      .filter((t) => t.day === tile.day)
+    const arrangedTiles = calendarTiler(allTilesOnDay)
+    arrangedTiles.forEach((at) => {
+      if (at.id === tile.id) {
+        tile = at
+      } else {
+        const tilesIndex = tiles.findIndex((t) => t.id === at.id)
         if (tilesIndex > -1) {
-          tiles[tilesIndex] = ut
+          tiles[tilesIndex] = at
         } else {
-          const nextTilesIndex = nextTiles.findIndex((t) => t.id === ut.id)
-          nextTiles[nextTilesIndex] = ut
+          const nextTilesIndex = nextTiles.findIndex((t) => t.id === at.id)
+          nextTiles[nextTilesIndex] = at
         }
-      })
-      setTiles([...tiles])
-      setNextTiles([...nextTiles])
-    }
+      }
+    })
+
+    setTiles([...tiles])
+    setNextTiles([...nextTiles])
     handleAddTile(tile)
     setPendingTile(null)
     toggleFormVisibility()
