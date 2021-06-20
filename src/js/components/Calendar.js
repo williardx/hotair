@@ -166,14 +166,8 @@ export default ({
       e.preventDefault()
       isDrawingTile.current = false
       if (pendingTile) {
-        const overlappingTiles = tiles
-          .concat(nextTiles)
-          .filter((tile) => isOverlapping(pendingTile, tile))
         setPendingTile({
           ...pendingTile,
-          zIndex: overlappingTiles.length, // This value never changes
-          overlappingTiles: overlappingTiles,
-          numOverlappingTiles: overlappingTiles.length, // This value updates
         })
       }
       showForm()
@@ -222,10 +216,6 @@ export default ({
     }
   }
 
-  const isOverlapping = (tileA, tileB) =>
-    tileA.day === tileB.day &&
-    !(tileA.startTime > tileB.endTime || tileA.endTime < tileB.startTime)
-
   const handleTouchEnd = (e) => {
     const targets = document.elementsFromPoint(
       e.changedTouches[0].clientX,
@@ -235,14 +225,8 @@ export default ({
       return
     }
     if (pendingTile) {
-      const overlappingTiles = tiles
-        .concat(nextTiles)
-        .filter((tile) => isOverlapping(pendingTile, tile))
       setPendingTile({
         ...pendingTile,
-        zIndex: overlappingTiles.length, // This value never changes
-        overlappingTiles: overlappingTiles,
-        numOverlappingTiles: overlappingTiles.length, // This value updates
       })
     }
     showForm()

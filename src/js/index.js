@@ -14,74 +14,75 @@ import Environment from "~js/components/Canvas/Environment"
 import Calendar from "~js/components/Calendar"
 import CalendarButton from "~js/components/CalendarButton"
 import randomChoice from "~js/helpers/randomChoice"
+import calendarTiler from "~js/helpers/calendarTiler"
 
 /**
  * app
  */
 const App = () => {
   const debugMode = useDebugMode()
-
-  const [tiles, setTiles] = useState([
-    {
-      text: "life",
-      size: "small",
-      color: "#33b679",
-      day: 2,
-      startTime: 4,
-      endTime: 9,
-      id: 92001,
-      opacity: 0,
-      initNumOverlappingTiles: 0,
-      numOverlappingTiles: 0,
-    },
-    {
-      text: "work",
-      size: "small",
-      color: "#cd60eb",
-      day: 4,
-      startTime: 12,
-      endTime: 18,
-      id: 14100,
-      opacity: 0,
-      initNumOverlappingTiles: 0,
-      numOverlappingTiles: 0,
-    },
-    {
-      text: "THIS PROJECT",
-      size: "small",
-      color: "#f6bf26",
-      day: 3,
-      startTime: 12,
-      endTime: 17,
-      id: 60997,
-      opacity: 0,
-      initNumOverlappingTiles: 0,
-      numOverlappingTiles: 0,
-    },
-    {
-      text: "startup",
-      size: "small",
-      color: "#f02400",
-      day: 1,
-      startTime: 4,
-      endTime: 10,
-      id: 97950,
-      opacity: 0,
-      initNumOverlappingTiles: 0,
-      numOverlappingTiles: 0,
-    },
-    {
-      text: "thinking thinking thinking",
-      color: "#ff7c1f",
-      day: 3,
-      startTime: 5,
-      endTime: 9,
-      id: 64432,
-      opacity: 1,
-      initNumOverlappingTiles: 0,
-      numOverlappingTiles: 0,
-    },
+  const initialTiles = calendarTiler([
+    // {
+    //   text: "life",
+    //   size: "small",
+    //   color: "#33b679",
+    //   day: 2,
+    //   startTime: 4,
+    //   endTime: 9,
+    //   id: 92001,
+    //   opacity: 0,
+    //   initNumOverlappingTiles: 0,
+    //   numOverlappingTiles: 0,
+    // },
+    // {
+    //   text: "work",
+    //   size: "small",
+    //   color: "#cd60eb",
+    //   day: 4,
+    //   startTime: 12,
+    //   endTime: 18,
+    //   id: 14100,
+    //   opacity: 0,
+    //   initNumOverlappingTiles: 0,
+    //   numOverlappingTiles: 0,
+    // },
+    // {
+    //   text: "THIS PROJECT",
+    //   size: "small",
+    //   color: "#f6bf26",
+    //   day: 3,
+    //   startTime: 12,
+    //   endTime: 17,
+    //   id: 60997,
+    //   opacity: 0,
+    //   initNumOverlappingTiles: 0,
+    //   numOverlappingTiles: 0,
+    // },
+    // {
+    //   text: "startup",
+    //   size: "small",
+    //   color: "#f02400",
+    //   day: 1,
+    //   startTime: 4,
+    //   endTime: 10,
+    //   id: 97950,
+    //   opacity: 0,
+    //   initNumOverlappingTiles: 0,
+    //   numOverlappingTiles: 0,
+    // },
+    // {
+    //   text: "thinking thinking thinking",
+    //   color: "#ff7c1f",
+    //   day: 3,
+    //   startTime: 5,
+    //   endTime: 9,
+    //   id: 64432,
+    //   opacity: 1,
+    //   initNumOverlappingTiles: 0,
+    //   numOverlappingTiles: 0,
+    // },
   ])
+  const [tiles, setTiles] = useState(initialTiles)
 
   // Tiles that are queued up to be added to sky
   const [nextTiles, setNextTiles] = useState([])
@@ -90,8 +91,7 @@ const App = () => {
   const [clouds, setClouds] = useState([])
   const maxNumClouds = 3
 
-  const [calendarVisibilityToggle, setCalendarVisibilityToggle] =
-    useState(false)
+  const [calendarVisibilityToggle, setCalendarVisibilityToggle] = useState(true)
 
   const handleAddTile = (tile) => {
     setNextTiles([...nextTiles, tile])
@@ -117,7 +117,7 @@ const App = () => {
   }
 
   const addCloudsToSky = useCallback(() => {
-    if (clouds.length < maxNumClouds) {
+    if (tiles.length > 0 && clouds.length < maxNumClouds) {
       // Otherwise randomly pick from the tiles in the calendar
       const activeCloudIds = clouds.map((cloud) => cloud.id)
       const newCloud = randomChoice(

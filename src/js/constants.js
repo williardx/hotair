@@ -1,4 +1,4 @@
-export const MAX_NUM_CLOUDS = 3
+export const MAX_NUM_CLOUDS = 999
 export const NUM_ROWS = 26
 export const COLORS = [
   "#4285f4",
