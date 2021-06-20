@@ -257,10 +257,23 @@ export default ({
   }
 
   const handleDeleteTile = (tile) => {
-    const newNextTiles = nextTiles.filter((t) => t.id !== tile.id)
-    const newTiles = tiles.filter((t) => t.id !== tile.id)
-    setNextTiles(newNextTiles)
-    setTiles(newTiles)
+    const filteredTiles = tiles.filter((t) => t.id !== tile.id)
+    const filteredNextTiles = nextTiles.filter((t) => t.id !== tile.id)
+    const allTilesOnDay = filteredTiles.concat(filteredNextTiles)
+    const arrangedTiles = calendarTiler(allTilesOnDay)
+    arrangedTiles.forEach((at) => {
+      const tilesIndex = filteredTiles.findIndex((t) => t.id === at.id)
+      if (tilesIndex > -1) {
+        filteredTiles[tilesIndex] = at
+      } else {
+        const nextTilesIndex = filteredNextTiles.findIndex(
+          (t) => t.id === at.id,
+        )
+        filteredNextTiles[nextTilesIndex] = at
+      }
+    })
+    setNextTiles([...filteredNextTiles])
+    setTiles([...filteredTiles])
     handleCloseModal()
   }
 
