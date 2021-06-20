@@ -7,6 +7,7 @@ Must do
     X Automatically increase calendar tile length if user types in longer string
     X Handle adding calendar events at edges of calendar
     X Improve calendar tiling algorithm so that it's more natural
+    X Bug: Tiles getting longer with text is broken
     - Bug: Adding tile can enter infinite loop somewhere 
     - Add help button in calendar view (if I absolutely have to)
 - Fill calendar with meaningful content

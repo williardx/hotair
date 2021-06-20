@@ -1096,7 +1096,6 @@ export default (appointmentsIn) => {
     start: "startTime",
     delineator: "endTime",
   })
-  console.log("----------------tiled", tiled)
   const stitched = tiled.sortedAppointments.map((tile, index) => {
     return {
       ...tile,

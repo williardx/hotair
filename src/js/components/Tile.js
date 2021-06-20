@@ -50,7 +50,7 @@ export default ({
         if (isPending && offset > tileHeight) {
           setPendingTile({
             ...tile,
-            endTime: Math.min(tile.endTime, NUM_ROWS),
+            endTime: Math.min(tile.endTime + 1, NUM_ROWS),
           })
         }
         context.fillText(lines[i], 15, 30 + i * textVerticalOffset)

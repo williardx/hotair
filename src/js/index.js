@@ -21,26 +21,7 @@ import calendarTiler from "~js/helpers/calendarTiler"
  */
 const App = () => {
   const debugMode = useDebugMode()
-  const initialTiles = calendarTiler([
-    {
-      text: "asdf",
-      color: "#cd60eb",
-      day: 2,
-      startTime: 7,
-      endTime: 10,
-      id: 61124,
-      opacity: 1,
-    },
-    {
-      text: "ghghgh",
-      color: "#33b679",
-      day: 2,
-      startTime: 7,
-      endTime: 10,
-      id: 61125,
-      opacity: 1,
-    },
-  ])
+  const initialTiles = calendarTiler([])
 
   const [tiles, setTiles] = useState(initialTiles)
 

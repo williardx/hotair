@@ -94,11 +94,11 @@ export default ({ tile, handleRemoveCloud }) => {
     context.fillStyle = "white"
     const lines = getLines(context, text, maxTextWidth)
     for (let i = 0; i < lines.length; i++) {
-      context.fillText(
-        lines[i],
-        tilePosX + textXOffset,
-        tilePosY + textYOffset + i * textVerticalOffset,
-      )
+      const offsetY = textYOffset + i * textVerticalOffset
+      if (offsetY > tileHeight) {
+        break
+      }
+      context.fillText(lines[i], tilePosX + textXOffset, tilePosY + offsetY)
     }
     context.blurAmount = 0
     context.brightnessAmount = 1
@@ -141,11 +141,11 @@ export default ({ tile, handleRemoveCloud }) => {
     ctx.fillStyle = `rgba(255, 255, 255, ${ctx.textAlpha})`
     const lines = getLines(ctx, text, maxTextWidth)
     for (let i = 0; i < lines.length; i++) {
-      ctx.fillText(
-        lines[i],
-        tilePosX + textXOffset,
-        tilePosY + textYOffset + i * textVerticalOffset,
-      )
+      const offsetY = textYOffset + i * textVerticalOffset
+      if (offsetY > tileHeight) {
+        break
+      }
+      ctx.fillText(lines[i], tilePosX + textXOffset, tilePosY + offsetY)
     }
   }
 
@@ -168,11 +168,11 @@ export default ({ tile, handleRemoveCloud }) => {
     ctx.fillStyle = "white"
     const lines = getLines(ctx, text, maxTextWidth)
     for (let i = 0; i < lines.length; i++) {
-      ctx.fillText(
-        lines[i],
-        tilePosX + textXOffset,
-        tilePosY + textYOffset + i * textVerticalOffset,
-      )
+      const offsetY = textYOffset + i * textVerticalOffset
+      if (offsetY > tileHeight) {
+        break
+      }
+      ctx.fillText(lines[i], tilePosX + textXOffset, tilePosY + offsetY)
     }
   }
 
