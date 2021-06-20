@@ -22,7 +22,7 @@ export default () => {
     <>
       <perspectiveCamera
         ref={camera}
-        position={[0, 0, 1.3]}
+        position={[0, 0, 1.4]}
         args={[75, width / height, 1, 10]}
       />
       {debugMode && <Controls />}

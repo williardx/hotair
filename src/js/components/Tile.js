@@ -14,7 +14,7 @@ export default ({
   const [fontLoaded, setFontLoaded] = useState(false)
   const calendarColumnWidthPct = 1 / 7
   const calendarRowHeightPct = 1 / NUM_ROWS
-  const fullTileWidth = calendarColumnWidthPct * window.innerWidth * 0.8
+  const fullTileWidth = calendarColumnWidthPct * window.innerWidth * 0.85
   const tileWidth = fullTileWidth * (isPending ? 1 : position.dx)
   const tileHeight =
     window.innerHeight * calendarRowHeightPct * (endTime - 1 - startTime + 1)

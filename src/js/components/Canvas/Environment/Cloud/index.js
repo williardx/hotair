@@ -22,7 +22,7 @@ import { NUM_ROWS } from "~js/constants"
  */
 
 export default ({ tile, handleRemoveCloud }) => {
-  const { text, color, id, startTime, endTime, day } = tile
+  const { text, color, id, startTime, endTime, day, position } = tile
   const { camera } = useThree()
   // Need a scaling factor because the camera is at a distance
   const calendarColumnWidthPct = 1 / 7
@@ -31,8 +31,11 @@ export default ({ tile, handleRemoveCloud }) => {
     window.innerHeight * calendarRowHeightPct * (endTime - 1 - startTime + 1)
   const scaleWidth = 1
   const scaleHeight = tileHeight > 512 * 0.8 ? 2 : 1
-  const tileWidth = calendarColumnWidthPct * window.innerWidth * 0.9
-  const tileX = window.innerWidth * calendarColumnWidthPct * day
+  const fullTileWidth = calendarColumnWidthPct * window.innerWidth * 0.85
+  const tileWidth = fullTileWidth * position.dx
+  const tileX =
+    window.innerWidth * calendarColumnWidthPct * day +
+    fullTileWidth * position.x
   const tileY = window.innerHeight * calendarRowHeightPct * (startTime + 2)
 
   // Convert screen coordinates to world space
@@ -226,7 +229,6 @@ export default ({ tile, handleRemoveCloud }) => {
         ),
       )
 
-      // return
       // Otherwise keep animating
       const scalingFactor = 0.25
       material.uniforms.uTime.value += 1
