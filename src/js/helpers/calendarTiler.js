@@ -1095,6 +1095,7 @@ export default (appointmentsIn) => {
   const tiled = CalendarTiler_calenderTiler_initialize(appointmentsIn, {
     start: "startTime",
     delineator: "endTime",
+    tilingMethod: "fillSpace",
   })
   const stitched = tiled.sortedAppointments.map((tile, index) => {
     return {

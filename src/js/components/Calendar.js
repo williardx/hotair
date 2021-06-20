@@ -257,23 +257,29 @@ export default ({
   }
 
   const handleDeleteTile = (tile) => {
-    const filteredTiles = tiles.filter((t) => t.id !== tile.id)
-    const filteredNextTiles = nextTiles.filter((t) => t.id !== tile.id)
-    const allTilesOnDay = filteredTiles.concat(filteredNextTiles)
+    const tilesOnSameDay = tiles.filter(
+      (t) => t.id !== tile.id && t.day === tile.day,
+    )
+    const nextTilesOnSameDay = nextTiles.filter(
+      (t) => t.id !== tile.id && t.day === tile.day,
+    )
+    const allTilesOnDay = tilesOnSameDay.concat(nextTilesOnSameDay)
     const arrangedTiles = calendarTiler(allTilesOnDay)
     arrangedTiles.forEach((at) => {
-      const tilesIndex = filteredTiles.findIndex((t) => t.id === at.id)
+      const tilesIndex = tilesOnSameDay.findIndex((t) => t.id === at.id)
       if (tilesIndex > -1) {
-        filteredTiles[tilesIndex] = at
+        tilesOnSameDay[tilesIndex] = at
       } else {
-        const nextTilesIndex = filteredNextTiles.findIndex(
+        const nextTilesIndex = nextTilesOnSameDay.findIndex(
           (t) => t.id === at.id,
         )
-        filteredNextTiles[nextTilesIndex] = at
+        nextTilesOnSameDay[nextTilesIndex] = at
       }
     })
-    setNextTiles([...filteredNextTiles])
-    setTiles([...filteredTiles])
+    const restOfTiles = tiles.filter((t) => t.day !== tile.day)
+    const restOfNextTiles = nextTiles.filter((t) => t.day !== tile.day)
+    setNextTiles([...restOfNextTiles, ...nextTilesOnSameDay])
+    setTiles([...restOfTiles, ...tilesOnSameDay])
     handleCloseModal()
   }
 

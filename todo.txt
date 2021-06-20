@@ -10,6 +10,7 @@ Must do
     X Bug: Tiles getting longer with text is broken
     - Bug: Adding tile can enter infinite loop somewhere 
     - Add help button in calendar view (if I absolutely have to)
+    - Clear calendar button
 - Fill calendar with meaningful content
 - Improve basic interaction
     X Add delete button

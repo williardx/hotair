@@ -15,18 +15,27 @@ import Calendar from "~js/components/Calendar"
 import CalendarButton from "~js/components/CalendarButton"
 import randomChoice from "~js/helpers/randomChoice"
 import calendarTiler from "~js/helpers/calendarTiler"
+import initialTiles from "~js/initialTiles"
+import { DAYS } from "~js/constants"
 
 /**
  * app
  */
 const App = () => {
   const debugMode = useDebugMode()
-  const initialTiles = calendarTiler([])
 
-  const [tiles, setTiles] = useState(initialTiles)
+  let initialArrangedTiles = []
+  DAYS.forEach((day) => {
+    initialArrangedTiles = initialArrangedTiles.concat(
+      calendarTiler(initialTiles.filter((t) => t.day === day)),
+    )
+  })
+
+  const [tiles, setTiles] = useState(initialArrangedTiles)
 
   // Tiles that are queued up to be added to sky
   const [nextTiles, setNextTiles] = useState([])
+  window.allTiles = tiles.concat(nextTiles)
 
   // Tiles that are in the sky
   const [clouds, setClouds] = useState([])
