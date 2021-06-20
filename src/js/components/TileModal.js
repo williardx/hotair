@@ -10,7 +10,9 @@ export default ({ tile, handleCloseModal, handleDeleteTile }) => {
   const tileWidth = calendarColumnWidthPct * window.innerWidth * 0.8
   const tileLeft = window.innerWidth * calendarColumnWidthPct * day
   const left = day < 4 ? tileLeft + tileWidth + 20 : tileLeft - modalWidth - 20
-  const top = window.innerHeight * calendarRowHeightPct * (startTime + 2)
+  const topRowAdjustment = startTime > 20 ? -1 : startTime >= 17 ? 0 : 2
+  const top =
+    window.innerHeight * calendarRowHeightPct * (startTime + topRowAdjustment)
 
   return (
     <div id="tile-modal" style={{ top, left }}>
