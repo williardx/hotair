@@ -17,6 +17,7 @@ export default ({
   setTiles,
   nextTiles,
   setNextTiles,
+  setClouds,
 }) => {
   const [formVisibilityToggle, setFormVisibilityToggle] = useState(false)
   const [tileModalVisibilityToggle, setTileModalVisibilityToggle] =
@@ -106,7 +107,8 @@ export default ({
         (obj) =>
           obj?.id === "event-form" ||
           obj?.id === "close-button" ||
-          obj?.id === "tile-modal",
+          obj?.id === "tile-modal" ||
+          obj?.id === "erase-button",
       ).length > 0
     )
   }
@@ -243,6 +245,7 @@ export default ({
   const handleDeleteAllTiles = () => {
     setNextTiles([])
     setTiles([])
+    setClouds([])
   }
 
   useEffect(() => {

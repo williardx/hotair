@@ -3,7 +3,7 @@ import "~css/main.css"
 import "core-js/stable"
 import "regenerator-runtime/runtime"
 
-import React, { useEffect, useCallback, useState } from "react"
+import React, { useEffect, useCallback, useState, useRef } from "react"
 import { render } from "react-dom"
 import { useDebugMode } from "~js/hooks"
 
@@ -16,6 +16,7 @@ import CalendarButton from "~js/components/CalendarButton"
 import randomChoice from "~js/helpers/randomChoice"
 import calendarTiler from "~js/helpers/calendarTiler"
 import initialTiles from "~js/initialTiles"
+import NextCloudsIndicator from "~js/components/NextCloudsIndicator"
 import { DAYS } from "~js/constants"
 
 /**
@@ -39,7 +40,9 @@ const App = () => {
 
   // Tiles that are in the sky
   const [clouds, setClouds] = useState([])
-  const maxNumClouds = 3
+  const [nextClouds, setNextClouds] = useState([])
+  const cloudsInitialized = useRef(false)
+  const maxNumClouds = 1
 
   const [calendarVisibilityToggle, setCalendarVisibilityToggle] = useState(true)
 
@@ -53,15 +56,21 @@ const App = () => {
 
   const toggleCalendarVisibility = () => {
     if (calendarVisibilityToggle && nextTiles.length > 0) {
-      let nextClouds
-      if (clouds.length + nextTiles.length <= maxNumClouds) {
-        nextClouds = [...clouds, ...nextTiles]
-      } else {
-        nextClouds = [...clouds.slice(nextTiles.length), ...nextTiles]
-      }
+      const numTilesToAdd = Math.min(maxNumClouds, nextTiles.length)
+      const currentClouds = [
+        ...clouds.slice(0, clouds.length - numTilesToAdd),
+        ...nextTiles.slice(0, numTilesToAdd),
+      ]
+
+      // Put new user-generated tiles at the front of the line since
+      // they're more likely to be there
       setTiles([...tiles, ...nextTiles])
       setNextTiles([])
-      setClouds(nextClouds)
+      setClouds(currentClouds)
+      setNextClouds([...nextTiles.slice(numTilesToAdd), ...nextClouds])
+      if (!cloudsInitialized.current) {
+        cloudsInitialized.current = true
+      }
     }
     setCalendarVisibilityToggle(!calendarVisibilityToggle)
   }
@@ -69,16 +78,30 @@ const App = () => {
   const addCloudsToSky = useCallback(() => {
     if (tiles.length > 0 && clouds.length < maxNumClouds) {
       // Otherwise randomly pick from the tiles in the calendar
-      const activeCloudIds = clouds.map((cloud) => cloud.id)
-      const newCloud = randomChoice(
-        tiles.filter((tile) => activeCloudIds.indexOf(tile.id) === -1),
-      )
-      setClouds([...clouds, newCloud])
+      let newCloud
+      // If we have queued up tiles add them first
+      if (nextClouds.length > 0) {
+        newCloud = nextClouds.shift()
+        setNextClouds(nextClouds)
+      } else {
+        const activeCloudIds = clouds.map((cloud) => cloud.id)
+        newCloud = randomChoice(
+          tiles.filter((tile) => activeCloudIds.indexOf(tile.id) === -1),
+        )
+      }
+      if (newCloud) {
+        setClouds([...clouds, newCloud])
+      }
     }
-  }, [clouds, tiles])
+  }, [clouds, nextClouds, tiles])
 
   useEffect(() => {
-    setTimeout(addCloudsToSky, 5000)
+    setTimeout(() => {
+      if (!cloudsInitialized.current) {
+        addCloudsToSky()
+        cloudsInitialized.current = true
+      }
+    }, 5000)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -92,6 +115,9 @@ const App = () => {
   return (
     <>
       <CalendarButton onClick={toggleCalendarVisibility} />
+      {nextClouds.length > 0 && (
+        <NextCloudsIndicator numNextClouds={nextClouds.length} />
+      )}
       {calendarVisibilityToggle && (
         <Calendar
           tiles={tiles}
@@ -101,6 +127,7 @@ const App = () => {
           handleAddTile={handleAddTile}
           toggleCalendarVisibility={toggleCalendarVisibility}
           setNextTiles={setNextTiles}
+          setClouds={setClouds}
         />
       )}
       <Canvas>

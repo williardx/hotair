@@ -77,7 +77,7 @@ export default ({ tile, handleRemoveCloud }) => {
     canvas.height = 512 * scaleHeight
     context.globalAlpha = initialOpacity
     context.globalAlphaAnimation = initialOpacity
-    context.font = "18pt NotoSansSC"
+    context.font = "14pt NotoSansSC"
     context.fillStyle = color
     const tilePosX = (canvas.width - tileWidth) / 2
     const tilePosY = (canvas.height - tileHeight) / 2
@@ -258,7 +258,6 @@ export default ({ tile, handleRemoveCloud }) => {
       }
 
       mesh.current.position.y += 0.0001
-      mesh.current.position.x += 0.00001
     }
   })
 

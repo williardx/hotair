@@ -21,16 +21,17 @@ export default ({ tiles, handleRemoveCloud }) => {
   return (
     <>
       <Background shouldTransition={shouldTransition} />
-      {tiles.map((tile) => {
-        return (
-          <Cloud
-            shouldTransition={shouldTransition}
-            tile={tile}
-            key={tile.id.toString()}
-            handleRemoveCloud={handleRemoveCloud}
-          />
-        )
-      })}
+      {tiles.length > 0 &&
+        tiles.map((tile) => {
+          return (
+            <Cloud
+              shouldTransition={shouldTransition}
+              tile={tile}
+              key={tile.id.toString()}
+              handleRemoveCloud={handleRemoveCloud}
+            />
+          )
+        })}
     </>
   )
 }
