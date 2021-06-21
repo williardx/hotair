@@ -101,9 +101,9 @@ export default ({
         }}
       >
         <h4 style={{ color: "#424247", marginBottom: 5 }}>
-          Where is your time?
+          What are you busy with?
         </h4>
-        <h5 style={{ color: "rgb(132 132 132)" }}>你的时间在哪儿？</h5>
+        <h5 style={{ color: "rgb(132 132 132)" }}>你在忙什么？</h5>
         <input
           ref={inputRef}
           style={{
