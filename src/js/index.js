@@ -42,7 +42,7 @@ const App = () => {
   const [clouds, setClouds] = useState([])
   const [nextClouds, setNextClouds] = useState([])
   const cloudsInitialized = useRef(false)
-  const maxNumClouds = 6
+  const maxNumClouds = 15
 
   const [calendarVisibilityToggle, setCalendarVisibilityToggle] =
     useState(false)
@@ -53,6 +53,11 @@ const App = () => {
 
   const handleRemoveCloud = (cloudID) => {
     setClouds([...clouds.filter((activeCloud) => cloudID !== activeCloud.id)])
+  }
+
+  const handleRemoveTile = (tile) => {
+    const newTiles = tiles.filter((t) => t.id !== tile.id)
+    setTiles(newTiles)
   }
 
   const toggleCalendarVisibility = () => {
@@ -92,6 +97,7 @@ const App = () => {
       }
       if (newCloud) {
         setClouds([...clouds, newCloud])
+        handleRemoveTile(newCloud)
       }
     }
   }, [clouds, nextClouds, tiles])
@@ -109,7 +115,7 @@ const App = () => {
   useEffect(() => {
     // Automatically add a new cloud when we have nothing new to show
     // and a cloud goes off screen
-    const interval = setInterval(addCloudsToSky, 30000)
+    const interval = setInterval(addCloudsToSky, 100)
     return () => clearInterval(interval)
   }, [addCloudsToSky])
 

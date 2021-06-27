@@ -121,11 +121,11 @@ export default ({ tile, handleRemoveCloud }) => {
   const transitionCanvasToCloud = (ctx, scalingFactor = 1) => {
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
     if (ctx.globalAlphaAnimation < 1) {
-      ctx.globalAlphaAnimation += 0.01
+      ctx.globalAlphaAnimation += 0.01 * scalingFactor
       ctx.globalAlpha = easeOutQuint(ctx.globalAlphaAnimation)
     }
     if (ctx.textAlphaAnimation < 1) {
-      ctx.textAlphaAnimation += 0.001
+      ctx.textAlphaAnimation += 0.002 * scalingFactor
       ctx.textAlpha = 1 - easeInQuint(ctx.textAlphaAnimation)
     }
     ctx.blurAmount += 0.03 * scalingFactor
@@ -228,7 +228,7 @@ export default ({ tile, handleRemoveCloud }) => {
       )
 
       // Otherwise keep animating
-      const scalingFactor = 0.25
+      const scalingFactor = 3
       material.uniforms.uTime.value += 1
       const ctx = material.uniforms.canvasTexture.value.image.getContext("2d")
 
@@ -255,7 +255,7 @@ export default ({ tile, handleRemoveCloud }) => {
         }
       }
 
-      mesh.current.position.y += 0.0001
+      mesh.current.position.y += 0.0005
     }
   })
 
