@@ -121,11 +121,11 @@ p {
   right: 100px;
   z-index: 1000;
   cursor: pointer;
-  background-color: #2693ff;
+  background-color: white;
 }
 
 #calendar-button:hover {
-  background-color: #4da6ff;
+  opacity: 85%;
 }
 
 #close-button {

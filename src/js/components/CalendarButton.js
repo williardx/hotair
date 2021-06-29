@@ -18,12 +18,12 @@ export default ({ onClick }) => {
       onTouchEnd={togglePress}
       onTouchCancel={togglePress}
       style={{
-        backgroundColor: isPressed ? "#85c2ff" : "",
+        opacity: isPressed ? "65%" : "",
       }}
     >
       <div
         style={{
-          color: "white",
+          color: "#2693ff",
           fontSize: 60,
           position: "absolute",
           top: 17,
