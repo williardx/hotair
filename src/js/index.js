@@ -115,7 +115,7 @@ const App = () => {
   useEffect(() => {
     // Automatically add a new cloud when we have nothing new to show
     // and a cloud goes off screen
-    const interval = setInterval(addCloudsToSky, 100)
+    const interval = setInterval(addCloudsToSky, 5000)
     return () => clearInterval(interval)
   }, [addCloudsToSky])
 

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react"
+import React, { useState, useRef, useEffect, useCallback } from "react"
 import { BiCheck, BiX } from "react-icons/bi"
 import { NUM_ROWS, COLORS } from "~js/constants"
 
@@ -70,6 +70,33 @@ export default ({
     )
   }
 
+  const createPendingTile = useCallback(() => {
+    const tile = {
+      text,
+      color,
+      day,
+      startTime,
+      endTime,
+      initNumOverlappingTiles: numOverlappingTiles,
+      numOverlappingTiles,
+      overlappingTiles,
+      id: Math.floor(Math.random() * 100000),
+      opacity: 1,
+    }
+    onSubmit(tile)
+    resetForm()
+  }, [
+    color,
+    day,
+    endTime,
+    numOverlappingTiles,
+    onSubmit,
+    overlappingTiles,
+    resetForm,
+    startTime,
+    text,
+  ])
+
   useEffect(() => {
     inputRef.current.focus()
   }, [isVisible])
@@ -105,6 +132,11 @@ export default ({
         </h4>
         <h5 style={{ color: "rgb(132 132 132)" }}>你在忙什么？</h5>
         <input
+          onKeyPress={(e) => {
+            if (e.key === "Enter" && !isSubmitDisabled) {
+              createPendingTile()
+            }
+          }}
           ref={inputRef}
           style={{
             marginTop: 15,
@@ -171,20 +203,7 @@ export default ({
             onTouchCancel={togglePress}
             onClick={(e) => {
               e.preventDefault()
-              const tile = {
-                text,
-                color,
-                day,
-                startTime,
-                endTime,
-                initNumOverlappingTiles: numOverlappingTiles,
-                numOverlappingTiles,
-                overlappingTiles,
-                id: Math.floor(Math.random() * 100000),
-                opacity: 1,
-              }
-              onSubmit(tile)
-              resetForm()
+              createPendingTile()
             }}
           >
             <BiCheck />
