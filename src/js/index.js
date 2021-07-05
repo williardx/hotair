@@ -63,17 +63,19 @@ const App = () => {
   const toggleCalendarVisibility = () => {
     if (calendarVisibilityToggle && nextTiles.length > 0) {
       const numTilesToAdd = Math.min(maxNumClouds, nextTiles.length)
+      const cloudsToAddNow = nextTiles.slice(0, numTilesToAdd)
+      const newCloudsInQueue = nextTiles.slice(numTilesToAdd)
       const currentClouds = [
         ...clouds.slice(0, clouds.length - numTilesToAdd),
-        ...nextTiles.slice(0, numTilesToAdd),
+        ...cloudsToAddNow,
       ]
 
       // Put new user-generated tiles at the front of the line since
       // they're more likely to be there
-      setTiles([...tiles, ...nextTiles])
       setNextTiles([])
+      setTiles([...tiles, ...newCloudsInQueue])
       setClouds(currentClouds)
-      setNextClouds([...nextTiles.slice(numTilesToAdd), ...nextClouds])
+      setNextClouds([...newCloudsInQueue, ...nextClouds])
       if (!cloudsInitialized.current) {
         cloudsInitialized.current = true
       }
