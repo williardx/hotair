@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { BiEraser } from "react-icons/bi"
+import { BiHelpCircle } from "react-icons/bi"
 
 export default ({ onClick, disabled }) => {
   const [isPressed, setIsPressed] = useState(false)
@@ -11,8 +11,7 @@ export default ({ onClick, disabled }) => {
   const className = disabled ? "bottomRowButton disabled" : "bottomRowButton"
   return (
     <button
-      title="Remove all events"
-      id="erase-button"
+      id="help-button"
       className={className}
       onClick={() => {
         if (!disabled) {
@@ -33,11 +32,11 @@ export default ({ onClick, disabled }) => {
           color: "white",
           fontSize: 30,
           position: "absolute",
-          top: 9,
+          top: 10,
           left: 11,
         }}
       >
-        <BiEraser />
+        <BiHelpCircle />
       </div>
     </button>
   )

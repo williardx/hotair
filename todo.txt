@@ -8,10 +8,11 @@ Must do
     X Handle adding calendar events at edges of calendar
     X Improve calendar tiling algorithm so that it's more natural
     X Bug: Tiles getting longer with text is broken
-    - Bug: Adding tile can enter infinite loop somewhere 
-    - Add help button in calendar view (if I absolutely have to)
+    X Add help button in calendar view (if I absolutely have to)
     X Clear calendar button
-    - Make enter button add calendar tile
+    X Make enter button add calendar tile
+    - Get calendar tiles to right speed for movement / transition
+    - Remove tiles when they enter sky and handle case where no tiles are left
 X Fill calendar with meaningful content
 X Improve basic interaction
     X Add delete button
@@ -32,14 +33,6 @@ X Tap on event shows full event title
 X Make calendar bilingual
 X Handle case where user wants to add clouds and there are too many clouds already
 X Possible bug: adding pending tile to tiles will cause it to show up prematurely in sky
-
-iPad Issues
------------
-- !!! Implement blur/brighten effect with GLSL
-- !!! Fix screen flickering with calendar when creating an event - disable highlight?
-- !!! Fix tile sizing on iPad
-- Fix calendar tap actions
-- Fix black flicker as cloud appears on screen
 
 Nice to have
 ------------

@@ -4,10 +4,13 @@ import Grid from "~js/components/Grid"
 import Tile from "~js/components/Tile"
 import CloseButton from "~js/components/CloseButton"
 import EraseButton from "~js/components/EraseButton"
+import HelpButton from "~js/components/HelpButton"
 import TileModal from "~js/components/TileModal"
+import HelpModal from "~js/components/HelpModal"
 import randomChoice from "~js/helpers/randomChoice"
 import { MAX_NUM_CLOUDS, COLORS } from "~js/constants"
 import calendarTiler from "~js/helpers/calendarTiler"
+import ResetButton from "./ResetButton"
 
 export default ({
   isVisible,
@@ -18,12 +21,15 @@ export default ({
   nextTiles,
   setNextTiles,
   setClouds,
+  handleResetTiles,
 }) => {
   const [formVisibilityToggle, setFormVisibilityToggle] = useState(false)
   const [tileModalVisibilityToggle, setTileModalVisibilityToggle] =
     useState(false)
   const [pendingTile, setPendingTile] = useState(null)
   const [selectedTile, setSelectedTile] = useState(null)
+  const [helpModalVisibilityToggle, setHelpModalVisibilityToggle] =
+    useState(false)
   const shouldPulse = nextTiles.length === MAX_NUM_CLOUDS
   const isDrawingTile = useRef(false)
   const lastMouseMove = useRef(null)
@@ -97,18 +103,26 @@ export default ({
     setTileModalVisibilityToggle(!tileModalVisibilityToggle)
   }
 
+  const handleToggleHelpModalVisibility = () => {
+    setHelpModalVisibilityToggle(!helpModalVisibilityToggle)
+  }
+
   const tappedOnTile = (targets) => {
     return targets.filter((obj) => obj?.className === "tile").length > 0
   }
 
   const tappedOnInput = (targets) => {
     return (
-      targets.filter(
-        (obj) =>
-          obj?.id === "event-form" ||
-          obj?.id === "close-button" ||
-          obj?.id === "tile-modal" ||
-          obj?.id === "erase-button",
+      targets.filter((obj) =>
+        [
+          "event-form",
+          "close-button",
+          "tile-modal",
+          "erase-button",
+          "help-modal",
+          "reset-button",
+          "help-button",
+        ].includes(obj?.id),
       ).length > 0
     )
   }
@@ -294,10 +308,15 @@ export default ({
         disabled={pendingTile !== null}
         shouldPulse={shouldPulse}
       />
+      <HelpButton
+        onClick={handleToggleHelpModalVisibility}
+        disabled={helpModalVisibilityToggle}
+      />
       <EraseButton
         onClick={handleDeleteAllTiles}
         disabled={pendingTile !== null}
       />
+      <ResetButton onClick={handleResetTiles} disabled={pendingTile !== null} />
       {pendingTile !== null && (
         <EventForm
           pendingTile={pendingTile}
@@ -314,6 +333,9 @@ export default ({
           handleCloseModal={handleCloseModal}
           handleDeleteTile={handleDeleteTile}
         />
+      )}
+      {helpModalVisibilityToggle && (
+        <HelpModal handleClose={handleToggleHelpModalVisibility} />
       )}
       <Grid
         disabled={pendingTile !== null || nextTiles.length >= MAX_NUM_CLOUDS}

@@ -42,7 +42,7 @@ const App = () => {
   const [clouds, setClouds] = useState([])
   const [nextClouds, setNextClouds] = useState([])
   const cloudsInitialized = useRef(false)
-  const maxNumClouds = 15
+  const maxNumClouds = 9
 
   const [calendarVisibilityToggle, setCalendarVisibilityToggle] =
     useState(false)
@@ -58,6 +58,13 @@ const App = () => {
   const handleRemoveTile = (tile) => {
     const newTiles = tiles.filter((t) => t.id !== tile.id)
     setTiles(newTiles)
+  }
+
+  const handleResetTiles = () => {
+    setTiles(initialTiles)
+    setNextTiles([])
+    setNextClouds([])
+    setClouds([])
   }
 
   const toggleCalendarVisibility = () => {
@@ -102,7 +109,7 @@ const App = () => {
         handleRemoveTile(newCloud)
       }
     }
-  }, [clouds, nextClouds, tiles])
+  }, [clouds, handleRemoveTile, nextClouds, tiles])
 
   useEffect(() => {
     setTimeout(() => {
@@ -110,7 +117,7 @@ const App = () => {
         addCloudsToSky()
         cloudsInitialized.current = true
       }
-    }, 5000)
+    }, 10000)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -134,6 +141,7 @@ const App = () => {
           setTiles={setTiles}
           isVisible={calendarVisibilityToggle}
           handleAddTile={handleAddTile}
+          handleResetTiles={handleResetTiles}
           toggleCalendarVisibility={toggleCalendarVisibility}
           setNextTiles={setNextTiles}
           setClouds={setClouds}

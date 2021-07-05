@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { BiEraser } from "react-icons/bi"
+import { BiReset } from "react-icons/bi"
 
 export default ({ onClick, disabled }) => {
   const [isPressed, setIsPressed] = useState(false)
@@ -11,8 +11,8 @@ export default ({ onClick, disabled }) => {
   const className = disabled ? "bottomRowButton disabled" : "bottomRowButton"
   return (
     <button
-      title="Remove all events"
-      id="erase-button"
+      id="reset-button"
+      title="Reset calendar"
       className={className}
       onClick={() => {
         if (!disabled) {
@@ -37,7 +37,7 @@ export default ({ onClick, disabled }) => {
           left: 11,
         }}
       >
-        <BiEraser />
+        <BiReset />
       </div>
     </button>
   )
