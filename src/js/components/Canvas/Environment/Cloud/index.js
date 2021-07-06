@@ -228,7 +228,7 @@ export default ({ tile, handleRemoveCloud }) => {
       )
 
       // Otherwise keep animating
-      const scalingFactor = 3
+      const scalingFactor = 1
       material.uniforms.uTime.value += 1
       const ctx = material.uniforms.canvasTexture.value.image.getContext("2d")
 
@@ -255,7 +255,7 @@ export default ({ tile, handleRemoveCloud }) => {
         }
       }
 
-      mesh.current.position.y += 0.0005
+      mesh.current.position.y += 0.0003
     }
   })
 
