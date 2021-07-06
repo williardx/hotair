@@ -1,6 +1,6 @@
 Must do
 -------
-- Clean up rough edges / make calendar more intuitive
+X Clean up rough edges / make calendar more intuitive
     X Make it obvious calendar button is clickable
     X Highlight current cell on hover in calendar view
     X Make click/drag calendar tile creation more obvious
@@ -11,8 +11,8 @@ Must do
     X Add help button in calendar view (if I absolutely have to)
     X Clear calendar button
     X Make enter button add calendar tile
-    - Get calendar tiles to right speed for movement / transition
-    - Remove tiles when they enter sky and handle case where no tiles are left
+    X Get calendar tiles to right speed for movement / transition
+    X Remove tiles when they enter sky and handle case where no tiles are left
 X Fill calendar with meaningful content
 X Improve basic interaction
     X Add delete button
