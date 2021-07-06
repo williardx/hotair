@@ -41,6 +41,8 @@ const App = () => {
   // Tiles that are in the sky
   const [clouds, setClouds] = useState([])
   const [nextClouds, setNextClouds] = useState([])
+  const resetTilesTimeout = 60000 * 4
+  const timeoutRef = useRef(null)
   const cloudsInitialized = useRef(false)
   const maxNumClouds = 9
 
@@ -53,11 +55,6 @@ const App = () => {
 
   const handleRemoveCloud = (cloudID) => {
     setClouds([...clouds.filter((activeCloud) => cloudID !== activeCloud.id)])
-  }
-
-  const handleRemoveTile = (tile) => {
-    const newTiles = tiles.filter((t) => t.id !== tile.id)
-    setTiles(newTiles)
   }
 
   const handleResetTiles = () => {
@@ -91,6 +88,10 @@ const App = () => {
   }
 
   const addCloudsToSky = useCallback(() => {
+    const handleRemoveTile = (tile) => {
+      const newTiles = tiles.filter((t) => t.id !== tile.id)
+      setTiles(newTiles)
+    }
     if (tiles.length > 0 && clouds.length < maxNumClouds) {
       // Otherwise randomly pick from the tiles in the calendar
       let newCloud
@@ -109,17 +110,17 @@ const App = () => {
         handleRemoveTile(newCloud)
       }
     }
-  }, [clouds, handleRemoveTile, nextClouds, tiles])
+  }, [clouds, nextClouds, tiles])
 
-  useEffect(() => {
-    setTimeout(() => {
-      if (!cloudsInitialized.current) {
-        addCloudsToSky()
-        cloudsInitialized.current = true
-      }
-    }, 10000)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     if (!cloudsInitialized.current) {
+  //       addCloudsToSky()
+  //       cloudsInitialized.current = true
+  //     }
+  //   }, 10000)
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [])
 
   useEffect(() => {
     // Automatically add a new cloud when we have nothing new to show
@@ -127,6 +128,23 @@ const App = () => {
     const interval = setInterval(addCloudsToSky, 5000)
     return () => clearInterval(interval)
   }, [addCloudsToSky])
+
+  useEffect(() => {
+    const isContentEmpty =
+      tiles.length === 0 &&
+      nextTiles.length === 0 &&
+      clouds.length === 0 &&
+      nextClouds.length === 0
+    if (isContentEmpty && timeoutRef.current === null) {
+      timeoutRef.current = setTimeout(handleResetTiles, resetTilesTimeout)
+      window.timeout = timeoutRef.current
+    } else if (!isContentEmpty && timeoutRef.current !== null) {
+      clearTimeout(timeoutRef.current)
+      timeoutRef.current = null
+      window.timeout = timeoutRef.current
+    }
+    return () => clearTimeout(timeoutRef.current)
+  }, [tiles, nextTiles, clouds, nextClouds, resetTilesTimeout])
 
   return (
     <>
