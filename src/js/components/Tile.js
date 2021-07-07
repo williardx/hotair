@@ -53,7 +53,7 @@ export default ({
             endTime: Math.min(tile.endTime + 1, NUM_ROWS),
           })
         }
-        context.fillText(lines[i], 15, 30 + i * textVerticalOffset)
+        context.fillText(lines[i], 15, 25 + i * textVerticalOffset)
       }
     }
   }, [tileWidth, tileHeight, color, text, fontLoaded])

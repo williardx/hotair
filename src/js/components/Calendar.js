@@ -90,7 +90,6 @@ export default ({
         setPendingTile(null)
       }
       toggleCalendarVisibility()
-      handleResetTiles()
     }
   }
 
@@ -217,6 +216,7 @@ export default ({
         lastMouseMove.current - intervalInitTimestamp.current <= 0
       ) {
         handleCloseCalendar()
+        handleResetTiles()
       } else {
         intervalInitTimestamp.current = Date.now()
       }
